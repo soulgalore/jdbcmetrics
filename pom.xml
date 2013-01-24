@@ -1,17 +1,18 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>com.soulgalore</groupId>
-  <artifactId>dbstats</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <name>dbstats</name>
-  
-  	<packaging>jar</packaging>
-   	
-   	<properties>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.soulgalore</groupId>
+	<artifactId>dbstats</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>dbstats</name>
+
+	<packaging>jar</packaging>
+
+	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
-  	
-  	<developers>
+
+	<developers>
 		<developer>
 			<name>Magnus Lundberg</name>
 			<email>magnus.lundberg@gmail.com</email>
@@ -23,7 +24,7 @@
 			<timezone>+1</timezone>
 		</developer>
 	</developers>
-	
+
 	<scm>
 		<connection>scm:git:git://github.com/soulgalore/dbstats.git</connection>
 		<developerConnection>scm:git:git@github.com:soulgalore/dbstats.git</developerConnection>
@@ -34,24 +35,24 @@
 		<system>github</system>
 		<url>http://github.com/soulgalore/dbstats/issues#issue/</url>
 	</issueManagement>
-	
+
 	<dependencies>
-		
-	<!--  Needed for servlet filter -->	
-	<dependency>
-	<groupId>javax.servlet</groupId>
-	<artifactId>servlet-api</artifactId>
-	<version>2.5</version>
-	</dependency>
-	
-	<!-- Woho, testing! -->
+
+		<!-- Needed for servlet filter -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>2.5</version>
+		</dependency>
+
+		<!-- Woho, testing! -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.11</version>
 			<scope>test</scope>
 		</dependency>
-		
+
 		<!-- Woho, testing again! -->
 		<dependency>
 			<groupId>org.hamcrest</groupId>
@@ -60,8 +61,8 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-	
-	 <build>
+
+	<build>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -88,5 +89,5 @@
 			</plugin>
 		</plugins>
 	</build>
-  	
+
 </project>
