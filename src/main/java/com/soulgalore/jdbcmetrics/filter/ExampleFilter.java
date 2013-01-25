@@ -1,4 +1,4 @@
-package com.soulgalore.dbstats.filter;
+package com.soulgalore.jdbcmetrics.filter;
 
 import java.io.IOException;
 
