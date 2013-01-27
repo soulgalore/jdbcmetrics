@@ -2,15 +2,13 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.soulgalore</groupId>
-	<artifactId>dbstats</artifactId>
+	<artifactId>jdbcmetrics</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>jdbcmetrics</name>
-	<description></description>
+	<description>Get info from your JDBC driver!</description>
+	<url>https://github.com/soulgalore/jdbcmetrics</url>
 	<packaging>jar</packaging>
 
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-	</properties>
 
 	<developers>
 		<developer>
@@ -25,16 +23,28 @@
 		</developer>
 	</developers>
 
+	<licenses>
+		<license>
+			<name>Apache License 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.html</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
 	<scm>
-		<connection>scm:git:git://github.com/soulgalore/dbstats.git</connection>
-		<developerConnection>scm:git:git@github.com:soulgalore/dbstats.git</developerConnection>
-		<url>http://github.com/soulgalore/dbstats/</url>
+		<connection>scm:git:git://github.com/soulgalore/jdbcmetrics.git</connection>
+		<developerConnection>scm:git:git@github.com:soulgalore/jdbcmetrics.git</developerConnection>
+		<url>http://github.com/soulgalore/jdbcmetrics/</url>
 	</scm>
 
 	<issueManagement>
 		<system>github</system>
-		<url>http://github.com/soulgalore/dbstats/issues#issue/</url>
+		<url>http://github.com/soulgalore/jdbcmetrics/issues#issue/</url>
 	</issueManagement>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
 
 	<dependencies>
 
