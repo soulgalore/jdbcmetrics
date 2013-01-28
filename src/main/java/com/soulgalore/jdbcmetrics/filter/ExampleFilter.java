@@ -17,21 +17,23 @@ import com.yammer.metrics.core.TimerContext;
 
 public class ExampleFilter implements Filter {
 
-	Meter getRequests;
-	Timer timer;
+	final Meter meterRequests = Metrics.newMeter(ExampleFilter.class, "requests",
+			"requests", TimeUnit.SECONDS);
+	final Timer requestTimer = Metrics.newTimer(ExampleFilter.class, "request-time",
+			TimeUnit.MILLISECONDS, TimeUnit.SECONDS);
 
 	@Override
 	public void destroy() {
-		getRequests.stop();
-		timer.stop();
+		meterRequests.stop();
+		requestTimer.stop();
 	}
 
 	@Override
 	public void doFilter(ServletRequest req, ServletResponse resp,
 			FilterChain chain) throws IOException, ServletException {
 
-		getRequests.mark();
-		final TimerContext context = timer.time();
+		meterRequests.mark();
+		final TimerContext context = requestTimer.time();
 		try {
 			chain.doFilter(req, resp);
 		} finally {
@@ -42,11 +44,7 @@ public class ExampleFilter implements Filter {
 
 	@Override
 	public void init(FilterConfig arg0) throws ServletException {
-		getRequests = Metrics.newMeter(ExampleFilter.class, "get-requests",
-				"requests", TimeUnit.SECONDS);
-		timer = Metrics.newTimer(ExampleFilter.class, "get-requests-timer",
-				TimeUnit.MILLISECONDS, TimeUnit.SECONDS);
-
+		
 	}
 
 }
