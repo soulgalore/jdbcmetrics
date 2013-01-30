@@ -14,7 +14,7 @@
 
 	<servlet-mapping>
 		<servlet-name>MetricsServlet</servlet-name>
-		<url-pattern>/metrics</url-pattern>
+		<url-pattern>/jdbcmetrics</url-pattern>
 	</servlet-mapping>
 
 	<filter>
