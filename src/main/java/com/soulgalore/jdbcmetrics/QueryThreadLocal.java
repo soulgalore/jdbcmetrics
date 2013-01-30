@@ -1,5 +1,7 @@
 package com.soulgalore.jdbcmetrics;
 
+import com.yammer.metrics.core.Meter;
+
 public abstract class QueryThreadLocal {
 
 	private static final ThreadLocal<ReadAndWrites> nrOfQueries = new ThreadLocal<ReadAndWrites>();
@@ -8,16 +10,17 @@ public abstract class QueryThreadLocal {
         return nrOfQueries.get();
     }
 	
+	// TODO depending on this is executed first, change this! :)
+	public static void setMeters(Meter readMeter, Meter writeMeter) {
+		nrOfQueries.set(new ReadAndWrites(readMeter, writeMeter));
+	}
+	
 	 public static void addRead() {
-		 if (nrOfQueries.get()==null)
-			 nrOfQueries.set(new ReadAndWrites(1,0));
-		 else nrOfQueries.get().incReads();
+		 nrOfQueries.get().incReads();
 	 }
 	 
 	 public static void addWrite() {
-		 if (nrOfQueries.get()==null)
-			 nrOfQueries.set(new ReadAndWrites(0,1));
-		 else nrOfQueries.get().incWrites();
+		nrOfQueries.get().incWrites();
 	 }
 
     public static void removeNrOfQueries(){

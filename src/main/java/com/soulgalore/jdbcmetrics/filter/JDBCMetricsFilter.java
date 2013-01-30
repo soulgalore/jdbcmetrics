@@ -1,6 +1,7 @@
 package com.soulgalore.jdbcmetrics.filter;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -16,6 +17,7 @@ import com.soulgalore.jdbcmetrics.ReadAndWrites;
 import com.yammer.metrics.Metrics;
 import com.yammer.metrics.core.Counter;
 import com.yammer.metrics.core.Histogram;
+import com.yammer.metrics.core.Meter;
 import com.yammer.metrics.core.MetricName;
 import com.yammer.metrics.core.MetricsRegistry;
 
@@ -35,14 +37,22 @@ public class JDBCMetricsFilter implements Filter {
 	final Counter totalNumberOfReads = registry.newCounter(new MetricName(
 			GROUP, TYPE_READ, "total-of-reads"));
 
-	final Counter totalNumberOfWrites = Metrics.newCounter(new MetricName(
+	final Counter totalNumberOfWrites = registry.newCounter(new MetricName(
 			GROUP, TYPE_WRITE, "total-of-writes"));
 
-	final Histogram readCountsPerPage = Metrics.newHistogram(new MetricName(
-			GROUP, TYPE_READ, "read-counts-per-page"));
+	final Histogram readCountsPerPage = registry.newHistogram(new MetricName(
+			GROUP, TYPE_READ, "read-counts-per-page"), true);
 
-	final Histogram writeCountsPerPage = Metrics.newHistogram(new MetricName(
-			GROUP, TYPE_READ, "write-counts-per-page"));
+	final Histogram writeCountsPerPage = registry.newHistogram(new MetricName(
+			GROUP, TYPE_WRITE, "write-counts-per-page"), true);
+	
+	final Meter readMeter = registry.newMeter(new MetricName(
+			GROUP, TYPE_READ, "reads"),"jdbcread", TimeUnit.SECONDS);
+	
+	final Meter writeMeter = registry.newMeter(new MetricName(
+			GROUP, TYPE_WRITE, "writes"),"jdbcwrite", TimeUnit.SECONDS);
+
+
 
 	@Override
 	public void destroy() {
@@ -52,6 +62,8 @@ public class JDBCMetricsFilter implements Filter {
 	public void doFilter(ServletRequest req, ServletResponse resp,
 			FilterChain chain) throws IOException, ServletException {
 
+		QueryThreadLocal.setMeters(readMeter, writeMeter);
+		
 		try {
 			chain.doFilter(req, resp);
 		} finally {
