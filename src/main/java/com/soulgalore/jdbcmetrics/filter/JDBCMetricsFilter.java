@@ -45,14 +45,12 @@ public class JDBCMetricsFilter implements Filter {
 
 	final Histogram writeCountsPerPage = registry.newHistogram(new MetricName(
 			GROUP, TYPE_WRITE, "write-counts-per-page"), true);
-	
-	final Meter readMeter = registry.newMeter(new MetricName(
-			GROUP, TYPE_READ, "reads"),"jdbcread", TimeUnit.SECONDS);
-	
-	final Meter writeMeter = registry.newMeter(new MetricName(
-			GROUP, TYPE_WRITE, "writes"),"jdbcwrite", TimeUnit.SECONDS);
 
+	final Meter readMeter = registry.newMeter(new MetricName(GROUP, TYPE_READ,
+			"reads"), "jdbcread", TimeUnit.SECONDS);
 
+	final Meter writeMeter = registry.newMeter(new MetricName(GROUP,
+			TYPE_WRITE, "writes"), "jdbcwrite", TimeUnit.SECONDS);
 
 	@Override
 	public void destroy() {
@@ -62,16 +60,19 @@ public class JDBCMetricsFilter implements Filter {
 	public void doFilter(ServletRequest req, ServletResponse resp,
 			FilterChain chain) throws IOException, ServletException {
 
-		QueryThreadLocal.setMeters(readMeter, writeMeter);
-		
-		try {
-			chain.doFilter(req, resp);
-		} finally {
+		// run once
+		if (QueryThreadLocal.getNrOfQueries() == null) {
+			QueryThreadLocal.setMeters(readMeter, writeMeter);
 
-			ReadAndWrites rw = QueryThreadLocal.getNrOfQueries();
-			updateStatistics(rw);
-			setHeaders(rw, req, resp);
-			QueryThreadLocal.removeNrOfQueries();
+			try {
+				chain.doFilter(req, resp);
+			} finally {
+
+				ReadAndWrites rw = QueryThreadLocal.getNrOfQueries();
+				updateStatistics(rw);
+				setHeaders(rw, req, resp);
+				QueryThreadLocal.removeNrOfQueries();
+			}
 		}
 
 	}
