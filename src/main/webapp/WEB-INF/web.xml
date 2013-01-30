@@ -18,14 +18,14 @@
 	</servlet-mapping>
 
 	<filter>
-		<filter-name>ExampleFilter</filter-name>
+		<filter-name>JDBCMetricsFilter</filter-name>
 		<filter-class>
-			com.soulgalore.jdbcmetrics.filter.ExampleFilter
+			com.soulgalore.jdbcmetrics.filter.JDBCMetricsFilter
 		</filter-class>
 	</filter>
 
 	<filter-mapping>
-		<filter-name>ExampleFilter</filter-name>
+		<filter-name>JDBCMetricsFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 
