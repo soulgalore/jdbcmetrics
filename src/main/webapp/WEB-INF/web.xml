@@ -22,6 +22,10 @@
 		<filter-class>
 			com.soulgalore.jdbcmetrics.filter.JDBCMetricsFilter
 		</filter-class>
+		<init-param>
+			<param-name>request-header-name</param-name>
+			<param-value>query-statistics</param-value>
+		</init-param>
 	</filter>
 
 	<filter-mapping>
