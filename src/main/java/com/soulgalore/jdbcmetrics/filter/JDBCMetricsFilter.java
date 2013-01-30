@@ -41,10 +41,10 @@ public class JDBCMetricsFilter implements Filter {
 			GROUP, TYPE_WRITE, "total-of-writes"));
 
 	final Histogram readCountsPerPage = registry.newHistogram(new MetricName(
-			GROUP, TYPE_READ, "read-counts-per-page"), true);
+			GROUP, TYPE_READ, "read-counts-per-request"), true);
 
 	final Histogram writeCountsPerPage = registry.newHistogram(new MetricName(
-			GROUP, TYPE_WRITE, "write-counts-per-page"), true);
+			GROUP, TYPE_WRITE, "write-counts-per-request"), true);
 
 	final Meter readMeter = registry.newMeter(new MetricName(GROUP, TYPE_READ,
 			"reads"), "jdbcread", TimeUnit.SECONDS);
