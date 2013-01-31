@@ -26,11 +26,12 @@ public class JDBCMetricsFilter implements Filter {
 	private final static String TYPE_READ = "read";
 	private final static String TYPE_WRITE = "write";
 
-	private final static String REQUEST_HEADER_NAME = "request-header-name";
-	private final static String RESPONSE_HEADER_NAME_NR_OF_READS = "nr-of-reads";
-	private final static String RESPONSE_HEADER_NAME_NR_OF_WRITES = "nr-of-writes";
+	final static String REQUEST_HEADER_NAME_INIT_PARAM_NAME = "request-header-name";
+	final static String DEFAULT_REQUEST_HEADER_NAME = "jdbcmetrics";
+	final static String RESPONSE_HEADER_NAME_NR_OF_READS = "nr-of-reads";
+	final static String RESPONSE_HEADER_NAME_NR_OF_WRITES = "nr-of-writes";
 
-	private String requestHeaderName;
+	String requestHeaderName;
 
 	final MetricsRegistry registry = new MetricsRegistry();
 	final Counter totalNumberOfReads = registry.newCounter(new MetricName(
@@ -78,7 +79,9 @@ public class JDBCMetricsFilter implements Filter {
 
 	@Override
 	public void init(FilterConfig config) throws ServletException {
-		requestHeaderName = config.getInitParameter(REQUEST_HEADER_NAME);
+		requestHeaderName = config.getInitParameter(REQUEST_HEADER_NAME_INIT_PARAM_NAME);
+		if (requestHeaderName==null || "".equals(requestHeaderName))
+			requestHeaderName = DEFAULT_REQUEST_HEADER_NAME;
 	}
 
 	private void updateStatistics(ReadAndWrites rw) {
