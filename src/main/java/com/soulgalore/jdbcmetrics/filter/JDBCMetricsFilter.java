@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.soulgalore.jdbcmetrics.QueryThreadLocal;
 import com.soulgalore.jdbcmetrics.ReadAndWrites;
-import com.yammer.metrics.Metrics;
 import com.yammer.metrics.core.Counter;
 import com.yammer.metrics.core.Histogram;
 import com.yammer.metrics.core.Meter;
