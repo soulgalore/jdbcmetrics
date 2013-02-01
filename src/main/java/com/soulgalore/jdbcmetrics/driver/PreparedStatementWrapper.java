@@ -21,6 +21,8 @@ import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.Calendar;
 
+import com.soulgalore.jdbcmetrics.QueryThreadLocal;
+
 public class PreparedStatementWrapper extends StatementWrapper implements PreparedStatement {
 
 	private final PreparedStatement pst;
@@ -35,12 +37,15 @@ public class PreparedStatementWrapper extends StatementWrapper implements Prepar
 		pst.clearParameters();
 	}
 	public boolean execute() throws SQLException {
+		QueryThreadLocal.addRead();
 		return pst.execute();
 	}
 	public ResultSet executeQuery() throws SQLException {
+		QueryThreadLocal.addRead();
 		return pst.executeQuery();
 	}
 	public int executeUpdate() throws SQLException {
+		QueryThreadLocal.addWrite();
 		return pst.executeUpdate();
 	}
 	public ResultSetMetaData getMetaData() throws SQLException {
