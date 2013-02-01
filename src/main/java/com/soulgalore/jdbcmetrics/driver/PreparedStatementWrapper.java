@@ -37,7 +37,7 @@ public class PreparedStatementWrapper extends StatementWrapper implements Prepar
 		pst.clearParameters();
 	}
 	public boolean execute() throws SQLException {
-		QueryThreadLocal.addRead();
+		// TODO what happens here?
 		return pst.execute();
 	}
 	public ResultSet executeQuery() throws SQLException {
