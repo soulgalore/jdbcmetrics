@@ -23,8 +23,9 @@ public class CallableStatementWrapper extends PreparedStatementWrapper
 		implements CallableStatement {
 	
 	private final CallableStatement cst;
-	public CallableStatementWrapper(final CallableStatement cst) {
-		super(cst);
+	
+	public CallableStatementWrapper(final CallableStatement cst, String sql) {
+		super(cst,sql);
 		this.cst = cst;
 	}
 	public Array getArray(int parameterIndex) throws SQLException {

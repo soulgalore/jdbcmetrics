@@ -26,10 +26,19 @@ import com.soulgalore.jdbcmetrics.QueryThreadLocal;
 public class PreparedStatementWrapper extends StatementWrapper implements PreparedStatement {
 
 	private final PreparedStatement pst;
+	private final String sql;
 	public PreparedStatementWrapper(final PreparedStatement pst) {
 		super(pst);
 		this.pst = pst;
+		sql = "";
 	}
+	
+	public PreparedStatementWrapper(final PreparedStatement pst, String sql) {
+		super(pst);
+		this.pst = pst;
+		this.sql = sql;
+	}
+	
 	public void addBatch() throws SQLException {
 		pst.addBatch();
 	}
@@ -37,7 +46,9 @@ public class PreparedStatementWrapper extends StatementWrapper implements Prepar
 		pst.clearParameters();
 	}
 	public boolean execute() throws SQLException {
-		// TODO what happens here?
+		if (JDBCMetricsDriver.isRead(sql))
+			QueryThreadLocal.addRead();
+		else QueryThreadLocal.addWrite();
 		return pst.execute();
 	}
 	public ResultSet executeQuery() throws SQLException {
@@ -225,4 +236,5 @@ public class PreparedStatementWrapper extends StatementWrapper implements Prepar
 			throws SQLException {
 		pst.setUnicodeStream(parameterIndex, x, length);
 	}
+	
 }

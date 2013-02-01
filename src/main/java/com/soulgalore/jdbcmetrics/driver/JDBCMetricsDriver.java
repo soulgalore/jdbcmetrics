@@ -71,4 +71,10 @@ public class JDBCMetricsDriver implements Driver {
 	protected String cleanUrl(String url) {
 		return url.replaceFirst("\\:jdbcmetrics", "");
 	}
+	
+	public static boolean isRead(String sql) {
+		if (sql.toLowerCase().indexOf("select") > -1 )
+			return true;
+			else return false;
+	}
 }
