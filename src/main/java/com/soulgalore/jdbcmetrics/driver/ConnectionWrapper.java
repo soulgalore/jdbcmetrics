@@ -144,7 +144,7 @@ public class ConnectionWrapper implements Connection {
 		return new PreparedStatementWrapper(con.prepareStatement(sql, columnNames));
 	}
 	public PreparedStatement prepareStatement(String sql) throws SQLException {
-		return con.prepareStatement(sql);
+		return new PreparedStatementWrapper(con.prepareStatement(sql));
 	}
 	public void releaseSavepoint(Savepoint savepoint) throws SQLException {
 		con.releaseSavepoint(savepoint);
