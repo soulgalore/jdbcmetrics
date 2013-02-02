@@ -44,12 +44,12 @@ By also setting up the JDBCMetricsFilter:
 ## Reporters
 JDBCMetrics uses the great [Metrics](http://metrics.codahale.com/) as metric backend, that have the following different ways of reporting:
 <ul>
-<li>JMX (not recommended for production)</li>
-<li>console</li>
-<li>CSV</li>
-<li>Servlet</li>
-<li>Ganglia</li>
-<li>Graphite</li>
+<li>[JMX](http://metrics.codahale.com/manual/core/#jmx) (not recommended for production)</li>
+<li>[console](http://metrics.codahale.com/manual/core/#console)</li>
+<li>[CSV](http://metrics.codahale.com/manual/core/#csv)</li>
+<li>[Servlet](http://metrics.codahale.com/manual/servlet/#metricsservlet)</li>
+<li>[Ganglia](http://metrics.codahale.com/manual/ganglia/#manual-ganglia)</li>
+<li>[Graphite](http://metrics.codahale.com/manual/graphite/#manual-graphite)</li>
 </ul>
 
 Click [here](http://metrics.codahale.com/manual/core/#reporters) for documentation of how to setup the reporters.
