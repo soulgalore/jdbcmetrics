@@ -185,11 +185,13 @@ public class StatementWrapper implements Statement {
 	void readStats() {
 		QueryThreadLocal.addRead();
 		JDBCMetrics.getInstance().getTotalNumberOfReads().inc();
+		JDBCMetrics.getInstance().getReadMeter().mark();
 	}
 	
 	void writeStats() {
 		QueryThreadLocal.addWrite();
 		JDBCMetrics.getInstance().getTotalNumberOfWrites().inc();
+		JDBCMetrics.getInstance().getWriteMeter().mark();
 	}
 	
 }

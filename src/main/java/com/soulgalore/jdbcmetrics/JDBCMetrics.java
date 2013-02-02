@@ -65,11 +65,11 @@ public class JDBCMetrics {
 		return writeCountsPerRequest;
 	}
 
-	public Meter getReadMeterPerRequest() {
+	public Meter getReadMeter() {
 		return readMeter;
 	}
 
-	public Meter getWriteMeterPerRequest() {
+	public Meter getWriteMeter() {
 		return writeMeter;
 	}
 	

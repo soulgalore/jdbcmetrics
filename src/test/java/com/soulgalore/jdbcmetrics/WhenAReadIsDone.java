@@ -14,14 +14,11 @@ import static org.hamcrest.Matchers.is;
 public class WhenAReadIsDone {
 
 	private ReadAndWrites rw;
-	private Meter read;
-	private Meter write;
+;
 	@Before
 	public void setUp() throws Exception {
-		read = Metrics.newMeter(WhenAReadIsDone.class, "read", "jdbcread", TimeUnit.SECONDS);
-		write = Metrics.newMeter(WhenAReadIsDone.class, "write", "jdbcwrite", TimeUnit.SECONDS);
-		
-		rw  = new ReadAndWrites(read,write);
+			
+		rw  = new ReadAndWrites();
 	}
 
 	@Test
@@ -31,9 +28,6 @@ public class WhenAReadIsDone {
 		rw.incReads();
 		rw.incReads();
 		assertThat(rw.getReads(), is(3));
-		assertThat(write.count() , is(new Long(0)));
-		assertThat(rw.getWrites(),is(0));
-		assertThat(read.count(),is(new Long(3)));
 	
 	}
 

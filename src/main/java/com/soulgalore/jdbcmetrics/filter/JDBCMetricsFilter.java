@@ -40,9 +40,7 @@ public class JDBCMetricsFilter implements Filter {
 
 		// run once
 		if (QueryThreadLocal.getNrOfQueries() == null) {
-			QueryThreadLocal.setMeters(JDBCMetrics.getInstance()
-					.getReadMeterPerRequest(), JDBCMetrics.getInstance()
-					.getWriteMeterPerRequest());
+			QueryThreadLocal.init();
 
 			try {
 				chain.doFilter(req, resp);
@@ -67,8 +65,6 @@ public class JDBCMetricsFilter implements Filter {
 
 	private void updateStatistics(ReadAndWrites rw) {
 		if (rw != null) {
-			// totalNumberOfReads.inc(rw.getReads());
-			// totalNumberOfWrites.inc(rw.getWrites());
 			JDBCMetrics.getInstance().getReadCountsPerRequest()
 					.update(rw.getReads());
 			JDBCMetrics.getInstance().getWriteCountsPerRequest()

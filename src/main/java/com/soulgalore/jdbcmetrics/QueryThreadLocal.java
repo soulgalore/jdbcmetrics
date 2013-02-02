@@ -11,8 +11,8 @@ public abstract class QueryThreadLocal {
     }
 	
 	// TODO depending on this is executed first, change this! :)
-	public static void setMeters(Meter readMeter, Meter writeMeter) {
-		nrOfQueries.set(new ReadAndWrites(readMeter, writeMeter));
+	public static void init() {
+		nrOfQueries.set(new ReadAndWrites());
 	}
 	
 	 public static void addRead() {
