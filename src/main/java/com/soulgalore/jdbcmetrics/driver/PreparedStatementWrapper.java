@@ -46,7 +46,7 @@ public class PreparedStatementWrapper extends StatementWrapper implements Prepar
 		pst.clearParameters();
 	}
 	public boolean execute() throws SQLException {
-		if (JDBCMetricsDriver.isRead(sql))
+		if (isRead(sql))
 			readStats();
 		else writeStats();
 		return pst.execute();
