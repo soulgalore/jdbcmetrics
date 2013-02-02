@@ -3,6 +3,8 @@
  "http://java.sun.com/dtd/web-app_2_3.dtd" >
 
 <web-app>
+	
+	<!-- 
 	<servlet>
 		<servlet-name>MetricsServlet</servlet-name>
 		<servlet-class>com.yammer.metrics.reporting.MetricsServlet</servlet-class>
@@ -16,7 +18,7 @@
 		<servlet-name>MetricsServlet</servlet-name>
 		<url-pattern>/jdbcmetrics</url-pattern>
 	</servlet-mapping>
-
+ 	-->
 	<filter>
 		<filter-name>JDBCMetricsFilter</filter-name>
 		<filter-class>
