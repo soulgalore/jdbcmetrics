@@ -24,7 +24,7 @@
 		</filter-class>
 		<init-param>
 			<param-name>request-header-name</param-name>
-			<param-value>query-statistics</param-value>
+			<param-value>jdbcmetrics</param-value>
 		</init-param>
 	</filter>
 
