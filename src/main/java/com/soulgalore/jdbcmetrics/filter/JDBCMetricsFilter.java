@@ -12,6 +12,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.soulgalore.jdbcmetrics.JDBCMetrics;
 import com.soulgalore.jdbcmetrics.QueryThreadLocal;
 import com.soulgalore.jdbcmetrics.ReadAndWrites;
 import com.yammer.metrics.core.Counter;
@@ -22,35 +23,12 @@ import com.yammer.metrics.core.MetricsRegistry;
 
 public class JDBCMetricsFilter implements Filter {
 
-	private final static String GROUP = "jdbc";
-	private final static String TYPE_READ = "read";
-	private final static String TYPE_WRITE = "write";
-
 	final static String REQUEST_HEADER_NAME_INIT_PARAM_NAME = "request-header-name";
 	final static String DEFAULT_REQUEST_HEADER_NAME = "jdbcmetrics";
 	final static String RESPONSE_HEADER_NAME_NR_OF_READS = "nr-of-reads";
 	final static String RESPONSE_HEADER_NAME_NR_OF_WRITES = "nr-of-writes";
 
 	String requestHeaderName;
-
-	final MetricsRegistry registry = new MetricsRegistry();
-	final Counter totalNumberOfReads = registry.newCounter(new MetricName(
-			GROUP, TYPE_READ, "total-of-reads"));
-
-	final Counter totalNumberOfWrites = registry.newCounter(new MetricName(
-			GROUP, TYPE_WRITE, "total-of-writes"));
-
-	final Histogram readCountsPerPage = registry.newHistogram(new MetricName(
-			GROUP, TYPE_READ, "read-counts-per-request"), true);
-
-	final Histogram writeCountsPerPage = registry.newHistogram(new MetricName(
-			GROUP, TYPE_WRITE, "write-counts-per-request"), true);
-
-	final Meter readMeter = registry.newMeter(new MetricName(GROUP, TYPE_READ,
-			"reads"), "jdbcread", TimeUnit.SECONDS);
-
-	final Meter writeMeter = registry.newMeter(new MetricName(GROUP,
-			TYPE_WRITE, "writes"), "jdbcwrite", TimeUnit.SECONDS);
 
 	@Override
 	public void destroy() {
@@ -62,7 +40,9 @@ public class JDBCMetricsFilter implements Filter {
 
 		// run once
 		if (QueryThreadLocal.getNrOfQueries() == null) {
-			QueryThreadLocal.setMeters(readMeter, writeMeter);
+			QueryThreadLocal.setMeters(JDBCMetrics.getInstance()
+					.getReadMeterPerRequest(), JDBCMetrics.getInstance()
+					.getWriteMeterPerRequest());
 
 			try {
 				chain.doFilter(req, resp);
@@ -79,17 +59,20 @@ public class JDBCMetricsFilter implements Filter {
 
 	@Override
 	public void init(FilterConfig config) throws ServletException {
-		requestHeaderName = config.getInitParameter(REQUEST_HEADER_NAME_INIT_PARAM_NAME);
-		if (requestHeaderName==null || "".equals(requestHeaderName))
+		requestHeaderName = config
+				.getInitParameter(REQUEST_HEADER_NAME_INIT_PARAM_NAME);
+		if (requestHeaderName == null || "".equals(requestHeaderName))
 			requestHeaderName = DEFAULT_REQUEST_HEADER_NAME;
 	}
 
 	private void updateStatistics(ReadAndWrites rw) {
 		if (rw != null) {
-			totalNumberOfReads.inc(rw.getReads());
-			totalNumberOfWrites.inc(rw.getWrites());
-			readCountsPerPage.update(rw.getReads());
-			writeCountsPerPage.update(rw.getWrites());
+			// totalNumberOfReads.inc(rw.getReads());
+			// totalNumberOfWrites.inc(rw.getWrites());
+			JDBCMetrics.getInstance().getReadCountsPerRequest()
+					.update(rw.getReads());
+			JDBCMetrics.getInstance().getWriteCountsPerRequest()
+					.update(rw.getWrites());
 		}
 	}
 

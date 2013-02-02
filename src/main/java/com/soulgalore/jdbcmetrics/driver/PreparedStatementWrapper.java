@@ -47,16 +47,16 @@ public class PreparedStatementWrapper extends StatementWrapper implements Prepar
 	}
 	public boolean execute() throws SQLException {
 		if (JDBCMetricsDriver.isRead(sql))
-			QueryThreadLocal.addRead();
-		else QueryThreadLocal.addWrite();
+			readStats();
+		else writeStats();
 		return pst.execute();
 	}
 	public ResultSet executeQuery() throws SQLException {
-		QueryThreadLocal.addRead();
+		readStats();
 		return pst.executeQuery();
 	}
 	public int executeUpdate() throws SQLException {
-		QueryThreadLocal.addWrite();
+		writeStats();
 		return pst.executeUpdate();
 	}
 	public ResultSetMetaData getMetaData() throws SQLException {
