@@ -1,7 +1,7 @@
 # JDBCMetrics - get information from your JDBC driver in your Java web environment
 
 Using JDBCMetrics you can get hold of the following information from your driver
-<ol>
+<ul>
 <li>The number of database reads created for a specific HTTP request</li>
 <li>The number of database writes created for a specific HTTP request</li>
 <li>The total number of database reads</li>
@@ -10,9 +10,48 @@ Using JDBCMetrics you can get hold of the following information from your driver
 <li>Statistics about writes per request (average, median, percentile etc)</li>
 <li>Number of reads per second (per minute, 5 minutes & 15 minutes)</li>
 <li>Number of writes per second (per minute, 5 minutes & 15 minutes)</li>
-</ol>
+</ul>
 
 ## How to setup
+<ol><li>Jack in JDBCMetrics like this:</li>
+<li>Add the filter in your *web.xml* file (make sure it run early in the chain):
+	<pre>
+&lt;filter&gt;
+	&lt;filter-name&gt;JDBCMetricsFilter&lt;/filter-name&gt;
+	&lt;filter-class&gt;
+		com.soulgalore.jdbcmetrics.filter.JDBCMetricsFilter
+	&lt;/filter-class&gt;
+	&lt;init-param&gt;
+		&lt;param-name&gt;request-header-name&lt;/param-name&gt;
+		&lt;param-value&gt;query-statistics&lt;/param-value&gt;
+	&lt;/init-param&gt;
+&lt;/filter&gt;
+
+&lt;filter-mapping&gt;
+	&lt;filter-name&gt;JDBCMetricsFilter&lt;/filter-name&gt;
+	&lt;url-pattern&gt;/*&lt;/url-pattern&gt;
+&lt;/filter-mapping&gt;
+	</pre>
+</li>
+<li>Setup the result servlet:
+<pre>
+&lt;servlet&gt;
+	&lt;servlet-name&gt;MetricsServlet&lt;/servlet-name&gt;
+	&lt;servlet-class&gt;com.yammer.metrics.reporting.MetricsServlet&lt;/servlet-class&gt;
+	&lt;init-param&gt;
+		&lt;param-name&gt;show-jvm-metrics&lt;/param-name&gt;
+		&lt;param-value&gt;false&lt;/param-value&gt;
+	&lt;/init-param&gt;
+&lt;/servlet&gt;
+
+&lt;servlet-mapping&gt;
+	&lt;servlet-name&gt;MetricsServlet&lt;/servlet-name&gt;
+	&lt;url-pattern&gt;/jdbcmetrics&lt;/url-pattern&gt;
+&lt;/servlet-mapping&gt;
+</pre>
+</li>
+</ol>
+
 
 ## How it works
 JDBCMetrics uses the great http://metrics.codahale.com/ library for collecting metric.
