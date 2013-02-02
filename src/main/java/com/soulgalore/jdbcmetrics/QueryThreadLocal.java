@@ -16,15 +16,17 @@ public abstract class QueryThreadLocal {
 	}
 	
 	 public static void addRead() {
-		 nrOfQueries.get().incReads();
+		 if (nrOfQueries.get()!=null) 
+			 nrOfQueries.get().incReads();
 	 }
 	 
 	 public static void addWrite() {
-		nrOfQueries.get().incWrites();
+		 if (nrOfQueries.get()!=null)
+			 nrOfQueries.get().incWrites();
 	 }
 
     public static void removeNrOfQueries(){
-        nrOfQueries.remove();
+    	 nrOfQueries.remove();
     }
 
 	
