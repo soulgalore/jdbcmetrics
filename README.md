@@ -2,14 +2,14 @@
 
 Using JDBCMetrics you can get hold of the following information from your driver
 
-Setting up the MetricsDriver:
+By only setting up the JDBCMetricsDriver:
 <ul>
 <li>The total number of database reads</li>
 <li>The total number of database writes</li>
 <li>Number of reads per second (per minute, 5 minutes & 15 minutes)</li>
 <li>Number of writes per second (per minute, 5 minutes & 15 minutes)</li>
 </ul>
-Using the web filter:
+By also setting up the JDBCMetricsFilter:
 <ul>
 <li>The number of database reads created for a specific HTTP request</li>
 <li>The number of database writes created for a specific HTTP request</li>
@@ -19,7 +19,7 @@ Using the web filter:
 
 
 ## How to setup
-<ol><li>Jack in JDBCMetrics like this:</li>
+<ol><li>Jack in JDBCMetricsDriver like this:</li>
 <li>Add the filter in your *web.xml* file (make sure it run early in the chain):
 	<pre>
 &lt;filter&gt;
@@ -39,7 +39,23 @@ Using the web filter:
 &lt;/filter-mapping&gt;
 	</pre>
 </li>
-<li>Setup the result servlet:
+</ol>
+
+## Reporters
+JDBCMetrics uses the great [Metrics](http://metrics.codahale.com/) as metric backend, that have the following different ways of reporting:
+<ul>
+<li>JMX (not recommended for production)</li>
+<li>console</li>
+<li>CSV</li>
+<li>Servlet</li>
+<li>Ganglia</li>
+<li>GraphiteReporter</li>
+</ul>
+
+You can check it how to setup/use the different reporters here:
+http://metrics.codahale.com/manual/core/#reporters
+
+And here's a real world example of setting up an metrics servlet:
 <pre>
 &lt;servlet&gt;
 	&lt;servlet-name&gt;MetricsServlet&lt;/servlet-name&gt;
@@ -55,8 +71,7 @@ Using the web filter:
 	&lt;url-pattern&gt;/jdbcmetrics&lt;/url-pattern&gt;
 &lt;/servlet-mapping&gt;
 </pre>
-</li>
-</ol>
+
 
 ## Fetching info from individual request(s)
 You can get information on how many database reads & writes your request generated, by adding a request header. By default, 
