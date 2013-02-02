@@ -49,11 +49,10 @@ JDBCMetrics uses the great [Metrics](http://metrics.codahale.com/) as metric bac
 <li>CSV</li>
 <li>Servlet</li>
 <li>Ganglia</li>
-<li>GraphiteReporter</li>
+<li>Graphite</li>
 </ul>
 
-You can check it how to setup/use the different reporters here:
-http://metrics.codahale.com/manual/core/#reporters
+Click [here](http://metrics.codahale.com/manual/core/#reporters) for documentation of how to setup the reporters.
 
 And here's a real world example of setting up an metrics servlet:
 <pre>
@@ -83,8 +82,6 @@ you will get two response headers: *nr-of-reads* & *nr-of-writes* holding the va
 *Remember* The cache within your application will give you different values if the caches is primed or not!
 
 ## How it works
-JDBCMetrics uses the great http://metrics.codahale.com/ library for collecting metric.
-
 
 ## License
 
