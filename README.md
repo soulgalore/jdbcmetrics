@@ -1,16 +1,22 @@
-# JDBCMetrics - get information from your JDBC driver in your Java web environment
+# JDBCMetrics - get information from your JDBC driver
 
 Using JDBCMetrics you can get hold of the following information from your driver
+
+Setting up the MetricsDriver:
 <ul>
-<li>The number of database reads created for a specific HTTP request</li>
-<li>The number of database writes created for a specific HTTP request</li>
 <li>The total number of database reads</li>
 <li>The total number of database writes</li>
-<li>Statistics about reads per request (average, median, percentile etc)</li>
-<li>Statistics about writes per request (average, median, percentile etc)</li>
 <li>Number of reads per second (per minute, 5 minutes & 15 minutes)</li>
 <li>Number of writes per second (per minute, 5 minutes & 15 minutes)</li>
 </ul>
+Using the web filter:
+<ul>
+<li>The number of database reads created for a specific HTTP request</li>
+<li>The number of database writes created for a specific HTTP request</li>
+<li>Statistics about reads per request (average, median, percentile etc)</li>
+<li>Statistics about writes per request (average, median, percentile etc)</li>
+</ul>
+
 
 ## How to setup
 <ol><li>Jack in JDBCMetrics like this:</li>
@@ -59,7 +65,7 @@ the header name is *jdbcmetrics* and you can configure that in *web.xml* and the
 By sending a header like: *jdbcmetrics=yes*
 you will get two response headers: *nr-of-reads* & *nr-of-writes* holding the values of the reads & writes.
 
-*Remember* The cachin within your application will give you different values if the caches is primed or not!
+*Remember* The cache within your application will give you different values if the caches is primed or not!
 
 ## How it works
 JDBCMetrics uses the great http://metrics.codahale.com/ library for collecting metric.
