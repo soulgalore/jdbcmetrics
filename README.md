@@ -52,6 +52,14 @@ Using JDBCMetrics you can get hold of the following information from your driver
 </li>
 </ol>
 
+## Fetching info from individual request(s)
+You can get information on how many database reads & writes your request generated, by adding a request header. By default, 
+the header name is *jdbcmetrics* and you can configure that in *web.xml* and the JDBCMetrics servlet filter.
+
+By sending a header like: *jdbcmetrics=yes*
+you will get two response headers: *nr-of-reads* & *nr-of-writes* holding the values of the reads & writes.
+
+*Remember* The cachin within your application will give you different values if the caches is primed or not!
 
 ## How it works
 JDBCMetrics uses the great http://metrics.codahale.com/ library for collecting metric.
