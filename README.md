@@ -19,7 +19,7 @@ By also setting up the JDBCMetricsFilter:
 
 
 ## How to setup
-<ol><li>Jack in JDBCMetricsDriver like this:</li>
+<ol><li>Jack in **JDBCMetricsDriver** like this:</li>
 <li>Add the filter in your *web.xml* file (make sure it run early in the chain):
 	<pre>
 &lt;filter&gt;
@@ -42,7 +42,7 @@ By also setting up the JDBCMetricsFilter:
 </ol>
 
 ## Reporters
-JDBCMetrics uses the great [Metrics](http://metrics.codahale.com/) as metric backend, that have the following different ways of reporting:
+**JDBCMetrics** uses the great [Metrics](http://metrics.codahale.com/) as metric backend, that have the following different ways of reporting:
 
 * [JMX](http://metrics.codahale.com/manual/core/#jmx) (not recommended for production)
 * [console](http://metrics.codahale.com/manual/core/#console)
@@ -85,12 +85,12 @@ Then set it up in your web.xml:
 
 ## Fetching info from individual request(s)
 You can get information on how many database reads & writes your request generated, by adding a request header. By default, 
-the header name is *jdbcmetrics* and you can configure that in *web.xml* and the JDBCMetrics servlet filter.
+the header name is **jdbcmetrics** and you can configure that in *web.xml* and the JDBCMetrics servlet filter.
 
-By sending a header like: *jdbcmetrics=yes*
-you will get two response headers: *nr-of-reads* & *nr-of-writes* holding the values of the reads & writes.
+By sending a header like: **jdbcmetrics=yes**
+you will get two response headers: **nr-of-reads** & **nr-of-writes** holding the values of the reads & writes.
 
-*Remember* The cache within your application will give you different values if the caches is primed or not!
+*Remember*: The cache within your application will give you different values if the caches is primed or not!
 
 ## How it works
 
