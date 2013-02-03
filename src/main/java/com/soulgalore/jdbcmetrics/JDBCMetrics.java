@@ -5,6 +5,7 @@ import java.util.concurrent.TimeUnit;
 import com.yammer.metrics.core.Counter;
 import com.yammer.metrics.core.Histogram;
 import com.yammer.metrics.core.Meter;
+import com.yammer.metrics.core.Timer;
 import com.yammer.metrics.core.MetricName;
 import com.yammer.metrics.core.MetricsRegistry;
 
@@ -37,6 +38,12 @@ public class JDBCMetrics {
 
 	private final Meter writeMeter = registry.newMeter(new MetricName(GROUP,
 			TYPE_WRITE, "writes"), "jdbcwrite", TimeUnit.SECONDS);
+	
+	private final Timer readTimer = registry.newTimer(new MetricName(GROUP, TYPE_READ,
+			"read-timer"), TimeUnit.MILLISECONDS, TimeUnit.SECONDS);
+
+	private final Timer writeTimer = registry.newTimer(new MetricName(GROUP, TYPE_READ,
+			"write-timer"), TimeUnit.MILLISECONDS, TimeUnit.SECONDS);
 	
 	private static final JDBCMetrics INSTANCE = new JDBCMetrics();
 
@@ -77,5 +84,12 @@ public class JDBCMetrics {
 		return writeMeter;
 	}
 	
+	public Timer getWriteTimer() {
+		return writeTimer;
+	}
+	
+	public Timer getReadTimer() {
+		return readTimer;
+	}
 	
 }
