@@ -19,7 +19,7 @@ public class WhenTheFilterIsRunning {
 	}
 
 	@Test
-	public void anEmtyInitParameterShhouldFallbackToDefault() {
+	public void anEmptyInitParameterShouldFallbackToDefault() {
 		FilterConfig config = Mockito.mock(FilterConfig.class);
 		Mockito.when(
 				config.getInitParameter(JDBCMetricsFilter.REQUEST_HEADER_NAME_INIT_PARAM_NAME))
