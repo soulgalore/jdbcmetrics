@@ -32,7 +32,8 @@ By also setting up the **JDBCMetricsFilter**:
 		&lt;param-value&gt;query-statistics&lt;/param-value&gt;
 	&lt;/init-param&gt;
 &lt;/filter&gt;
-
+</pre>
+<pre>
 &lt;filter-mapping&gt;
 	&lt;filter-name&gt;JDBCMetricsFilter&lt;/filter-name&gt;
 	&lt;url-pattern&gt;/*&lt;/url-pattern&gt;
