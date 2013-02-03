@@ -19,8 +19,8 @@ By also setting up the **JDBCMetricsFilter**:
 
 
 ## How to setup
-<ol><li>Jack in **JDBCMetricsDriver** like this:</li>
-<li>Add the filter in your *web.xml* file (make sure it run early in the chain):
+1. Jack in **JDBCMetricsDriver** like this:
+2. Add the filter in your *web.xml* file (make sure it run early in the chain):
 	<pre>
 &lt;filter&gt;
 	&lt;filter-name&gt;JDBCMetricsFilter&lt;/filter-name&gt;
@@ -38,8 +38,6 @@ By also setting up the **JDBCMetricsFilter**:
 	&lt;url-pattern&gt;/*&lt;/url-pattern&gt;
 &lt;/filter-mapping&gt;
 	</pre>
-</li>
-</ol>
 
 ## Reporters
 **JDBCMetrics** uses the great [Metrics](http://metrics.codahale.com/) as metric backend, that have the following different ways of reporting:
