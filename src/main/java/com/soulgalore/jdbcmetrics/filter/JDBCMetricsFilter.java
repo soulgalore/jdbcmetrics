@@ -1,7 +1,6 @@
 package com.soulgalore.jdbcmetrics.filter;
 
 import java.io.IOException;
-import java.util.concurrent.TimeUnit;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -15,11 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 import com.soulgalore.jdbcmetrics.JDBCMetrics;
 import com.soulgalore.jdbcmetrics.QueryThreadLocal;
 import com.soulgalore.jdbcmetrics.ReadAndWrites;
-import com.yammer.metrics.core.Counter;
-import com.yammer.metrics.core.Histogram;
-import com.yammer.metrics.core.Meter;
-import com.yammer.metrics.core.MetricName;
-import com.yammer.metrics.core.MetricsRegistry;
 
 public class JDBCMetricsFilter implements Filter {
 

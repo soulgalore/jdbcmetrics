@@ -1,7 +1,5 @@
 package com.soulgalore.jdbcmetrics;
 
-import com.yammer.metrics.core.Meter;
-
 public abstract class QueryThreadLocal {
 
 	private static final ThreadLocal<ReadAndWrites> nrOfQueries = new ThreadLocal<ReadAndWrites>();

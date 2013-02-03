@@ -1,7 +1,5 @@
 package com.soulgalore.jdbcmetrics;
 
-import com.yammer.metrics.core.Meter;
-
 public class ReadAndWrites {
 			
 	private int reads = 0;
