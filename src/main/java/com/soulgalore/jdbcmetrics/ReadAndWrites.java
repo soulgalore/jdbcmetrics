@@ -1,5 +1,9 @@
 package com.soulgalore.jdbcmetrics;
 
+/**
+ * Hold read & writes per request. The class is not thread safe but is used within a ThreadLocal.
+ *
+ */
 public class ReadAndWrites {
 			
 	private int reads = 0;
@@ -24,5 +28,9 @@ public class ReadAndWrites {
 		return reads;
 	}
 	
+	public void clear() {
+		reads = 0;
+		writes = 0;
+	}
 	
 }

@@ -15,6 +15,27 @@ import com.soulgalore.jdbcmetrics.JDBCMetrics;
 import com.soulgalore.jdbcmetrics.QueryThreadLocal;
 import com.soulgalore.jdbcmetrics.ReadAndWrites;
 
+/**
+ * Filter that will make JDBCMetrics collect JDBC metrics per request. Set it up like this:
+ * <pre>
+ * &lt;filter&gt;
+ *  &lt;filter-name&gt;JDBCMetricsFilter&lt;/filter-name&gt;
+ *	&lt;filter-class&gt;
+ *		com.soulgalore.jdbcmetrics.filter.JDBCMetricsFilter
+ *	&lt;/filter-class&gt;
+ *	&lt;init-param&gt;
+ *		&lt;param-name&gt;request-header-name&lt;/param-name&gt;
+ *		&lt;param-value&gt;query-statistics&lt;/param-value&gt;
+ *	&lt;/init-param&gt;
+ * &lt;/filter&gt;
+ *
+ * &lt;filter-mapping&gt;
+ *	&lt;filter-name&gt;JDBCMetricsFilter&lt;/filter-name&gt;
+ *	&lt;url-pattern&gt;/*&lt;/url-pattern&gt;
+ * &lt;/filter-mapping&gt;
+</pre>
+ *
+ */
 public class JDBCMetricsFilter implements Filter {
 
 	final static String REQUEST_HEADER_NAME_INIT_PARAM_NAME = "request-header-name";
@@ -32,7 +53,7 @@ public class JDBCMetricsFilter implements Filter {
 	public void doFilter(ServletRequest req, ServletResponse resp,
 			FilterChain chain) throws IOException, ServletException {
 
-		// run once
+		// run once per thread
 		if (QueryThreadLocal.getNrOfQueries() == null) {
 			QueryThreadLocal.init();
 
@@ -51,6 +72,7 @@ public class JDBCMetricsFilter implements Filter {
 
 	@Override
 	public void init(FilterConfig config) throws ServletException {
+		
 		requestHeaderName = config
 				.getInitParameter(REQUEST_HEADER_NAME_INIT_PARAM_NAME);
 		if (requestHeaderName == null || "".equals(requestHeaderName))

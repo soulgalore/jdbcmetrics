@@ -8,13 +8,17 @@ import com.yammer.metrics.core.Meter;
 import com.yammer.metrics.core.MetricName;
 import com.yammer.metrics.core.MetricsRegistry;
 
+/**
+ * Class responsible for holding all the Yammer Metrics.
+ *
+ */
 public class JDBCMetrics {
 
 	private final static String GROUP = "jdbc";
 	private final static String TYPE_READ = "read";
 	private final static String TYPE_WRITE = "write";
 	
-	final MetricsRegistry registry = new MetricsRegistry();
+	private final MetricsRegistry registry = new MetricsRegistry();
 	
 	private final Counter totalNumberOfReads = registry.newCounter(new MetricName(
 			GROUP, TYPE_READ, "total-of-reads"));

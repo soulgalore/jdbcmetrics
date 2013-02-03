@@ -1,5 +1,9 @@
 package com.soulgalore.jdbcmetrics;
 
+/**
+ * Holds the number of queries per request.
+ *
+ */
 public abstract class QueryThreadLocal {
 
 	private static final ThreadLocal<ReadAndWrites> nrOfQueries = new ThreadLocal<ReadAndWrites>();
