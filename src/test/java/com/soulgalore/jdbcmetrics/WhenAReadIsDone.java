@@ -24,7 +24,9 @@ public class WhenAReadIsDone {
 		rw.incReads();
 		rw.incReads();
 		assertThat(rw.getReads(), is(3));
-
+		rw.clear();
+		assertThat(rw.getReads(), is(0));
+		
 	}
 
 }

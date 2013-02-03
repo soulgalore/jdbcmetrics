@@ -25,6 +25,9 @@ public class WhenAWriteIsDone {
 		rw.incWrites();
 		rw.incWrites();
 		assertThat(rw.getWrites(), is(3));
+		rw.clear();
+		assertThat(rw.getWrites(), is(0));
+		
 	}
 
 }
