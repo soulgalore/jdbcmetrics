@@ -3,19 +3,19 @@
 Using JDBCMetrics you can get hold of the following information from your driver
 
 By only setting up the JDBCMetricsDriver:
-<ul>
-<li>The total number of database reads</li>
-<li>The total number of database writes</li>
-<li>Number of reads per second (per minute, 5 minutes & 15 minutes)</li>
-<li>Number of writes per second (per minute, 5 minutes & 15 minutes)</li>
-</ul>
+
+* The total number of database reads
+* The total number of database writes
+* Number of reads per second (per minute, 5 minutes & 15 minutes)
+* Number of writes per second (per minute, 5 minutes & 15 minutes)
+
 By also setting up the JDBCMetricsFilter:
-<ul>
-<li>The number of database reads created for a specific HTTP request</li>
-<li>The number of database writes created for a specific HTTP request</li>
-<li>Statistics about reads per request (average, median, percentile etc)</li>
-<li>Statistics about writes per request (average, median, percentile etc)</li>
-</ul>
+
+* The number of database reads created for a specific HTTP request
+* The number of database writes created for a specific HTTP request
+* Statistics about reads per request (average, median, percentile etc)
+* Statistics about writes per request (average, median, percentile etc)
+
 
 
 ## How to setup
