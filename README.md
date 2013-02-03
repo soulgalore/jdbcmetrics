@@ -46,8 +46,8 @@ JDBCMetrics uses the great [Metrics](http://metrics.codahale.com/) as metric bac
 <ul>
 <li>[JMX](http://metrics.codahale.com/manual/core/#jmx) (not recommended for production)</li>
 <li>[console](http://metrics.codahale.com/manual/core/#console)</li>
-<li>[CSV](http://metrics.codahale.com/manual/core/#csv)</li>
-<li>[Servlet](http://metrics.codahale.com/manual/servlet/#metricsservlet)</li>
+<li>[CSV](http://metrics.codahale.com/manual/core/#csv) - which periodically appends to a set of .csv files in a given directory.</li>
+<li>[Servlet](http://metrics.codahale.com/manual/servlet/#metricsservlet) -  which will retrun all metrics as JSON</li>
 <li>[Ganglia](http://metrics.codahale.com/manual/ganglia/#manual-ganglia)</li>
 <li>[Graphite](http://metrics.codahale.com/manual/graphite/#manual-graphite)</li>
 </ul>
@@ -55,6 +55,17 @@ JDBCMetrics uses the great [Metrics](http://metrics.codahale.com/) as metric bac
 Click [here](http://metrics.codahale.com/manual/core/#reporters) for documentation of how to setup the reporters.
 
 And here's a real world example of setting up an metrics servlet:
+
+First add it the servlet to your pom.xml file:
+<pre>
+&lt;dependency&gt;
+	&lt;groupId&gt;com.yammer.metrics&lt;/groupId&gt;
+	&lt;artifactId&gt;metrics-servlet&lt;/artifactId&gt;
+	&lt;version&gt;2.2.0&lt;/version&gt;
+&lt;/dependency&gt;
+</pre>
+
+Then set it up in your web.xml:
 <pre>
 &lt;servlet&gt;
 	&lt;servlet-name&gt;MetricsServlet&lt;/servlet-name&gt;
