@@ -1,15 +1,15 @@
 # JDBCMetrics - get information from your JDBC driver
 
-Using JDBCMetrics you can get hold of the following information from your driver
+Using **JDBCMetrics** you can get hold of the following information from your driver
 
-By only setting up the JDBCMetricsDriver:
+By only setting up the **JDBCMetricsDriver**:
 
 * The total number of database reads
 * The total number of database writes
 * Number of reads per second (per minute, 5 minutes & 15 minutes)
 * Number of writes per second (per minute, 5 minutes & 15 minutes)
 
-By also setting up the JDBCMetricsFilter:
+By also setting up the **JDBCMetricsFilter**:
 
 * The number of database reads created for a specific HTTP request
 * The number of database writes created for a specific HTTP request
