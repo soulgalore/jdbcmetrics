@@ -43,14 +43,14 @@ By also setting up the JDBCMetricsFilter:
 
 ## Reporters
 JDBCMetrics uses the great [Metrics](http://metrics.codahale.com/) as metric backend, that have the following different ways of reporting:
-<ul>
-<li>[JMX](http://metrics.codahale.com/manual/core/#jmx) (not recommended for production)</li>
-<li>[console](http://metrics.codahale.com/manual/core/#console)</li>
-<li>[CSV](http://metrics.codahale.com/manual/core/#csv) - which periodically appends to a set of .csv files in a given directory.</li>
-<li>[Servlet](http://metrics.codahale.com/manual/servlet/#metricsservlet) -  which will retrun all metrics as JSON</li>
-<li>[Ganglia](http://metrics.codahale.com/manual/ganglia/#manual-ganglia) - read more about Ganglia [here](http://ganglia.sourceforge.net/)</li>
-<li>[Graphite](http://metrics.codahale.com/manual/graphite/#manual-graphite) - read more about Graphite [here](http://graphite.wikidot.com/)</li>
-</ul>
+
+* [JMX](http://metrics.codahale.com/manual/core/#jmx) (not recommended for production)
+* [console](http://metrics.codahale.com/manual/core/#console)
+* [CSV](http://metrics.codahale.com/manual/core/#csv) - which periodically appends to a set of .csv files in a given directory.
+* [Servlet](http://metrics.codahale.com/manual/servlet/#metricsservlet) -  which will retrun all metrics as JSON.
+* [Ganglia](http://metrics.codahale.com/manual/ganglia/#manual-ganglia) - read more about Ganglia [here](http://ganglia.sourceforge.net/).
+* [Graphite](http://metrics.codahale.com/manual/graphite/#manual-graphite) - read more about Graphite [here](http://graphite.wikidot.com/).
+
 
 Click [here](http://metrics.codahale.com/manual/core/#reporters) for documentation of how to setup the reporters.
 
