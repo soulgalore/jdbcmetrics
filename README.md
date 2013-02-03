@@ -46,7 +46,7 @@ By also setting up the **JDBCMetricsFilter**:
 * [JMX](http://metrics.codahale.com/manual/core/#jmx) (not recommended for production)
 * [console](http://metrics.codahale.com/manual/core/#console)
 * [CSV](http://metrics.codahale.com/manual/core/#csv) - which periodically appends to a set of .csv files in a given directory.
-* [Servlet](http://metrics.codahale.com/manual/servlet/#metricsservlet) -  which will retrun all metrics as JSON.
+* [Servlet](http://metrics.codahale.com/manual/servlet/#metricsservlet) -  which will return all metrics as JSON.
 * [Ganglia](http://metrics.codahale.com/manual/ganglia/#manual-ganglia) - read more about Ganglia [here](http://ganglia.sourceforge.net/).
 * [Graphite](http://metrics.codahale.com/manual/graphite/#manual-graphite) - read more about Graphite [here](http://graphite.wikidot.com/).
 
