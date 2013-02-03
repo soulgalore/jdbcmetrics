@@ -4,21 +4,6 @@
 
 <web-app>
 	
-	<!-- 
-	<servlet>
-		<servlet-name>MetricsServlet</servlet-name>
-		<servlet-class>com.yammer.metrics.reporting.MetricsServlet</servlet-class>
-		<init-param>
-			<param-name>show-jvm-metrics</param-name>
-			<param-value>false</param-value>
-		</init-param>
-	</servlet>
-
-	<servlet-mapping>
-		<servlet-name>MetricsServlet</servlet-name>
-		<url-pattern>/jdbcmetrics</url-pattern>
-	</servlet-mapping>
- 	-->
 	<filter>
 		<filter-name>JDBCMetricsFilter</filter-name>
 		<filter-class>
