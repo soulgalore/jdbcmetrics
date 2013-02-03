@@ -3,9 +3,15 @@ package com.soulgalore.jdbcmetrics.filter;
 import static org.junit.Assert.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.mockito.Mockito.*;
 
+import java.io.IOException;
+
+import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -37,4 +43,64 @@ public class WhenTheFilterIsRunning {
 			filter.destroy();
 		}
 	}
+
+	@Test
+	public void headersShouldBeSetWhenRightHeaderIsSupplied()
+			throws ServletException, IOException {
+		FilterConfig config = Mockito.mock(FilterConfig.class);
+		String headerName = "jdbc";
+		Mockito.when(
+				config.getInitParameter(JDBCMetricsFilter.REQUEST_HEADER_NAME_INIT_PARAM_NAME))
+				.thenReturn(headerName);
+
+		HttpServletRequest req = Mockito.mock(HttpServletRequest.class);
+		Mockito.when(req.getHeader(headerName)).thenReturn("yes");
+		HttpServletResponse resp = Mockito.mock(HttpServletResponse.class);
+
+		FilterChain chain = Mockito.mock(FilterChain.class);
+
+		JDBCMetricsFilter filter = new JDBCMetricsFilter();
+		try {
+			filter.init(config);
+			filter.doFilter(req, resp, chain);
+
+			verify(resp).setHeader(
+					JDBCMetricsFilter.RESPONSE_HEADER_NAME_NR_OF_READS, "0");
+			verify(resp).setHeader(
+					JDBCMetricsFilter.RESPONSE_HEADER_NAME_NR_OF_WRITES, "0");
+
+		} finally {
+			filter.destroy();
+		}
+
+	}
+
+	@Test
+	public void headersShouldNotBeSetWithMissingRequestHeader()
+			throws ServletException, IOException {
+		FilterConfig config = Mockito.mock(FilterConfig.class);
+		String headerName = "jdbc";
+		Mockito.when(
+				config.getInitParameter(JDBCMetricsFilter.REQUEST_HEADER_NAME_INIT_PARAM_NAME))
+				.thenReturn(headerName);
+
+		HttpServletRequest req = Mockito.mock(HttpServletRequest.class);
+		Mockito.when(req.getHeader(headerName)).thenReturn(null);
+		HttpServletResponse resp = Mockito.mock(HttpServletResponse.class);
+
+		FilterChain chain = Mockito.mock(FilterChain.class);
+
+		JDBCMetricsFilter filter = new JDBCMetricsFilter();
+		try {
+			filter.init(config);
+			filter.doFilter(req, resp, chain);
+
+			verifyZeroInteractions(resp);
+
+		} finally {
+			filter.destroy();
+		}
+
+	}
+
 }
