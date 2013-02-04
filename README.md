@@ -89,7 +89,8 @@ the header name is **jdbcmetrics** and you can configure that in *web.xml* and t
 By sending a header like: **jdbcmetrics=yes**
 you will get two response headers: **nr-of-reads** & **nr-of-writes** holding the values of the reads & writes.
 
-*Remember*: The cache within your application will give you different values if the caches is primed or not!
+Remember: The cache within your application will give you different values if the caches is primed or not! **Warning** also if you use the filter, the 
+response will not be flushed until the full chain is finished, meaning if you have some smart flushing content early thing, the filter will remove that functionality. 
 
 ## How it works
 
