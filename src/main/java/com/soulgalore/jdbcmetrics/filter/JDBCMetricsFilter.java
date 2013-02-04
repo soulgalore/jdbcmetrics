@@ -9,7 +9,9 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpServletResponseWrapper;
 
 import com.soulgalore.jdbcmetrics.JDBCMetrics;
 import com.soulgalore.jdbcmetrics.QueryThreadLocal;
@@ -57,14 +59,17 @@ public class JDBCMetricsFilter implements Filter {
 		if (QueryThreadLocal.getNrOfQueries() == null) {
 			QueryThreadLocal.init();
 
+			ResponseWrapper responseWrapper = new ResponseWrapper((HttpServletResponse) resp);	
+			
 			try {
-				chain.doFilter(req, resp);
+				chain.doFilter(req, responseWrapper);
 			} finally {
 
 				ReadAndWrites rw = QueryThreadLocal.getNrOfQueries();
 				updateStatistics(rw);
-				setHeaders(rw, req, resp);
+				setHeaders(rw, req, responseWrapper);
 				QueryThreadLocal.removeNrOfQueries();
+				responseWrapper.write();
 			}
 		}
 
