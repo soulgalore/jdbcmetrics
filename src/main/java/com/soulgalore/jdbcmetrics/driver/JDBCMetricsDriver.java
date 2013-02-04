@@ -28,9 +28,13 @@ public class JDBCMetricsDriver implements Driver {
 
 	@Override
 	public Connection connect(String url, Properties info) throws SQLException {
-		//return new ConnectionWrapper(getDriver(url).connect(cleanUrl(url), info));
-		ProxyFactory pf = new ProxyFactory();
-		return pf.connectionProxy(getDriver(url).connect(cleanUrl(url), info));
+		Connection connection = getDriver(url).connect(cleanUrl(url), info);
+		if (connection != null) {
+			ProxyFactory pf = new ProxyFactory();
+			return pf.connectionProxy(connection);
+		} else {
+			return null;
+		}
 	}
 
 	@Override
