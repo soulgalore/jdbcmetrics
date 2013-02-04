@@ -10,6 +10,7 @@ import java.io.IOException;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -56,7 +57,9 @@ public class WhenTheFilterIsRunning {
 		HttpServletRequest req = Mockito.mock(HttpServletRequest.class);
 		Mockito.when(req.getHeader(headerName)).thenReturn("yes");
 		HttpServletResponse resp = Mockito.mock(HttpServletResponse.class);
-
+		ServletOutputStream stream = Mockito.mock(ServletOutputStream.class);
+		Mockito.when(resp.getOutputStream()).thenReturn(stream);
+		
 		FilterChain chain = Mockito.mock(FilterChain.class);
 
 		JDBCMetricsFilter filter = new JDBCMetricsFilter();
@@ -87,15 +90,16 @@ public class WhenTheFilterIsRunning {
 		HttpServletRequest req = Mockito.mock(HttpServletRequest.class);
 		Mockito.when(req.getHeader(headerName)).thenReturn(null);
 		HttpServletResponse resp = Mockito.mock(HttpServletResponse.class);
-
+		ServletOutputStream stream = Mockito.mock(ServletOutputStream.class);
+		Mockito.when(resp.getOutputStream()).thenReturn(stream);
+		
 		FilterChain chain = Mockito.mock(FilterChain.class);
 
 		JDBCMetricsFilter filter = new JDBCMetricsFilter();
 		try {
 			filter.init(config);
 			filter.doFilter(req, resp, chain);
-
-			verifyZeroInteractions(resp);
+			verify(resp,times(0)).setHeader(anyString(), anyString());
 
 		} finally {
 			filter.destroy();
