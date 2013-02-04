@@ -35,7 +35,7 @@ public class WhenTheFilterIsRunning {
 		try {
 			try {
 				filter.init(config);
-				assertThat(filter.requestHeaderName,
+				assertThat("The header name should be the default one",filter.requestHeaderName,
 						is(JDBCMetricsFilter.DEFAULT_REQUEST_HEADER_NAME));
 			} catch (ServletException e) {
 				fail();
