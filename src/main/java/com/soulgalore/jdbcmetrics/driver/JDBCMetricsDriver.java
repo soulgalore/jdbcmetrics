@@ -5,8 +5,10 @@ import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.DriverPropertyInfo;
 import java.sql.SQLException;
+import java.sql.SQLFeatureNotSupportedException;
 import java.util.Enumeration;
 import java.util.Properties;
+import java.util.logging.Logger;
 
 public class JDBCMetricsDriver implements Driver {
 
@@ -26,7 +28,9 @@ public class JDBCMetricsDriver implements Driver {
 
 	@Override
 	public Connection connect(String url, Properties info) throws SQLException {
-		return new ConnectionWrapper(getDriver(url).connect(cleanUrl(url), info));
+		//return new ConnectionWrapper(getDriver(url).connect(cleanUrl(url), info));
+		ProxyFactory pf = new ProxyFactory();
+		return pf.connectionProxy(getDriver(url).connect(cleanUrl(url), info));
 	}
 
 	@Override
@@ -53,6 +57,11 @@ public class JDBCMetricsDriver implements Driver {
 		return false;
 	}
 	
+	//Override in java7
+	public Logger getParentLogger() throws SQLFeatureNotSupportedException {
+		throw new SQLFeatureNotSupportedException();
+	}
+
 	protected Driver getDriver(String url) throws SQLException {
 		//TODO: "cache" the driver? on url?
 		if (acceptsURL(url)) {
