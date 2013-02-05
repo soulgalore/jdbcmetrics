@@ -31,6 +31,7 @@ public class StatementInvocationHandler implements InvocationHandler {
 			throws Throwable {
 
 		// TODO we only need to time the onces that executes a query
+		// this adds a little overhead
 		long start = System.nanoTime();
 		Object o = method.invoke(statement, args);
 		long time = start - System.nanoTime();
@@ -81,6 +82,8 @@ public class StatementInvocationHandler implements InvocationHandler {
 				.update(time / inc, TimeUnit.NANOSECONDS);
 		JDBCMetrics.getInstance().getTotalNumberOfReads().inc(inc);
 		JDBCMetrics.getInstance().getReadMeter().mark();
+		
+		// TODO how should we handle slow queries? or is the timing enough?
 	}
 
 	void writeStats(long inc, long time) {
