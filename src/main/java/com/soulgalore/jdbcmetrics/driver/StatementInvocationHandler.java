@@ -57,13 +57,17 @@ public class StatementInvocationHandler implements InvocationHandler {
 	}
 
 	void readStats(long inc) {
-		QueryThreadLocal.addRead();
+		for (long i=inc; i>0; i--) {
+			QueryThreadLocal.addRead();
+		}
 		JDBCMetrics.getInstance().getTotalNumberOfReads().inc(inc);
 		JDBCMetrics.getInstance().getReadMeter().mark();
 	}
 	
 	void writeStats(long inc) {
-		QueryThreadLocal.addWrite();
+		for (long i=inc; i>0; i--) {
+			QueryThreadLocal.addWrite();
+		}
 		JDBCMetrics.getInstance().getTotalNumberOfWrites().inc(inc);
 		JDBCMetrics.getInstance().getWriteMeter().mark();
 	}
