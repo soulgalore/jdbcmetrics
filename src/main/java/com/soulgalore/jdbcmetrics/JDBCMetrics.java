@@ -39,6 +39,13 @@ public class JDBCMetrics {
 	private final Meter writeMeter = registry.newMeter(new MetricName(GROUP,
 			TYPE_WRITE, "writes"), "jdbcwrite", TimeUnit.SECONDS);
 	
+	private final Timer writeTimer = registry.newTimer(new MetricName(GROUP,
+			TYPE_WRITE, "write-time"), TimeUnit.MILLISECONDS, TimeUnit.SECONDS);
+	
+	private final Timer readTimer = registry.newTimer(new MetricName(GROUP,
+			TYPE_WRITE, "read-time"), TimeUnit.MILLISECONDS, TimeUnit.SECONDS);
+	
+	
 	private static final JDBCMetrics INSTANCE = new JDBCMetrics();
 
 	
@@ -78,5 +85,12 @@ public class JDBCMetrics {
 		return writeMeter;
 	}
 	
+	public Timer getWriteTimer() {
+		return writeTimer;
+	}
+	
+	public Timer getReadTimer() {
+		return readTimer;
+	}
 	
 }
