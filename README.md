@@ -27,6 +27,9 @@ By also setting up the **JDBCMetricsFilter**:
 	&lt;filter-class&gt;
 		com.soulgalore.jdbcmetrics.filter.JDBCMetricsFilter
 	&lt;/filter-class&gt;
+	&lt;param-name&gt;use-headers&lt;/param-name&gt;
+			&lt;param-value&gt;true&lt;/param-value&gt;
+	&lt;/init-param&gt;
 	&lt;init-param&gt;
 		&lt;param-name&gt;request-header-name&lt;/param-name&gt;
 		&lt;param-value&gt;query-statistics&lt;/param-value&gt;
@@ -83,14 +86,25 @@ Then set it up in your web.xml:
 
 
 ## Fetching info from individual request(s)
-You can get information on how many database reads & writes your request generated, by adding a request header. By default, 
-the header name is **jdbcmetrics** and you can configure that in *web.xml* and the JDBCMetrics servlet filter.
+You can get information on how many database reads & writes your request generates by two different ways: Either it is logged to your log system or you can get it as response headers
+when you access the page.
+
+### Response headers ###
+To get the information back as response headers, you need to turn on that 
+functionality in the filter config by setting  **use-headers** to **true**. The reason for why this is not default behaviour is that it will wrap the response and not flush the resoonse until everything is finished, so 
+if you have some smart flushing content early thing, the filter will remove that functionality (so for some systems, this is not good running in production).
+
+You can configure the request header name that will trigger the response, by default it is **jdbcmetrics** and you configure that in *web.xml* and the JDBCMetrics servlet filter.
 
 By sending a header like: **jdbcmetrics=yes**
 you will get two response headers: **nr-of-reads** & **nr-of-writes** holding the values of the reads & writes.
 
-Remember: The cache within your application will give you different values if the caches is primed or not! **Warning** also if you use the filter, the 
-response will not be flushed until the full chain is finished, meaning if you have some smart flushing content early thing, the filter will remove that functionality. 
+
+### Getting the log ###
+The log logs at *debug* level to **com.soulgalore.jdbcmetrics.filter.JDBCMetricsFilter**. An log entry will look like this:
+<pre>
+
+</pre>
 
 ## How it works
 
