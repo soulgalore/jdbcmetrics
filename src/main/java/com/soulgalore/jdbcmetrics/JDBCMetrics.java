@@ -39,18 +39,6 @@ public class JDBCMetrics {
 	private final Meter writeMeter = registry.newMeter(new MetricName(GROUP,
 			TYPE_WRITE, "writes"), "jdbcwrite", TimeUnit.SECONDS);
 	
-	private final Meter slowQueryReadMeter = registry.newMeter(new MetricName(GROUP,
-			TYPE_WRITE, "slow-query"), "jdbcread", TimeUnit.SECONDS);
-	
-	private final Meter slowQueryWriteMeter = registry.newMeter(new MetricName(GROUP,
-			TYPE_WRITE, "slow-query"), "jdbcwrite", TimeUnit.SECONDS);
-	
-	private final Timer readTimer = registry.newTimer(new MetricName(GROUP, TYPE_READ,
-			"read-timer"), TimeUnit.MILLISECONDS, TimeUnit.SECONDS);
-
-	private final Timer writeTimer = registry.newTimer(new MetricName(GROUP, TYPE_READ,
-			"write-timer"), TimeUnit.MILLISECONDS, TimeUnit.SECONDS);
-	
 	private static final JDBCMetrics INSTANCE = new JDBCMetrics();
 
 	
@@ -88,22 +76,6 @@ public class JDBCMetrics {
 
 	public Meter getWriteMeter() {
 		return writeMeter;
-	}
-	
-	public Meter getSlowQueryRead() {
-		return slowQueryReadMeter;
-	}
-	
-	public Meter getSlowQueryWrite() {
-		return slowQueryWriteMeter;
-	}
-	
-	public Timer getWriteTimer() {
-		return writeTimer;
-	}
-	
-	public Timer getReadTimer() {
-		return readTimer;
 	}
 	
 	
