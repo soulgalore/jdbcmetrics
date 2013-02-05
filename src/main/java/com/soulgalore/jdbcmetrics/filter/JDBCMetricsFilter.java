@@ -11,30 +11,35 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.soulgalore.jdbcmetrics.JDBCMetrics;
 import com.soulgalore.jdbcmetrics.QueryThreadLocal;
 import com.soulgalore.jdbcmetrics.ReadAndWrites;
 
 /**
- * Filter that will make JDBCMetrics collect JDBC metrics per request. Set it up like this:
+ * Filter that will make JDBCMetrics collect JDBC metrics per request. Set it up
+ * like this:
+ * 
  * <pre>
  * &lt;filter&gt;
  *  &lt;filter-name&gt;JDBCMetricsFilter&lt;/filter-name&gt;
- *	&lt;filter-class&gt;
- *		com.soulgalore.jdbcmetrics.filter.JDBCMetricsFilter
- *	&lt;/filter-class&gt;
- *	&lt;init-param&gt;
- *		&lt;param-name&gt;request-header-name&lt;/param-name&gt;
- *		&lt;param-value&gt;query-statistics&lt;/param-value&gt;
- *	&lt;/init-param&gt;
+ * &lt;filter-class&gt;
+ * 	com.soulgalore.jdbcmetrics.filter.JDBCMetricsFilter
+ * &lt;/filter-class&gt;
+ * &lt;init-param&gt;
+ * 	&lt;param-name&gt;request-header-name&lt;/param-name&gt;
+ * 	&lt;param-value&gt;query-statistics&lt;/param-value&gt;
+ * &lt;/init-param&gt;
  * &lt;/filter&gt;
- *
+ * 
  * &lt;filter-mapping&gt;
- *	&lt;filter-name&gt;JDBCMetricsFilter&lt;/filter-name&gt;
- *	&lt;url-pattern&gt;/*&lt;/url-pattern&gt;
+ * &lt;filter-name&gt;JDBCMetricsFilter&lt;/filter-name&gt;
+ * &lt;url-pattern&gt;/*&lt;/url-pattern&gt;
  * &lt;/filter-mapping&gt;
-</pre>
- *
+ * </pre>
+ * 
  */
 public class JDBCMetricsFilter implements Filter {
 
@@ -43,7 +48,10 @@ public class JDBCMetricsFilter implements Filter {
 	final static String RESPONSE_HEADER_NAME_NR_OF_READS = "nr-of-reads";
 	final static String RESPONSE_HEADER_NAME_NR_OF_WRITES = "nr-of-writes";
 
+	final Logger logger = LoggerFactory.getLogger(JDBCMetricsFilter.class);
+
 	String requestHeaderName;
+	boolean useHeaders;
 
 	@Override
 	public void destroy() {
@@ -57,17 +65,32 @@ public class JDBCMetricsFilter implements Filter {
 		if (QueryThreadLocal.getNrOfQueries() == null) {
 			QueryThreadLocal.init();
 
-			ResponseWrapper responseWrapper = new ResponseWrapper((HttpServletResponse) resp);	
-			
+			ResponseWrapper responseWrapper = new ResponseWrapper(
+					(HttpServletResponse) resp);
+
 			try {
-				chain.doFilter(req, responseWrapper);
+				chain.doFilter(req, useHeaders ? responseWrapper : resp);
 			} finally {
 
 				ReadAndWrites rw = QueryThreadLocal.getNrOfQueries();
 				updateStatistics(rw);
-				setHeaders(rw, req, responseWrapper);
+				if (useHeaders)
+					setHeaders(rw, req, responseWrapper);
+
+				if (logger.isDebugEnabled()) {
+					StringBuilder builder = new StringBuilder("URL: ");
+					HttpServletRequest request = (HttpServletRequest) req;
+					builder.append(request.getRequestURL());
+					if (request.getQueryString() != null)
+						builder.append("?").append(request.getQueryString());
+					builder.append(" reads:").append(rw.getReads())
+							.append(" writes:").append(rw.getWrites());
+					logger.debug(builder.toString());
+				}
+
 				QueryThreadLocal.removeNrOfQueries();
-				responseWrapper.write();
+				if (useHeaders)
+					responseWrapper.write();
 			}
 		}
 
@@ -75,11 +98,14 @@ public class JDBCMetricsFilter implements Filter {
 
 	@Override
 	public void init(FilterConfig config) throws ServletException {
-		
+
 		requestHeaderName = config
 				.getInitParameter(REQUEST_HEADER_NAME_INIT_PARAM_NAME);
 		if (requestHeaderName == null || "".equals(requestHeaderName))
 			requestHeaderName = DEFAULT_REQUEST_HEADER_NAME;
+
+		useHeaders = Boolean.valueOf((config.getInitParameter("use-headers")));
+
 	}
 
 	private void updateStatistics(ReadAndWrites rw) {
