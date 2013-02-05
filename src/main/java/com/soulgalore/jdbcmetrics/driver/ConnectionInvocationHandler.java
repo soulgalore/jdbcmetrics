@@ -26,9 +26,9 @@ public class ConnectionInvocationHandler implements InvocationHandler {
 		if ("createStatement".equals(method.getName())) {
 			o = proxyFactory.statementProxy((Statement) o);
 		} else if ("prepareStatement".equals(method.getName())) {
-			o = proxyFactory.preparedStatementProxy((PreparedStatement) o);
+			o = proxyFactory.preparedStatementProxy((PreparedStatement) o, args[0].toString());
 		} else if ("prepareCall".equals(method.getName())) {
-			o = proxyFactory.callableStatementProxy((CallableStatement) o);
+			o = proxyFactory.callableStatementProxy((CallableStatement) o, args[0].toString());
 		}
 		return o;
 	}

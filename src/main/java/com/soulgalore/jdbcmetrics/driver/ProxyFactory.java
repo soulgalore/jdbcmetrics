@@ -17,12 +17,12 @@ public class ProxyFactory {
     	return createProxy(Statement.class, new StatementInvocationHandler(statement));
 	}
 	
-	public PreparedStatement preparedStatementProxy(PreparedStatement preparedStatement) {
-		return createProxy(PreparedStatement.class, new StatementInvocationHandler(preparedStatement));
+	public PreparedStatement preparedStatementProxy(PreparedStatement preparedStatement, String sql) {
+		return createProxy(PreparedStatement.class, new StatementInvocationHandler(preparedStatement, sql));
 	}
 	
-	public CallableStatement callableStatementProxy(CallableStatement callableStatement) {
-		return createProxy(CallableStatement.class, new StatementInvocationHandler(callableStatement));
+	public CallableStatement callableStatementProxy(CallableStatement callableStatement, String sql) {
+		return createProxy(CallableStatement.class, new StatementInvocationHandler(callableStatement, sql));
 	}
 
 	private <T> T createProxy(Class<T> clazz, InvocationHandler handler) {

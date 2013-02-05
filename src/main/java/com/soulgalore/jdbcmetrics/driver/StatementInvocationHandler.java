@@ -10,13 +10,19 @@ import com.soulgalore.jdbcmetrics.QueryThreadLocal;
 public class StatementInvocationHandler implements InvocationHandler {
 
 	private Statement statement;
+	private String sql;
 	
 	private long nrOfBatchReads = 0;
 	private long nrOfBatchWrites = 0;
 
-	public StatementInvocationHandler(Statement statement) {
+	public StatementInvocationHandler(Statement statement, String sql) {
 		super();
 		this.statement = statement;
+		this.sql = sql;
+	}
+
+	public StatementInvocationHandler(Statement statement) {
+		this(statement, null);
 	}
 
 	@Override
@@ -30,10 +36,10 @@ public class StatementInvocationHandler implements InvocationHandler {
 			writeStats(1);
 		}
 		else if ("execute".equals(method.getName())) {
-			if (isRead(args[0].toString())) {
-				readStats(1);
+			if (args == null) {
+				incStats(sql);
 			} else {
-				writeStats(1);
+				incStats(args[0].toString());
 			}
 		}
 		else if ("addBatch".equals(method.getName())) {
@@ -45,7 +51,7 @@ public class StatementInvocationHandler implements InvocationHandler {
 		}
 		else if ("clearBatch".equals(method.getName())) {
 			nrOfBatchReads = 0;
-			nrOfBatchWrites = 0;	
+			nrOfBatchWrites = 0;
 		}
 		else if ("executeBatch".equals(method.getName())) {
 			readStats(nrOfBatchReads);
@@ -54,6 +60,14 @@ public class StatementInvocationHandler implements InvocationHandler {
 			nrOfBatchWrites = 0;
 		}
 		return o;
+	}
+	
+	void incStats(String sql) {
+		if (isRead(sql)) {
+			readStats(1);
+		} else {
+			writeStats(1);
+		}
 	}
 
 	void readStats(long inc) {
