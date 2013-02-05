@@ -44,6 +44,7 @@ import com.soulgalore.jdbcmetrics.ReadAndWrites;
 public class JDBCMetricsFilter implements Filter {
 
 	final static String REQUEST_HEADER_NAME_INIT_PARAM_NAME = "request-header-name";
+	final static String USE_HEADERS_INIT_PARAM_NAME = "use-headers";
 	final static String DEFAULT_REQUEST_HEADER_NAME = "jdbcmetrics";
 	final static String RESPONSE_HEADER_NAME_NR_OF_READS = "nr-of-reads";
 	final static String RESPONSE_HEADER_NAME_NR_OF_WRITES = "nr-of-writes";
@@ -104,7 +105,7 @@ public class JDBCMetricsFilter implements Filter {
 		if (requestHeaderName == null || "".equals(requestHeaderName))
 			requestHeaderName = DEFAULT_REQUEST_HEADER_NAME;
 
-		useHeaders = Boolean.valueOf((config.getInitParameter("use-headers")));
+		useHeaders = Boolean.valueOf((config.getInitParameter(USE_HEADERS_INIT_PARAM_NAME)));
 
 	}
 
