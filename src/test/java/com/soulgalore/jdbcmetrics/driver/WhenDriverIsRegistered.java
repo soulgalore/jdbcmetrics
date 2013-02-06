@@ -39,13 +39,27 @@ public class WhenDriverIsRegistered extends AbstractDriverTest {
 	}
 	
 	@Test
+	public void knownUrlWithDriverShouldBeCleaned() {
+		assertThat("The url should be cleaned from jdbcmetrics", driver.cleanUrl(URL_JDBC_METRICS_SPECIFIED_DRIVER), equalTo(URL_KNOWN_DRIVER));
+	}
+
+	@Test
 	public void unknownUrlShouldNotBeCleaned() {
 		assertThat("The url should be intact", driver.cleanUrl(URL_UNKNOWN), equalTo(URL_UNKNOWN));
 	}
 
 	@Test
 	public void underlayingDriverShouldExist() throws SQLException {
-		assertThat("Should be the underlaying driver", driver.getDriver(URL_JDBC_METRICS), sameInstance(underlayingDriver));
+		assertThat("Should be the underlaying driver", driver.getDriver(URL_JDBC_METRICS, URL_KNOWN_DRIVER), sameInstance(underlayingDriver));
 	}
 
+	@Test
+	public void specifiedDriverClassNameShouldBeParsedFromUrl() {
+		assertThat(driver.getSpecifiedDriverClassName(URL_JDBC_METRICS_SPECIFIED_DRIVER), equalTo("org.postgresql.Driver"));
+	}
+
+	@Test
+	public void specifiedDriverClassNameShouldNotBeFoundInUrl() {
+		assertThat(driver.getSpecifiedDriverClassName(URL_JDBC_METRICS), nullValue());
+	}
 }
