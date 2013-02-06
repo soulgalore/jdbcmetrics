@@ -78,16 +78,7 @@ public class JDBCMetricsFilter implements Filter {
 				if (useHeaders)
 					setHeaders(rw, req, responseWrapper);
 
-				if (logger.isDebugEnabled()) {
-					StringBuilder builder = new StringBuilder("URL: ");
-					HttpServletRequest request = (HttpServletRequest) req;
-					builder.append(request.getRequestURL());
-					if (request.getQueryString() != null)
-						builder.append("?").append(request.getQueryString());
-					builder.append(" reads:").append(rw.getReads())
-							.append(" writes:").append(rw.getWrites());
-					logger.debug(builder.toString());
-				}
+				log(req, rw);
 
 				QueryThreadLocal.removeNrOfQueries();
 				if (useHeaders)
@@ -105,8 +96,22 @@ public class JDBCMetricsFilter implements Filter {
 		if (requestHeaderName == null || "".equals(requestHeaderName))
 			requestHeaderName = DEFAULT_REQUEST_HEADER_NAME;
 
-		useHeaders = Boolean.valueOf((config.getInitParameter(USE_HEADERS_INIT_PARAM_NAME)));
+		useHeaders = Boolean.valueOf((config
+				.getInitParameter(USE_HEADERS_INIT_PARAM_NAME)));
 
+	}
+
+	private void log(ServletRequest req, ReadAndWrites rw) {
+		if (logger.isDebugEnabled()) {
+			StringBuilder builder = new StringBuilder("URL: ");
+			HttpServletRequest request = (HttpServletRequest) req;
+			builder.append(request.getRequestURL());
+			if (request.getQueryString() != null)
+				builder.append("?").append(request.getQueryString());
+			builder.append(" reads:").append(rw.getReads()).append(" writes:")
+					.append(rw.getWrites());
+			logger.debug(builder.toString());
+		}
 	}
 
 	private void updateStatistics(ReadAndWrites rw) {
