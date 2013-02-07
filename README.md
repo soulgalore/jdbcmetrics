@@ -66,10 +66,10 @@ Add the filter in your *web.xml* file (make sure it run early in the chain):
 	&lt;filter-name&gt;JDBCMetricsFilter&lt;/filter-name&gt;
 	&lt;url-pattern&gt;/*&lt;/url-pattern&gt;
 &lt;/filter-mapping&gt;
-	</pre>
+</pre>
 
 
-## Reporters
+##Reporters##
 **JDBCMetrics** uses the great [Metrics](http://metrics.codahale.com/) as metric backend, that have the following different ways of reporting:
 
 * [JMX](http://metrics.codahale.com/manual/core/#jmx) (not recommended for production)
