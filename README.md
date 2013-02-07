@@ -29,8 +29,6 @@ In your *pom.xml* file add:
 
 ## Setup the driver
 
-Register/configure to use the  **JDBCMetricsDriver**. Depending on how your system works this can be done in different ways.
-
 ###Using DataSource###
    
 * Configure the driver class to be <code>com.soulgalore.jdbcmetrics.driver.JDBCMetricsDriver</code>
@@ -39,18 +37,14 @@ Register/configure to use the  **JDBCMetricsDriver**. Depending on how your syst
    
 * Set the JVM parameter: <code>-Djdbc.drivers=com.soulgalore.jdbcmetrics.driver.JDBCMetricsDriver</code>
 * Or load the driver in your code: <code>Class.forName("com.soulgalore.jdbcmetrics.driver.JDBCMetricsDriver");</code>
-	
+
 ### Configure the jdbc url/connect string###
 
-If your existing connect string looks like this: <code>jdbc:mysql://localhost:3306/test_db</code>
-   
-Prefix it with "jdbcmetrics:", like this: <code>jdbc:jdbcmetrics:mysql://localhost:3306/test_db</code>
+* If your existing connect string looks like this: <code>jdbc:mysql://localhost:3306/test_db</code><br/>
+Prefix it with <code>jdbcmetrics:</code> like this <code>jdbc:jdbcmetrics:mysql://localhost:3306/test_db</code>
 
-Make sure the underlaying driver, your regular driver, is registered either in DriverManager (see step 2) or specify it in the jdbc url/connect string which would be the easiest.
-
-<code>jdbc:jdbcmetrics?driver=com.mysql.jdbc.Driver:mysql://localhost:3306/test_db</code>
-
-**JDBCMetricsDriver** will then instantiate the driver to use it underneath.
+* Specify the underlaying driver, your regular driver, in the url like this <code>jdbc:jdbcmetrics?driver=com.mysql.jdbc.Driver:mysql://localhost:3306/test_db</code><br/>
+JDBCMetricsDriver will then instantiate the driver to use it underneath. If you omit the driver param JDBCMetricsDriver will try to match the url to a driver registered in DriverManager.
 
 ## Setup the filter (optional)
 
