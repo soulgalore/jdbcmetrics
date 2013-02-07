@@ -1,8 +1,8 @@
 # JDBCMetrics - get information from your JDBC driver
 
-Using **JDBCMetrics** you can get hold of the following information from your driver
+Using **JDBCMetrics** you can get hold of the following information from your driver:
 
-By only setting up the **JDBCMetricsDriver**:
+By only setting up the **JDBCMetricsDriver** (meaning configure your driver):
 
 * The total number of database reads
 * The total number of database writes
@@ -10,7 +10,7 @@ By only setting up the **JDBCMetricsDriver**:
 * Number of writes per second (per minute, 5 minutes & 15 minutes)
 * TODO add info about the timer
 
-By also setting up the **JDBCMetricsFilter**:
+By also setting up the **JDBCMetricsFilter** you will get:
 
 * The number of database reads created for a specific HTTP request
 * The number of database writes created for a specific HTTP request
@@ -41,11 +41,11 @@ Make sure the underlaying driver, your regular driver, is registered either in D
 
 <code>jdbc:jdbcmetrics?driver=com.mysql.jdbc.Driver:mysql://localhost:3306/test_db</code>
 
-JDBCMetricsDriver will then instantiate the driver to use it underneath.
+**JDBCMetricsDriver** will then instantiate the driver to use it underneath.
 
 ## Setup the filter (optional)
 
-1. Add the filter in your *web.xml* file (make sure it run early in the chain):
+Add the filter in your *web.xml* file (make sure it run early in the chain):
 	<pre>
 &lt;filter&gt;
 	&lt;filter-name&gt;JDBCMetricsFilter&lt;/filter-name&gt;
