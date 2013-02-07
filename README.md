@@ -22,7 +22,7 @@ In your *pom.xml* file add:
 <pre>
 &lt;dependency&gt;
  &lt;groupId&gt;com.soulgalore&lt;/groupId&gt;
- &lt;artifactId&gt;jdbcmetric&lt;/artifactId&gt;
+ &lt;artifactId&gt;jdbcmetrics&lt;/artifactId&gt;
  &lt;version&gt;0.5&lt;/version&gt;
 &lt;/dependency&gt;
 </pre>
