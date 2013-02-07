@@ -8,6 +8,7 @@ By only setting up the **JDBCMetricsDriver**:
 * The total number of database writes
 * Number of reads per second (per minute, 5 minutes & 15 minutes)
 * Number of writes per second (per minute, 5 minutes & 15 minutes)
+* TODO add info about the timer
 
 By also setting up the **JDBCMetricsFilter**:
 
@@ -17,9 +18,32 @@ By also setting up the **JDBCMetricsFilter**:
 * Statistics about writes per request (average, median, percentile etc)
 
 
+## Setup the driver
 
-## How to setup
-Jack in **JDBCMetricsDriver** like this:
+Register/configure to use the  **JDBCMetricsDriver**. Depending on how your system works this can be done in different ways.
+
+###Using DataSource###
+   
+* Configure the driver class to be <code>com.soulgalore.jdbcmetrics.driver.JDBCMetricsDriver</code>
+	
+###Using DriverManager###
+   
+* Set the JVM parameter: <code>-Djdbc.drivers=com.soulgalore.jdbcmetrics.driver.JDBCMetricsDriver</code>
+* Or load the driver in your code: <code>Class.forName("com.soulgalore.jdbcmetrics.driver.JDBCMetricsDriver");</code>
+	
+### Configure the jdbc url/connect string###
+
+If your existing connect string looks like this: <code>jdbc:mysql://localhost:3306/test_db</code>
+   
+Prefix it with "jdbcmetrics:", like this: <code>jdbc:jdbcmetrics:mysql://localhost:3306/test_db</code>
+
+Make sure the underlaying driver, your regular driver, is registered either in DriverManager (see step 2) or specify it in the jdbc url/connect string which would be the easiest.
+
+<code>jdbc:jdbcmetrics?driver=com.mysql.jdbc.Driver:mysql://localhost:3306/test_db</code>
+
+JDBCMetricsDriver will then instantiate the driver to use it underneath.
+
+## Setup the filter (optional)
 
 1. Add the filter in your *web.xml* file (make sure it run early in the chain):
 	<pre>
@@ -43,29 +67,6 @@ Jack in **JDBCMetricsDriver** like this:
 	&lt;url-pattern&gt;/*&lt;/url-pattern&gt;
 &lt;/filter-mapping&gt;
 	</pre>
-
-2. Register/configure to use the JDBCMetrics driver. Depending on how your system works this can be done in different ways.
-
-Using DataSource:
-   
-* Configure the driver class to be <code>com.soulgalore.jdbcmetrics.driver.JDBCMetricsDriver</code>
-	
-Using DriverManager:
-   
-* Set the JVM parameter: <code>-Djdbc.drivers=com.soulgalore.jdbcmetrics.driver.JDBCMetricsDriver</code>
-* Or load the driver in your code: <code>Class.forName("com.soulgalore.jdbcmetrics.driver.JDBCMetricsDriver");</code>
-	
-3. Configure the jdbc url/connect string.
-
-If your existing would look like: <code>jdbc:mysql://localhost:3306/test_db</code>
-   
-Prefix it with "jdbcmetrics:", like this: <code>jdbc:jdbcmetrics:mysql://localhost:3306/test_db</code>
-
-4. Make sure the underlaying driver, your regular driver, is registered either in DriverManager (see step 2) or specify it in the jdbc url/connect string which would be the easiest.
-
-<code>jdbc:jdbcmetrics?driver=com.mysql.jdbc.Driver:mysql://localhost:3306/test_db</code>
-
-JDBCMetricsDriver will then instantiate the driver to use it underneath.
 
 
 ## Reporters
@@ -131,7 +132,6 @@ The log logs at *debug* level to **com.soulgalore.jdbcmetrics.filter.JDBCMetrics
 
 </pre>
 
-## How it works
 
 ## License
 
