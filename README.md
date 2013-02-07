@@ -17,6 +17,15 @@ By also setting up the **JDBCMetricsFilter** you will get:
 * Statistics about reads per request (average, median, percentile etc)
 * Statistics about writes per request (average, median, percentile etc)
 
+##Download the jar##
+In your *pom.xml* file add:
+<pre>
+&lt;dependency&gt;
+ &lt;groupId&gt;com.soulgalore&lt;/groupId&gt;
+ &lt;artifactId&gt;jdbcmetric&lt;/artifactId&gt;
+ &lt;version&gt;0.5&lt;/version&gt;
+&lt;/dependency&gt;
+</pre>
 
 ## Setup the driver
 
