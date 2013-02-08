@@ -29,7 +29,7 @@ of knowing what actually is happening between the application server & the datab
 
 
 ###Add the jar
-In your *pom.xml* file add:
+In your **pom.xml** file add:
 <pre>
 &lt;dependency&gt;
  &lt;groupId&gt;com.soulgalore&lt;/groupId&gt;
@@ -40,23 +40,24 @@ In your *pom.xml* file add:
 
 
 ###Setup the driver
+Depending on your current setup, this need to be done in different ways.
 
 ####Using DataSource####
    
-* Configure the driver class to be <code>com.soulgalore.jdbcmetrics.driver.JDBCMetricsDriver</code>
+Configure the driver class to be <code>com.soulgalore.jdbcmetrics.driver.JDBCMetricsDriver</code>
 	
 ####Using DriverManager####
    
-* Set the JVM parameter: <code>-Djdbc.drivers=com.soulgalore.jdbcmetrics.driver.JDBCMetricsDriver</code>
-* Or load the driver in your code: <code>Class.forName("com.soulgalore.jdbcmetrics.driver.JDBCMetricsDriver");</code>
+Set the JVM parameter: <code>-Djdbc.drivers=com.soulgalore.jdbcmetrics.driver.JDBCMetricsDriver</code>
+Or load the driver in your code: <code>Class.forName("com.soulgalore.jdbcmetrics.driver.JDBCMetricsDriver");</code>
 
 ####Configure the jdbc url/connect string####
 
-* If your existing connect string looks like this: <code>jdbc:mysql://localhost:3306/test_db</code><br/>
+If your existing connect string looks like this: <code>jdbc:mysql://localhost:3306/test_db</code><br/>
 Prefix it with <code>jdbcmetrics:</code> like this <code>jdbc:jdbcmetrics:mysql://localhost:3306/test_db</code>
 
-* Specify the underlaying driver, your regular driver, in the url like this <code>jdbc:jdbcmetrics?driver=com.mysql.jdbc.Driver:mysql://localhost:3306/test_db</code><br/>
-JDBCMetricsDriver will then instantiate the driver to use it underneath. If you omit the driver param JDBCMetricsDriver will try to match the url to a driver registered in DriverManager.
+Specify the underlaying driver, your regular driver, in the url like this <code>jdbc:jdbcmetrics?driver=com.mysql.jdbc.Driver:mysql://localhost:3306/test_db</code><br/>
+**JDBCMetricsDriver** will then instantiate the driver to use it underneath. If you omit the driver param **JDBCMetricsDriver** will try to match the url to a driver registered in DriverManager.
 
 ### Setup the filter (optional) 
 
