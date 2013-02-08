@@ -8,8 +8,6 @@
 	<description>Get info from your JDBC driver!</description>
 	<url>https://github.com/soulgalore/jdbcmetrics</url>
 	<packaging>jar</packaging>
-
-
 	<developers>
 		<developer>
 			<name>Magnus Lundberg</name>
