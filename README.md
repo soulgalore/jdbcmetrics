@@ -17,7 +17,18 @@ By also setting up the **JDBCMetricsFilter** you will get:
 * Statistics about reads per request (average, median, percentile etc)
 * Statistics about writes per request (average, median, percentile etc)
 
-##Download the jar##
+##Background##
+In 99% of the projects we have worked with, when the shit hits the fan the problem is the database. We want a super easy way 
+of knowing what actually is happening with the database.
+
+##Setup##
+1. Add the jar
+2. Setup the driver
+3. Setup a reporter
+4. Setup the filter (optional)
+
+
+##Add the jar## 
 In your *pom.xml* file add:
 <pre>
 &lt;dependency&gt;
@@ -27,7 +38,7 @@ In your *pom.xml* file add:
 &lt;/dependency&gt;
 </pre>
 
-## Setup the driver
+##Setup the driver## 
 
 ###Using DataSource###
    
@@ -46,7 +57,7 @@ Prefix it with <code>jdbcmetrics:</code> like this <code>jdbc:jdbcmetrics:mysql:
 * Specify the underlaying driver, your regular driver, in the url like this <code>jdbc:jdbcmetrics?driver=com.mysql.jdbc.Driver:mysql://localhost:3306/test_db</code><br/>
 JDBCMetricsDriver will then instantiate the driver to use it underneath. If you omit the driver param JDBCMetricsDriver will try to match the url to a driver registered in DriverManager.
 
-## Setup the filter (optional)
+## Setup the filter (optional) 
 
 Add the filter in your *web.xml* file (make sure it run early in the chain):
 	<pre>
