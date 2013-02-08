@@ -19,16 +19,16 @@ By also setting up the **JDBCMetricsFilter** you will get:
 
 ##Background##
 In 99% of the projects we have worked with, when the shit hits the fan the problem is the database. We want a super easy way 
-of knowing what actually is happening with the database.
+of knowing what actually is happening between the application server & the database.
 
 ##Setup##
-1. Add the jar
-2. Setup the driver
-3. Setup a reporter
-4. Setup the filter (optional)
+1. [Add the jar](#add-jar)
+2. [Setup the driver](#setup-driver)
+3. [Setup the filter](#setup-filter) (optional) 
+4. [Setup a reporter](#reporters)
 
-
-##Add the jar
+<a id="add-jar"></a>
+###Add the jar
 In your *pom.xml* file add:
 <pre>
 &lt;dependency&gt;
@@ -38,18 +38,19 @@ In your *pom.xml* file add:
 &lt;/dependency&gt;
 </pre>
 
-##Setup the driver
+<a id="setup-driver"></a>
+###Setup the driver
 
-###Using DataSource###
+####Using DataSource####
    
 * Configure the driver class to be <code>com.soulgalore.jdbcmetrics.driver.JDBCMetricsDriver</code>
 	
-###Using DriverManager###
+####Using DriverManager####
    
 * Set the JVM parameter: <code>-Djdbc.drivers=com.soulgalore.jdbcmetrics.driver.JDBCMetricsDriver</code>
 * Or load the driver in your code: <code>Class.forName("com.soulgalore.jdbcmetrics.driver.JDBCMetricsDriver");</code>
 
-### Configure the jdbc url/connect string###
+####Configure the jdbc url/connect string####
 
 * If your existing connect string looks like this: <code>jdbc:mysql://localhost:3306/test_db</code><br/>
 Prefix it with <code>jdbcmetrics:</code> like this <code>jdbc:jdbcmetrics:mysql://localhost:3306/test_db</code>
@@ -57,7 +58,8 @@ Prefix it with <code>jdbcmetrics:</code> like this <code>jdbc:jdbcmetrics:mysql:
 * Specify the underlaying driver, your regular driver, in the url like this <code>jdbc:jdbcmetrics?driver=com.mysql.jdbc.Driver:mysql://localhost:3306/test_db</code><br/>
 JDBCMetricsDriver will then instantiate the driver to use it underneath. If you omit the driver param JDBCMetricsDriver will try to match the url to a driver registered in DriverManager.
 
-## Setup the filter (optional) 
+<a id="setup-filter"></a>
+### Setup the filter (optional) 
 
 Add the filter in your *web.xml* file (make sure it run early in the chain):
 	<pre>
@@ -82,8 +84,8 @@ Add the filter in your *web.xml* file (make sure it run early in the chain):
 &lt;/filter-mapping&gt;
 </pre>
 
-
-##Reporters##
+<a id="reporters"></a>
+###Reporters###
 **JDBCMetrics** uses the great [Metrics](http://metrics.codahale.com/) as metric backend, that have the following different ways of reporting:
 
 * [JMX](http://metrics.codahale.com/manual/core/#jmx) (not recommended for production)
