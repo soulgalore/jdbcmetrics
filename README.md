@@ -18,7 +18,7 @@ By also setting up the **JDBCMetricsFilter** you will get:
 * Statistics about writes per request (average, median, percentile etc)
 
 ##Background##
-In 99% of the projects we have worked with, when the shit hits the fan the problem is the database. We want a super easy way 
+In 99% of the projects we have worked with, when the shit hits the fan the problem is the interaction with the database. We want a super easy way 
 of knowing what actually is happening between the application server & the database.
 
 ##Setup##
