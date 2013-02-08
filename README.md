@@ -28,7 +28,7 @@ of knowing what actually is happening with the database.
 4. Setup the filter (optional)
 
 
-##Add the jar## 
+##Add the jar
 In your *pom.xml* file add:
 <pre>
 &lt;dependency&gt;
@@ -38,7 +38,7 @@ In your *pom.xml* file add:
 &lt;/dependency&gt;
 </pre>
 
-##Setup the driver## 
+##Setup the driver
 
 ###Using DataSource###
    
