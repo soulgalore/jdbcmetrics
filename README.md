@@ -1,4 +1,4 @@
-# JDBCMetrics - get information from your JDBC driver
+# JDBCMetrics - get information from your JDBC driver [![Build Status](https://travis-ci.org/soulgalore/jdbcmetrics.png?branch=master)](https://travis-ci.org/soulgalore/jdbcmetrics)
 
 Using **JDBCMetrics** you can get hold of the following information from your driver:
 
