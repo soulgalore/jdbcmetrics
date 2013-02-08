@@ -14,6 +14,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.soulgalore.jdbcmetrics.QueryThreadLocal;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -22,8 +23,8 @@ public class WhenTheFilterIsRunning {
 
 	@Before
 	public void setUp() throws Exception {
-
-	}
+        QueryThreadLocal.removeNrOfQueries();
+    }
 
 	@Test
 	public void anEmptyInitParameterShouldFallbackToDefault() {
