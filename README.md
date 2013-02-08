@@ -30,6 +30,8 @@ of knowing what actually is happening between the application server & the datab
 
 ###Add the jar
 In your **pom.xml** file add:
+*Will be added soon, clone the project for now*
+<!--
 <pre>
 &lt;dependency&gt;
  &lt;groupId&gt;com.soulgalore&lt;/groupId&gt;
@@ -37,7 +39,7 @@ In your **pom.xml** file add:
  &lt;version&gt;0.5&lt;/version&gt;
 &lt;/dependency&gt;
 </pre>
-
+-->
 
 ###Setup the driver
 Depending on your current setup, this need to be done in different ways.
