@@ -29,10 +29,10 @@
 		</license>
 	</licenses>
 
-	<scm>
+	<scm>	
 		<connection>scm:git:git://github.com/soulgalore/jdbcmetrics.git</connection>
 		<developerConnection>scm:git:git@github.com:soulgalore/jdbcmetrics.git</developerConnection>
-		<url>http://github.com/soulgalore/jdbcmetrics/</url>
+		<url>git@github.com:soulgalore/jdbcmetrics.git/</url>
 	</scm>
 
 	<issueManagement>
