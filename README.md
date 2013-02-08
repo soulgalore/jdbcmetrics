@@ -57,11 +57,12 @@ If your existing connect string looks like this: <code>jdbc:mysql://localhost:33
 Prefix it with <code>jdbcmetrics:</code> like this <code>jdbc:jdbcmetrics:mysql://localhost:3306/test_db</code>
 
 Specify the underlaying driver, your regular driver, in the url like this <code>jdbc:jdbcmetrics?driver=com.mysql.jdbc.Driver:mysql://localhost:3306/test_db</code><br/>
+
 **JDBCMetricsDriver** will then instantiate the driver to use it underneath. If you omit the driver param **JDBCMetricsDriver** will try to match the url to a driver registered in DriverManager.
 
 ### Setup the filter (optional) 
 
-Add the filter in your *web.xml* file (make sure it run early in the chain):
+Add the filter in your **web.xml** file (make sure it run early in the chain):
 	<pre>
 &lt;filter&gt;
 	&lt;filter-name&gt;JDBCMetricsFilter&lt;/filter-name&gt;
@@ -99,7 +100,7 @@ Click [here](http://metrics.codahale.com/manual/core/#reporters) for documentati
 
 And here's a real world example of setting up an metrics servlet:
 
-First add it the servlet to your pom.xml file:
+First add it the servlet to your **pom.xml** file:
 <pre>
 &lt;dependency&gt;
 	&lt;groupId&gt;com.yammer.metrics&lt;/groupId&gt;
@@ -108,7 +109,7 @@ First add it the servlet to your pom.xml file:
 &lt;/dependency&gt;
 </pre>
 
-Then set it up in your web.xml:
+Then set it up in your **web.xml**:
 <pre>
 &lt;servlet&gt;
 	&lt;servlet-name&gt;MetricsServlet&lt;/servlet-name&gt;
