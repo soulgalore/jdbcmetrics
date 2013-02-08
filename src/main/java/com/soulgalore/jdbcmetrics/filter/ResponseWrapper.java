@@ -2,7 +2,7 @@
  * JDBCMetrics
  * 
  *
- * Copyright (C) 2013 by Magnus Lundberg & Peter Hedenskog (http://peterhedenskog.com)
+ * Copyright (C) 2013 by Magnus Lundberg (http://magnuslundberg.com) & Peter Hedenskog (http://peterhedenskog.com)
  *
  ******************************************************
  *
