@@ -1,6 +1,7 @@
 package com.soulgalore.jdbcmetrics.driver;
 
 import static org.hamcrest.MatcherAssert.*;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
 import java.sql.Driver;
@@ -16,7 +17,14 @@ public class WhenDriverIsRegistered extends AbstractDriverTest {
 	@Test
 	public void driverShouldBeInDriverManager() {
 		List<Driver> driversInManager = Collections.list(DriverManager.getDrivers());
-		assertThat(driversInManager, hasItem(isA(JDBCMetricsDriver.class)));
+        boolean foundJDBCMetricsDriver = false;
+        for (Driver driver : driversInManager) {
+            if (driver instanceof JDBCMetricsDriver) {
+                foundJDBCMetricsDriver = true;
+                break;
+            }
+        }
+        assertThat("JDBCMetricsDriver should be registered in DriverManager", foundJDBCMetricsDriver);
 		assertThat(underlayingDriver, isIn(driversInManager));
 	}
 
