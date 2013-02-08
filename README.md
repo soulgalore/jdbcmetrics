@@ -22,12 +22,12 @@ In 99% of the projects we have worked with, when the shit hits the fan the probl
 of knowing what actually is happening between the application server & the database.
 
 ##Setup##
-1. [Add the jar](#add-jar)
-2. [Setup the driver](#setup-driver)
-3. [Setup the filter](#setup-filter) (optional) 
+1. [Add the jar](#add-the-jar)
+2. [Setup the driver](#setup-the-driver)
+3. [Setup the filter](#setup-the-filter-optional) (optional) 
 4. [Setup a reporter](#reporters)
 
-<a id="add-jar"></a>
+
 ###Add the jar
 In your *pom.xml* file add:
 <pre>
@@ -38,7 +38,7 @@ In your *pom.xml* file add:
 &lt;/dependency&gt;
 </pre>
 
-<a id="setup-driver"></a>
+
 ###Setup the driver
 
 ####Using DataSource####
@@ -58,7 +58,6 @@ Prefix it with <code>jdbcmetrics:</code> like this <code>jdbc:jdbcmetrics:mysql:
 * Specify the underlaying driver, your regular driver, in the url like this <code>jdbc:jdbcmetrics?driver=com.mysql.jdbc.Driver:mysql://localhost:3306/test_db</code><br/>
 JDBCMetricsDriver will then instantiate the driver to use it underneath. If you omit the driver param JDBCMetricsDriver will try to match the url to a driver registered in DriverManager.
 
-<a id="setup-filter"></a>
 ### Setup the filter (optional) 
 
 Add the filter in your *web.xml* file (make sure it run early in the chain):
@@ -84,7 +83,6 @@ Add the filter in your *web.xml* file (make sure it run early in the chain):
 &lt;/filter-mapping&gt;
 </pre>
 
-<a id="reporters"></a>
 ###Reporters###
 **JDBCMetrics** uses the great [Metrics](http://metrics.codahale.com/) as metric backend, that have the following different ways of reporting:
 
