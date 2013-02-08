@@ -143,9 +143,12 @@ you will get two response headers: **nr-of-reads** & **nr-of-writes** holding th
 
 
 ### Getting the log ###
-The log logs at *debug* level to **com.soulgalore.jdbcmetrics.filter.JDBCMetricsFilter**. An log entry will look like this:
-<pre>
+The log logs at *debug* level to **com.soulgalore.jdbcmetrics.filter.JDBCMetricsFilter** and uses **SLF4j**. To setup it up to support your current logging framework, checkout the 
+[documentation](http://www.slf4j.org/manual.html#swapping).
 
+A log entry will look something like this:
+<pre>
+URL: http://www.example.com reads:10 writes:1
 </pre>
 
 
