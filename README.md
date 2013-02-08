@@ -46,7 +46,7 @@ Depending on your current setup, this need to be done in different ways.
 
 ####Using DataSource####
    
-Configure the driver class to be <code>com.soulgalore.jdbcmetrics.driver.JDBCMetricsDriver</code>
+If you can configure the jdbc driver class set it to be <code>com.soulgalore.jdbcmetrics.driver.JDBCMetricsDriver</code>. If you need a DataSource class, hang tight we will fix it soon.
 	
 ####Using DriverManager####
    
@@ -71,8 +71,9 @@ Add the filter in your **web.xml** file (make sure it run early in the chain):
 	&lt;filter-class&gt;
 		com.soulgalore.jdbcmetrics.filter.JDBCMetricsFilter
 	&lt;/filter-class&gt;
-	&lt;param-name&gt;use-headers&lt;/param-name&gt;
-			&lt;param-value&gt;true&lt;/param-value&gt;
+	&lt;init-param&gt;
+		&lt;param-name&gt;use-headers&lt;/param-name&gt;
+		&lt;param-value&gt;true&lt;/param-value&gt;
 	&lt;/init-param&gt;
 	&lt;init-param&gt;
 		&lt;param-name&gt;request-header-name&lt;/param-name&gt;
