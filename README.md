@@ -50,8 +50,8 @@ If you can configure the jdbc driver class set it to be <code>com.soulgalore.jdb
 	
 ####Using DriverManager####
    
-Set the JVM parameter: <code>-Djdbc.drivers=com.soulgalore.jdbcmetrics.driver.JDBCMetricsDriver</code>
-Or load the driver in your code: <code>Class.forName("com.soulgalore.jdbcmetrics.driver.JDBCMetricsDriver");</code>
+The driver is automatically registered in DriverManager (as of JDBC4 in java6). If you need to register it manually either set the JVM parameter <code>-Djdbc.drivers=com.soulgalore.jdbcmetrics.driver.JDBCMetricsDriver</code>
+or load the driver in your code like <code>Class.forName("com.soulgalore.jdbcmetrics.driver.JDBCMetricsDriver");</code>
 
 ####Configure the jdbc url/connect string####
 
@@ -60,7 +60,7 @@ Prefix it with <code>jdbcmetrics:</code> like this <code>jdbc:jdbcmetrics:mysql:
 
 Specify the underlaying driver, your regular driver, in the url like this <code>jdbc:jdbcmetrics?driver=com.mysql.jdbc.Driver:mysql://localhost:3306/test_db</code><br/>
 
-**JDBCMetricsDriver** will then instantiate the driver to use it underneath. If you omit the driver param **JDBCMetricsDriver** will try to match the url to a driver registered in DriverManager.
+**JDBCMetricsDriver** will then instantiate the specified driver to use it underneath. If you omit the driver param **JDBCMetricsDriver** will try to match the url to a driver registered in DriverManager.
 
 ### Setup the filter (optional) 
 
