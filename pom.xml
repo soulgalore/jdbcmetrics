@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.soulgalore</groupId>
 	<artifactId>jdbcmetrics</artifactId>
-	<version>0.5-SNAPSHOT</version>
+	<version>0.9-SNAPSHOT</version>
 	<name>jdbcmetrics</name>
 	<description>Get info from your JDBC driver!</description>
 	<url>https://github.com/soulgalore/jdbcmetrics</url>
