@@ -61,11 +61,7 @@ public class StatementInvocationHandler implements InvocationHandler {
 		} else if ("executeUpdate".equals(method.getName())) {
 			writeStats(1, time);
 		} else if ("execute".equals(method.getName())) {
-			if (args == null) {
-				incStats(sql, time);
-			} else {
-				incStats(args[0].toString(), time);
-			}
+			incStats(args != null ? args[0].toString() : sql, time);
 		} else if ("addBatch".equals(method.getName())) {
 			if (isRead(args[0].toString())) {
 				nrOfBatchReads++;
@@ -76,10 +72,8 @@ public class StatementInvocationHandler implements InvocationHandler {
 			nrOfBatchReads = 0;
 			nrOfBatchWrites = 0;
 		} else if ("executeBatch".equals(method.getName())) {
-			if (nrOfBatchReads > 0)
-				readStats(nrOfBatchReads, time);
-			if (nrOfBatchWrites > 0)
-				writeStats(nrOfBatchWrites, time);
+			readStats(nrOfBatchReads, time);
+			writeStats(nrOfBatchWrites, time);
 			nrOfBatchReads = 0;
 			nrOfBatchWrites = 0;
 		}
@@ -95,6 +89,9 @@ public class StatementInvocationHandler implements InvocationHandler {
 	}
 
 	void readStats(long inc, long time) {
+		if (inc == 0) {
+			return;
+		}
 		for (long i = inc; i > 0; i--) {
 			QueryThreadLocal.addRead();
 		}
@@ -107,6 +104,9 @@ public class StatementInvocationHandler implements InvocationHandler {
 	}
 
 	void writeStats(long inc, long time) {
+		if (inc == 0) {
+			return;
+		}
 		for (long i = inc; i > 0; i--) {
 			QueryThreadLocal.addWrite();
 		}

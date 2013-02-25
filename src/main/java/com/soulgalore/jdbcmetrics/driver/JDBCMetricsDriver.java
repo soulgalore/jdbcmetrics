@@ -36,7 +36,7 @@ import java.util.regex.Pattern;
 
 public class JDBCMetricsDriver implements Driver {
 
-	private static Pattern JDBCMETRICS_IN_URL_PATTERN = Pattern.compile("jdbc\\:(jdbcmetrics(?:\\?driver\\=((?:[\\p{L}_$][\\p{L}\\p{N}_$]*\\.)*[\\p{L}_$][\\p{L}\\p{N}_$]*))?\\:).*");
+	private static final Pattern JDBCMETRICS_IN_URL_PATTERN = Pattern.compile("jdbc\\:(jdbcmetrics(?:\\?driver\\=((?:[\\p{L}_$][\\p{L}\\p{N}_$]*\\.)*[\\p{L}_$][\\p{L}\\p{N}_$]*))?\\:).*");
 	private Map<String, Driver> cachedDrivers = new ConcurrentHashMap<String, Driver>();
 	private ProxyFactory proxyFactory = new ProxyFactory();
 	

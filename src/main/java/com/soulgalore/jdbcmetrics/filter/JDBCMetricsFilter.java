@@ -63,16 +63,16 @@ import com.soulgalore.jdbcmetrics.ReadAndWrites;
  */
 public class JDBCMetricsFilter implements Filter {
 
-	final static String REQUEST_HEADER_NAME_INIT_PARAM_NAME = "request-header-name";
-	final static String USE_HEADERS_INIT_PARAM_NAME = "use-headers";
-	final static String DEFAULT_REQUEST_HEADER_NAME = "jdbcmetrics";
-	final static String RESPONSE_HEADER_NAME_NR_OF_READS = "nr-of-reads";
-	final static String RESPONSE_HEADER_NAME_NR_OF_WRITES = "nr-of-writes";
+	static final String REQUEST_HEADER_NAME_INIT_PARAM_NAME = "request-header-name";
+	static final String USE_HEADERS_INIT_PARAM_NAME = "use-headers";
+	static final String DEFAULT_REQUEST_HEADER_NAME = "jdbcmetrics";
+	static final String RESPONSE_HEADER_NAME_NR_OF_READS = "nr-of-reads";
+	static final String RESPONSE_HEADER_NAME_NR_OF_WRITES = "nr-of-writes";
 
-	final Logger logger = LoggerFactory.getLogger(JDBCMetricsFilter.class);
+	private final Logger logger = LoggerFactory.getLogger(JDBCMetricsFilter.class);
 
-	String requestHeaderName;
-	boolean useHeaders;
+	protected String requestHeaderName;
+	private boolean useHeaders;
 
 	@Override
 	public void destroy() {
@@ -95,17 +95,17 @@ public class JDBCMetricsFilter implements Filter {
 
 				ReadAndWrites rw = QueryThreadLocal.getNrOfQueries();
 				updateStatistics(rw);
-				if (useHeaders)
+				if (useHeaders) {
 					setHeaders(rw, req, responseWrapper);
-
+				}
 				log(req, rw);
 
 				QueryThreadLocal.removeNrOfQueries();
-				if (useHeaders)
+				if (useHeaders) {
 					responseWrapper.write();
+				}
 			}
 		}
-
 	}
 
 	@Override
@@ -113,12 +113,11 @@ public class JDBCMetricsFilter implements Filter {
 
 		requestHeaderName = config
 				.getInitParameter(REQUEST_HEADER_NAME_INIT_PARAM_NAME);
-		if (requestHeaderName == null || "".equals(requestHeaderName))
+		if (requestHeaderName == null || "".equals(requestHeaderName)) {
 			requestHeaderName = DEFAULT_REQUEST_HEADER_NAME;
-
+		}
 		useHeaders = Boolean.valueOf((config
 				.getInitParameter(USE_HEADERS_INIT_PARAM_NAME)));
-
 	}
 
 	private void log(ServletRequest req, ReadAndWrites rw) {
@@ -126,8 +125,9 @@ public class JDBCMetricsFilter implements Filter {
 			StringBuilder builder = new StringBuilder("URL: ");
 			HttpServletRequest request = (HttpServletRequest) req;
 			builder.append(request.getRequestURL());
-			if (request.getQueryString() != null)
+			if (request.getQueryString() != null) {
 				builder.append("?").append(request.getQueryString());
+			}
 			builder.append(" reads:").append(rw.getReads()).append(" writes:")
 					.append(rw.getWrites());
 			logger.debug(builder.toString());

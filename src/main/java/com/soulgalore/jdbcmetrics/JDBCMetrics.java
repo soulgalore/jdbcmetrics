@@ -35,9 +35,9 @@ import com.yammer.metrics.core.MetricsRegistry;
  */
 public class JDBCMetrics {
 
-	private final static String GROUP = "jdbc";
-	private final static String TYPE_READ = "read";
-	private final static String TYPE_WRITE = "write";
+	private static final String GROUP = "jdbc";
+	private static final String TYPE_READ = "read";
+	private static final String TYPE_WRITE = "write";
 	
 	private final MetricsRegistry registry = new MetricsRegistry();
 	
