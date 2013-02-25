@@ -113,4 +113,8 @@ public class JDBCMetrics {
 		return readTimer;
 	}
 	
+	public MetricsRegistry getRegistry() {
+		return registry;
+	}
+	
 }
