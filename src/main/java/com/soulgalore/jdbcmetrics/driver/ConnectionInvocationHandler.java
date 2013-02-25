@@ -21,6 +21,7 @@
 package com.soulgalore.jdbcmetrics.driver;
 
 import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -42,7 +43,13 @@ public class ConnectionInvocationHandler implements InvocationHandler {
 	@Override
 	public Object invoke(Object proxy, Method method, Object[] args)
 			throws Throwable {
-		Object o = method.invoke(connection, args);
+		Object o;
+		try {
+			o = method.invoke(connection, args);
+		} catch (InvocationTargetException e) {
+			throw e.getCause();
+		}
+		
 		if ("createStatement".equals(method.getName())) {
 			o = proxyFactory.statementProxy((Statement) o);
 		} else if ("prepareStatement".equals(method.getName())) {

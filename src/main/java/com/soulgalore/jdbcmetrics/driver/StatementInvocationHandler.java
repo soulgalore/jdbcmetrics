@@ -21,6 +21,7 @@
 package com.soulgalore.jdbcmetrics.driver;
 
 import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.sql.Statement;
 import java.util.concurrent.TimeUnit;
@@ -53,7 +54,12 @@ public class StatementInvocationHandler implements InvocationHandler {
 		// TODO we only need to time the onces that executes a query
 		// this adds a little overhead
 		long start = System.nanoTime();
-		Object o = method.invoke(statement, args);
+		Object o;
+		try {
+			o = method.invoke(statement, args);
+		} catch (InvocationTargetException e) {
+			throw e.getCause();
+		}
 		long time = start - System.nanoTime();
 
 		if ("executeQuery".equals(method.getName())) {
