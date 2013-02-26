@@ -57,12 +57,14 @@ public class JDBCMetricsDriver implements Driver {
 	@Override
 	public Connection connect(String url, Properties info) throws SQLException {
 		final String cleanUrl = cleanUrl(url);
-		Connection connection = getDriver(url, cleanUrl).connect(cleanUrl, info);
-		if (connection != null) {
-			return proxyFactory.connectionProxy(connection);
-		} else {
-			return null;
+		Driver driver = getDriver(url, cleanUrl);
+		if (driver != null) {
+			Connection connection = driver.connect(cleanUrl, info);
+			if (connection != null) {
+				return proxyFactory.connectionProxy(connection);
+			}
 		}
+		return null;
 	}
 
 	@Override
@@ -79,7 +81,11 @@ public class JDBCMetricsDriver implements Driver {
 	public DriverPropertyInfo[] getPropertyInfo(String url, Properties info)
 			throws SQLException {
 		final String cleanUrl = cleanUrl(url);
-		return getDriver(url, cleanUrl).getPropertyInfo(cleanUrl, info);
+		Driver driver = getDriver(url, cleanUrl);
+		if (driver != null) {
+			return driver.getPropertyInfo(cleanUrl, info);
+		}
+		return null;
 	}
 
 	@Override
