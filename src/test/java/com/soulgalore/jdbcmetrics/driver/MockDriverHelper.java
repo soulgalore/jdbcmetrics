@@ -8,22 +8,23 @@ import static org.mockito.Mockito.when;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
 
+import com.soulgalore.jdbcmetrics.Driver;
+
 // Static help class - just register mock drivers once in DriverManager (which is static)
 public class MockDriverHelper {
 
-	static JDBCMetricsDriver driver;
-	static Driver underlayingDriver;
+	static Driver driver;
+	static java.sql.Driver underlayingDriver;
 	
 	static {
 		try {
-			driver = new JDBCMetricsDriver(); // static block registers in driver manager
+			driver = new Driver(); // static block registers in driver manager
 	
 			Connection connection = mock(Connection.class);
 			Statement statement = mock(Statement.class);
@@ -42,7 +43,7 @@ public class MockDriverHelper {
 			when(connection.prepareStatement(anyString(), anyInt(), anyInt())).thenReturn(preparedStatement);
 			when(connection.prepareStatement(anyString(), anyInt(), anyInt(), anyInt())).thenReturn(preparedStatement);
 	
-			underlayingDriver = mock(Driver.class);
+			underlayingDriver = mock(java.sql.Driver.class);
 			when(underlayingDriver.acceptsURL(AbstractDriverTest.URL_KNOWN_DRIVER)).thenReturn(true);
 			when(underlayingDriver.connect(anyString(), any(Properties.class))).thenReturn(connection);
 			

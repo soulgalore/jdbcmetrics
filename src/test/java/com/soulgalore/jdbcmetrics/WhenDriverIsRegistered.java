@@ -1,9 +1,8 @@
-package com.soulgalore.jdbcmetrics.driver;
+package com.soulgalore.jdbcmetrics;
 
 import static org.hamcrest.MatcherAssert.*;
 import static org.hamcrest.Matchers.*;
 
-import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Collections;
@@ -11,14 +10,17 @@ import java.util.List;
 
 import org.junit.Test;
 
+import com.soulgalore.jdbcmetrics.Driver;
+import com.soulgalore.jdbcmetrics.driver.AbstractDriverTest;
+
 public class WhenDriverIsRegistered extends AbstractDriverTest {
 
 	@Test
 	public void driverShouldBeInDriverManager() {
-		List<Driver> driversInManager = Collections.list(DriverManager.getDrivers());
+		List<java.sql.Driver> driversInManager = Collections.list(DriverManager.getDrivers());
         boolean foundJDBCMetricsDriver = false;
-        for (Driver driver : driversInManager) {
-            if (driver instanceof JDBCMetricsDriver) {
+        for (java.sql.Driver driver : driversInManager) {
+            if (driver instanceof Driver) {
                 foundJDBCMetricsDriver = true;
                 break;
             }
@@ -29,9 +31,9 @@ public class WhenDriverIsRegistered extends AbstractDriverTest {
 
 	@Test
 	public void driverShouldBeLocatedByKnownUrl() throws SQLException {
-		Driver d = DriverManager.getDriver(URL_JDBC_METRICS);
+		java.sql.Driver d = DriverManager.getDriver(URL_JDBC_METRICS);
 		assertThat("JDBCMetricsDriver should be registered in DriverManager and understand url", d, notNullValue());
-		assertThat(d, instanceOf(JDBCMetricsDriver.class));
+		assertThat(d, instanceOf(Driver.class));
 	}
 	
 	@Test(expected=SQLException.class)

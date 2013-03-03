@@ -18,7 +18,7 @@
  *
  *******************************************************
  */
-package com.soulgalore.jdbcmetrics.driver;
+package com.soulgalore.jdbcmetrics.proxy;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;

@@ -18,10 +18,9 @@
  *
  *******************************************************
  */
-package com.soulgalore.jdbcmetrics.driver;
+package com.soulgalore.jdbcmetrics;
 
 import java.sql.Connection;
-import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.DriverPropertyInfo;
 import java.sql.SQLException;
@@ -34,15 +33,17 @@ import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class JDBCMetricsDriver implements Driver {
+import com.soulgalore.jdbcmetrics.proxy.ProxyFactory;
+
+public class Driver implements java.sql.Driver {
 
 	private static final Pattern JDBCMETRICS_IN_URL_PATTERN = Pattern.compile("jdbc\\:(jdbcmetrics(?:\\?driver\\=((?:[\\p{L}_$][\\p{L}\\p{N}_$]*\\.)*[\\p{L}_$][\\p{L}\\p{N}_$]*))?\\:).*");
-	private Map<String, Driver> cachedDrivers = new ConcurrentHashMap<String, Driver>();
+	private Map<String, java.sql.Driver> cachedDrivers = new ConcurrentHashMap<String, java.sql.Driver>();
 	private ProxyFactory proxyFactory = new ProxyFactory();
 	
 	static {
 		try {
-			DriverManager.registerDriver(new JDBCMetricsDriver());
+			DriverManager.registerDriver(new Driver());
 		} catch (SQLException e) {
 			throw new RuntimeException("JDBCMetrics could not register driver", e);
 		}
@@ -60,7 +61,7 @@ public class JDBCMetricsDriver implements Driver {
 	@Override
 	public Connection connect(String url, Properties info) throws SQLException {
 		final String cleanUrl = cleanUrl(url);
-		Driver driver = getDriver(url, cleanUrl);
+		java.sql.Driver driver = getDriver(url, cleanUrl);
 		if (driver != null) {
 			Connection connection = driver.connect(cleanUrl, info);
 			if (connection != null) {
@@ -84,7 +85,7 @@ public class JDBCMetricsDriver implements Driver {
 	public DriverPropertyInfo[] getPropertyInfo(String url, Properties info)
 			throws SQLException {
 		final String cleanUrl = cleanUrl(url);
-		Driver driver = getDriver(url, cleanUrl);
+		java.sql.Driver driver = getDriver(url, cleanUrl);
 		if (driver != null) {
 			return driver.getPropertyInfo(cleanUrl, info);
 		}
@@ -101,8 +102,8 @@ public class JDBCMetricsDriver implements Driver {
 		throw new SQLFeatureNotSupportedException();
 	}
 
-	protected Driver getDriver(String url, String cleanUrl) throws SQLException {
-		Driver driver = cachedDrivers.get(url);
+	protected java.sql.Driver getDriver(String url, String cleanUrl) throws SQLException {
+		java.sql.Driver driver = cachedDrivers.get(url);
 		if (driver == null) {
 			final String className = getSpecifiedDriverClassName(url);
 			if (className != null) {
@@ -117,10 +118,10 @@ public class JDBCMetricsDriver implements Driver {
 		return driver;
 	}
 
-	protected Driver getDriverFromDriverManager(String cleanUrl) throws SQLException {
-		Enumeration<Driver> drivers = DriverManager.getDrivers();
+	protected java.sql.Driver getDriverFromDriverManager(String cleanUrl) throws SQLException {
+		Enumeration<java.sql.Driver> drivers = DriverManager.getDrivers();
 		while (drivers.hasMoreElements()) {
-			Driver driver = drivers.nextElement();
+			java.sql.Driver driver = drivers.nextElement();
 			if (driver.acceptsURL(cleanUrl)) {
 				return driver;
 			}

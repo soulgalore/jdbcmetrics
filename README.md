@@ -45,12 +45,12 @@ Depending on your current setup, this need to be done in different ways.
 
 ####Using DataSource####
    
-If you can configure the jdbc driver class set it to be <code>com.soulgalore.jdbcmetrics.driver.JDBCMetricsDriver</code>. If you need a DataSource class, hang tight we will fix it soon.
+If you can configure the jdbc driver class set it to be <code>com.soulgalore.jdbcmetrics.Driver</code>. If you need a DataSource class, hang tight we will fix it soon.
 	
 ####Using DriverManager####
    
-The driver is automatically registered in DriverManager (as of JDBC4 in java6). If you need to register it manually either set the JVM parameter <code>-Djdbc.drivers=com.soulgalore.jdbcmetrics.driver.JDBCMetricsDriver</code>
-or load the driver in your code like <code>Class.forName("com.soulgalore.jdbcmetrics.driver.JDBCMetricsDriver");</code>
+The driver is automatically registered in DriverManager (as of JDBC4 in java6). If you need to register it manually either set the JVM parameter <code>-Djdbc.drivers=com.soulgalore.jdbcmetrics.Driver</code>
+or load the driver in your code like <code>Class.forName("com.soulgalore.jdbcmetrics.Driver");</code>
 
 ####Configure the jdbc url/connect string####
 

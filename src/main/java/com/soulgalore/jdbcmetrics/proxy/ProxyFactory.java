@@ -18,7 +18,7 @@
  *
  *******************************************************
  */
-package com.soulgalore.jdbcmetrics.driver;
+package com.soulgalore.jdbcmetrics.proxy;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;
@@ -27,11 +27,22 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 
+import javax.sql.PooledConnection;
+import javax.sql.XAConnection;
+
 public class ProxyFactory {
 
     public Connection connectionProxy(Connection connection) {
     	return createProxy(Connection.class, new ConnectionInvocationHandler(connection, this));
     }
+
+	public PooledConnection pooledConnectionProxy(PooledConnection connection) {
+		return createProxy(PooledConnection.class, new PooledConnectionInvocationHandler(connection, this));
+	}
+
+	public XAConnection xaConnectionProxy(XAConnection connection) {
+		return createProxy(XAConnection.class, new PooledConnectionInvocationHandler(connection, this));
+	}
 
 	public Statement statementProxy(Statement statement) {
     	return createProxy(Statement.class, new StatementInvocationHandler(statement));

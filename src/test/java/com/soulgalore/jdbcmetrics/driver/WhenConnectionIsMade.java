@@ -12,6 +12,8 @@ import java.sql.SQLException;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.soulgalore.jdbcmetrics.proxy.ConnectionInvocationHandler;
+
 public class WhenConnectionIsMade extends AbstractDriverTest {
 
 	@Before

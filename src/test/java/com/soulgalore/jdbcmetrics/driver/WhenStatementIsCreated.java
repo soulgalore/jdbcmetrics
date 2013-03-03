@@ -13,6 +13,8 @@ import java.sql.Statement;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.soulgalore.jdbcmetrics.proxy.StatementInvocationHandler;
+
 public class WhenStatementIsCreated extends AbstractDriverTest {
 
 	private Connection connection;

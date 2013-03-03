@@ -1,6 +1,6 @@
 package com.soulgalore.jdbcmetrics.driver;
 
-import java.sql.Driver;
+import com.soulgalore.jdbcmetrics.Driver;
 
 public abstract class AbstractDriverTest {
 
@@ -9,7 +9,7 @@ public abstract class AbstractDriverTest {
 	public static final String URL_KNOWN_DRIVER =  "jdbc:realDriver:someFancyUrl:3306?doit";
 	public static final String URL_UNKNOWN =  "jdbc:someDriver:someFancyUrl:3306?doit";
 	
-	public JDBCMetricsDriver driver = MockDriverHelper.driver;
-	public Driver underlayingDriver = MockDriverHelper.underlayingDriver;
+	public Driver driver = MockDriverHelper.driver;
+	public java.sql.Driver underlayingDriver = MockDriverHelper.underlayingDriver;
 	
 }
