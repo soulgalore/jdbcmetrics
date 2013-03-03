@@ -50,6 +50,9 @@ public class JDBCMetricsDriver implements Driver {
 	
 	@Override
 	public boolean acceptsURL(String url) throws SQLException {
+		if (url == null) {
+			return false;
+		}
 		Matcher m = JDBCMETRICS_IN_URL_PATTERN.matcher(url);
 		return m.matches();
 	}
