@@ -1,0 +1,7 @@
+CHANGELOG jdbcmetrics
+
+
+version 0.9.1
+--------------------------
+* Introduced the changelog
+* Made the MetricsRegistry public availiable
