@@ -1,7 +1,12 @@
 CHANGELOG jdbcmetrics
 
 
-version 0.9.1
+version 1.0-SNAPSHOT
 --------------------------
 * Introduced the changelog
 * Made the MetricsRegistry public availiable
+
+
+version	 0.9
+--------------------------
+* Initial release
