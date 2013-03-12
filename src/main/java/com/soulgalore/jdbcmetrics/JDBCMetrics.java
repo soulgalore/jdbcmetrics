@@ -36,6 +36,7 @@ import com.yammer.metrics.core.MetricsRegistry;
 public class JDBCMetrics {
 
 	private static final String GROUP = "jdbc";
+	private static final String GROUP_POOL = "connectionpool";
 	private static final String TYPE_READ = "read";
 	private static final String TYPE_WRITE = "write";
 	
@@ -64,6 +65,9 @@ public class JDBCMetrics {
 	
 	private final Timer readTimer = registry.newTimer(new MetricName(GROUP,
 			TYPE_WRITE, "read-time"), TimeUnit.MILLISECONDS, TimeUnit.SECONDS);
+	
+	private final Timer connectionPoolTimer = registry.newTimer(new MetricName(GROUP_POOL,
+			TYPE_WRITE, "wait-for-connection"), TimeUnit.MILLISECONDS, TimeUnit.SECONDS);
 	
 	
 	private static final JDBCMetrics INSTANCE = new JDBCMetrics();
@@ -111,6 +115,10 @@ public class JDBCMetrics {
 	
 	public Timer getReadTimer() {
 		return readTimer;
+	}
+	
+	public Timer getWaitForConnectionInPool() {
+		return connectionPoolTimer;
 	}
 	
 	public MetricsRegistry getRegistry() {
