@@ -45,16 +45,21 @@ Depending on your current setup, this need to be done in different ways.
 
 ####Using DataSource####
    
-If you can configure the jdbc driver class set it to be <code>com.soulgalore.jdbcmetrics.driver.JDBCMetricsDriver</code>. If you need a DataSource class, hang tight we will fix it soon.
+The idea is to change the existing data sources name and create a new JDBCMetrics data source that wraps/proxies the existing and name it with the real data sources original name. You feed it with either the real data source or it's new name (like "java:/comp/env/jdbc/testDS" or "jdbc/testDS").
+This can be done as contructor parameters or by setters named "dataSource" or "referenceName". The classes are <code>com.soulgalore.jdbcmetrics.DataSource, ConnectionPoolDataSource, XADataSource</code>.
+
+You can also use the factory <code>com.soulgalore.jdbcmetrics.DataSourceFactory</code> with the params "referenceName" (like "java:/comp/env/jdbc/testDS" or "jdbc/testDS") and "className" which is the type to use (as above, defaults to the DataSouce class if left out).
+
+If you need to pass along the resources in web.xml, don't forget to add the real one with the new name.
+
+If your existing data source can be configured with any jdbc driver, you can use the "Using DriverManager" method instead.
 	
 ####Using DriverManager####
    
-The driver is automatically registered in DriverManager (as of JDBC4 in java6). If you need to register it manually either set the JVM parameter <code>-Djdbc.drivers=com.soulgalore.jdbcmetrics.driver.JDBCMetricsDriver</code>
-or load the driver in your code like <code>Class.forName("com.soulgalore.jdbcmetrics.driver.JDBCMetricsDriver");</code>
+The driver is automatically registered in DriverManager (as of JDBC4 in java6). If you need to register it manually either set the JVM parameter <code>-Djdbc.drivers=com.soulgalore.jdbcmetrics.Driver</code>
+or load the driver in your code like <code>Class.forName("com.soulgalore.jdbcmetrics.Driver");</code>
 
-####Configure the jdbc url/connect string####
-
-If your existing connect string looks like this: <code>jdbc:mysql://localhost:3306/test_db</code><br/>
+Then configure the jdbc url/connect string. If your existing connect string looks like this: <code>jdbc:mysql://localhost:3306/test_db</code><br/>
 Prefix it with <code>jdbcmetrics:</code> like this <code>jdbc:jdbcmetrics:mysql://localhost:3306/test_db</code>
 
 Specify the underlaying driver, your regular driver, in the url like this <code>jdbc:jdbcmetrics?driver=com.mysql.jdbc.Driver:mysql://localhost:3306/test_db</code><br/>
