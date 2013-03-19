@@ -129,14 +129,14 @@ public class Driver implements java.sql.Driver {
 		return null;
 	}
 
-	protected Driver getDriverByClassName(String className) {
+	protected java.sql.Driver getDriverByClassName(String className) {
 		try {
 			Class<?> c = Class.forName(className);
 			Object o = c.newInstance();
-			if (o instanceof Driver) {
-				return (Driver) o;
+			if (o instanceof java.sql.Driver) {
+				return (java.sql.Driver) o;
 			} else {
-				return null;
+				throw new RuntimeException("JDBCMetrics could cast " + className + " to java.sql.Driver");
 			}
 		} catch (ClassNotFoundException e) {
 			throw new RuntimeException("JDBCMetrics could not find driver class", e);
