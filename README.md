@@ -81,7 +81,7 @@ Add the filter in your **web.xml** file (make sure it run early in the chain):
 	&lt;/init-param&gt;
 	&lt;init-param&gt;
 		&lt;param-name&gt;request-header-name&lt;/param-name&gt;
-		&lt;param-value&gt;query-statistics&lt;/param-value&gt;
+		&lt;param-value&gt;jdbcmetrics&lt;/param-value&gt;
 	&lt;/init-param&gt;
 &lt;/filter&gt;
 </pre>
