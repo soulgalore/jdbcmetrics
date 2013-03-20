@@ -39,10 +39,14 @@ import com.yammer.metrics.core.MetricsRegistry;
  */
 public class JDBCMetrics {
 
+	public static final String REGISTRY_PROPERTY_NAME = "com.soulgalore.jdbcmetrics.MetricRegistry";
+	
 	private static final String GROUP = "jdbc";
 	private static final String GROUP_POOL = "connectionpool";
 	private static final String TYPE_READ = "read";
 	private static final String TYPE_WRITE = "write";
+
+	private static final String REGISTRY_DEFAULT = "default";
 	
 	private final MetricsRegistry registry; 
 	
@@ -56,14 +60,13 @@ public class JDBCMetrics {
 	private final Timer readTimer;
 	private final Timer connectionPoolTimer;
 	
-	
 	private static final JDBCMetrics INSTANCE = new JDBCMetrics();
 
 	
 	private JDBCMetrics() {
 		
-		String propertyValue = System.getProperty("com.soulgalore.jdbcmetrics.MetricRegistry","default");
-		if ("default".equals(propertyValue))
+		String propertyValue = System.getProperty(REGISTRY_PROPERTY_NAME,REGISTRY_DEFAULT);
+		if (REGISTRY_DEFAULT.equals(propertyValue))
 			registry = Metrics.defaultRegistry();
 		else
 			registry = new MetricsRegistry();
