@@ -1,9 +1,11 @@
 CHANGELOG jdbcmetrics
 
+version  0.9.3
+--------------------------
+
 version	 0.9.2
 --------------------------
 * Make it possible to use Metrics default MetricRegistry
-
 
 version	 0.9.1
 --------------------------
