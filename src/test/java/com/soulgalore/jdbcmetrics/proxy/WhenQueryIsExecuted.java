@@ -1,4 +1,4 @@
-package com.soulgalore.jdbcmetrics.driver;
+package com.soulgalore.jdbcmetrics.proxy;
 
 import static org.hamcrest.MatcherAssert.*;
 import static org.hamcrest.Matchers.*;

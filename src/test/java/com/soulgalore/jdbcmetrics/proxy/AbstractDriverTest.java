@@ -1,4 +1,4 @@
-package com.soulgalore.jdbcmetrics.driver;
+package com.soulgalore.jdbcmetrics.proxy;
 
 import com.soulgalore.jdbcmetrics.Driver;
 

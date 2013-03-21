@@ -1,4 +1,4 @@
-package com.soulgalore.jdbcmetrics.driver;
+package com.soulgalore.jdbcmetrics.proxy;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyInt;

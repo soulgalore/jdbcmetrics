@@ -11,7 +11,7 @@ import java.util.List;
 import org.junit.Test;
 
 import com.soulgalore.jdbcmetrics.Driver;
-import com.soulgalore.jdbcmetrics.driver.AbstractDriverTest;
+import com.soulgalore.jdbcmetrics.proxy.AbstractDriverTest;
 
 public class WhenDriverIsRegistered extends AbstractDriverTest {
 
