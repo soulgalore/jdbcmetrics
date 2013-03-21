@@ -121,7 +121,7 @@ public class JDBCMetricsFilter implements Filter {
 	}
 
 	private void log(ServletRequest req, ReadAndWrites rw) {
-		if (logger.isDebugEnabled()) {
+		if (logger.isDebugEnabled() && (rw.getReads()>0 || rw.getWrites()>0)) {
 			StringBuilder builder = new StringBuilder("URL: ");
 			HttpServletRequest request = (HttpServletRequest) req;
 			builder.append(request.getRequestURL());
