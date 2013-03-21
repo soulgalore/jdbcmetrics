@@ -111,6 +111,43 @@ public class WhenQueryIsExecuted extends AbstractDriverTest {
 		assertThat(reads(), is(0));
 		assertThat(writes(), is(1));
 	}
+	
+	@Test
+	public void allPrepareStatementsExecuteShouldIncreaseCounter() throws SQLException {
+
+		PreparedStatement pst = null;
+		try {
+			pst = connection.prepareStatement("SELECT 1");
+			pst.execute();
+			assertThat(reads(), is(1));
+			assertThat(writes(), is(0));
+			pst.executeQuery();
+			assertThat(reads(), is(2));
+			assertThat(writes(), is(0));
+			pst.execute("SELECT 2");
+			assertThat(reads(), is(3));
+			assertThat(writes(), is(0));
+			pst.execute("SELECT 1", 1);
+			assertThat(reads(), is(4));
+			assertThat(writes(), is(0));
+			pst.execute("SELECT 1,2", new int[] { 1, 2 });
+			assertThat(reads(), is(5));
+			assertThat(writes(), is(0));
+			pst.execute("SELECT 1", new String[] { "mycolumn" });
+			assertThat(reads(), is(6));
+			assertThat(writes(), is(0));
+			pst.addBatch("SELECT 1");
+			pst.addBatch("SELECT 2");
+			pst.executeBatch();
+			assertThat(reads(), is(8));
+			assertThat(writes(), is(0));
+			
+		} finally {
+			if (pst != null)
+				pst.close();
+		}
+		
+	}
 
 	private int reads() {
 		return QueryThreadLocal.getNrOfQueries().getReads();
