@@ -1,5 +1,9 @@
 CHANGELOG jdbcmetrics
 
+version  0.9.5
+--------------------------
+
+
 version  0.9.4
 --------------------------
 * Only log when queries are executed, meaning accessing a page that don't do a database query will not result in any log
