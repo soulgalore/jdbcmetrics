@@ -58,6 +58,11 @@ public class WhenDriverIsRegistered extends AbstractDriverTest {
 	}
 
 	@Test
+	public void underlayingDriverShouldExistInDriverManager() throws SQLException {
+		assertThat("Should be the underlaying driver", driver.getDriverFromDriverManager(driver.cleanUrl(URL_KNOWN_DRIVER)), sameInstance(underlayingDriver));
+	}
+
+	@Test
 	public void underlayingDriverShouldExist() throws SQLException {
 		assertThat("Should be the underlaying driver", driver.getDriver(URL_JDBC_METRICS, URL_KNOWN_DRIVER), sameInstance(underlayingDriver));
 	}
@@ -71,4 +76,34 @@ public class WhenDriverIsRegistered extends AbstractDriverTest {
 	public void specifiedDriverClassNameShouldNotBeFoundInUrl() {
 		assertThat(driver.getSpecifiedDriverClassName(URL_JDBC_METRICS), nullValue());
 	}
+	
+	@Test(expected = RuntimeException.class)
+	public void driverByNonExistingClassNameShouldThrow() {
+		driver.getDriverByClassName("non.existing.Class");
+	}
+	
+	@Test(expected = RuntimeException.class)
+	public void driverByClassNameNotImplementingDriverShouldThrow() {
+		driver.getDriverByClassName(String.class.getName());
+	}
+	
+	@Test
+	public void driverByClassNameShouldReturn() {
+		java.sql.Driver d = driver.getDriverByClassName(Driver.class.getName());
+		assertThat(d, notNullValue());
+		assertThat("Should be jdbcmetrics driver", d.getClass().equals(Driver.class));
+	}
+	
+	@Test
+	public void shouldAcceptUrl() throws SQLException {
+		assertThat(driver.acceptsURL(URL_JDBC_METRICS), is(true));
+		assertThat(driver.acceptsURL(URL_JDBC_METRICS_SPECIFIED_DRIVER), is(true));
+	}
+	
+	@Test
+	public void shouldNotAcceptUrl() throws SQLException {
+		assertThat(driver.acceptsURL(URL_KNOWN_DRIVER), is(false));
+		assertThat(driver.acceptsURL(URL_UNKNOWN), is(false));
+	}
+
 }
