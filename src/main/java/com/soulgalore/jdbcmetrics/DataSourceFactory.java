@@ -51,7 +51,7 @@ public class DataSourceFactory implements ObjectFactory {
 		return new DataSource(resourceName);
 	}
 	
-	private String getRefString(Reference reference, String name) {
+	protected String getRefString(Reference reference, String name) {
 		RefAddr refAddr = reference.get(name);
 		if (refAddr != null) {
 			String s = (String)refAddr.getContent();
