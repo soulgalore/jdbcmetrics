@@ -26,6 +26,9 @@ import java.lang.reflect.Method;
 import java.sql.Statement;
 import java.util.concurrent.TimeUnit;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.soulgalore.jdbcmetrics.JDBCMetrics;
 import com.soulgalore.jdbcmetrics.QueryThreadLocal;
 
@@ -33,6 +36,8 @@ public class StatementInvocationHandler implements InvocationHandler {
 
 	private final Statement statement;
 	private final String sql;
+
+	private final Logger logger = LoggerFactory.getLogger(StatementInvocationHandler.class);
 
 	private long nrOfBatchReads = 0;
 	private long nrOfBatchWrites = 0;
@@ -83,6 +88,12 @@ public class StatementInvocationHandler implements InvocationHandler {
 			nrOfBatchReads = 0;
 			nrOfBatchWrites = 0;
 		}
+		
+		if (logger.isDebugEnabled()) {
+			logger.debug((method.getName() + " " + args != null ? args[0]
+					.toString() : sql));
+		}
+		
 		return o;
 	}
 
