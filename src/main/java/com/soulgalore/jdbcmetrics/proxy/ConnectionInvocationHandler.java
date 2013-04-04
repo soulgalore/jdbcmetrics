@@ -30,8 +30,8 @@ import java.sql.Statement;
 
 public class ConnectionInvocationHandler implements InvocationHandler {
 
-	private Connection connection;
-	private ProxyFactory proxyFactory;
+	private final Connection connection;
+	private final ProxyFactory proxyFactory;
 	
 	public ConnectionInvocationHandler(Connection connection,
 			ProxyFactory proxyFactory) {

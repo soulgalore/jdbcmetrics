@@ -38,8 +38,8 @@ import com.soulgalore.jdbcmetrics.proxy.ProxyFactory;
 public class Driver implements java.sql.Driver {
 
 	private static final Pattern JDBCMETRICS_IN_URL_PATTERN = Pattern.compile("jdbc\\:(jdbcmetrics(?:\\?driver\\=((?:[\\p{L}_$][\\p{L}\\p{N}_$]*\\.)*[\\p{L}_$][\\p{L}\\p{N}_$]*))?\\:).*");
-	private Map<String, java.sql.Driver> cachedDrivers = new ConcurrentHashMap<String, java.sql.Driver>();
-	private ProxyFactory proxyFactory = new ProxyFactory();
+	private final Map<String, java.sql.Driver> cachedDrivers = new ConcurrentHashMap<String, java.sql.Driver>();
+	private final ProxyFactory proxyFactory = new ProxyFactory();
 	
 	static {
 		try {

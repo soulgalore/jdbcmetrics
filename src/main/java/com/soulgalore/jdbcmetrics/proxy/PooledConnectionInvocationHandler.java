@@ -29,8 +29,8 @@ import javax.sql.PooledConnection;
 
 public class PooledConnectionInvocationHandler implements InvocationHandler {
 
-	private PooledConnection connection;
-	private ProxyFactory proxyFactory;
+	private final PooledConnection connection;
+	private final ProxyFactory proxyFactory;
 	
 	public PooledConnectionInvocationHandler(PooledConnection connection, ProxyFactory proxyFactory) {
 		this.connection = connection;

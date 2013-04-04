@@ -40,8 +40,8 @@ import com.soulgalore.jdbcmetrics.proxy.ProxyFactory;
 public abstract class AbstractCommonDataSource<T extends CommonDataSource> implements CommonDataSource,
 		Referenceable, Serializable {
 
-	protected transient ProxyFactory proxyFactory = new ProxyFactory();
-	private transient AtomicBoolean initialized = new AtomicBoolean();
+	protected final transient ProxyFactory proxyFactory = new ProxyFactory();
+	private final transient AtomicBoolean initialized = new AtomicBoolean();
 	private transient T dataSource;
 	
 	private String referenceName;

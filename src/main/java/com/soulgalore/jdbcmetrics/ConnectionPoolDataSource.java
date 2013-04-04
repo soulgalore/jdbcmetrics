@@ -31,7 +31,7 @@ import com.yammer.metrics.core.TimerContext;
 public class ConnectionPoolDataSource extends AbstractCommonDataSource<javax.sql.ConnectionPoolDataSource>
 		implements javax.sql.ConnectionPoolDataSource {
 
-	private Timer timer;
+	private final Timer timer;
 	public ConnectionPoolDataSource() {
 		super();
 		timer = JDBCMetrics.getInstance().getWaitForConnectionInPool();

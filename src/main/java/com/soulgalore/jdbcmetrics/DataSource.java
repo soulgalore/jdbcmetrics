@@ -60,7 +60,7 @@ public class DataSource extends AbstractCommonDataSource<javax.sql.DataSource> i
 	@Override
 	public Connection getConnection(String username, String password)
 			throws SQLException {
-		Connection connection = getDataSource().getConnection(username, password);
+		final Connection connection = getDataSource().getConnection(username, password);
 		if (connection != null) {
 			return proxyFactory.connectionProxy(connection);
 		}

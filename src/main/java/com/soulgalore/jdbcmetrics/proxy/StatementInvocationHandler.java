@@ -31,8 +31,8 @@ import com.soulgalore.jdbcmetrics.QueryThreadLocal;
 
 public class StatementInvocationHandler implements InvocationHandler {
 
-	private Statement statement;
-	private String sql;
+	private final Statement statement;
+	private final String sql;
 
 	private long nrOfBatchReads = 0;
 	private long nrOfBatchWrites = 0;
@@ -53,14 +53,14 @@ public class StatementInvocationHandler implements InvocationHandler {
 
 		// TODO we only need to time the onces that executes a query
 		// this adds a little overhead
-		long start = System.nanoTime();
+		final long start = System.nanoTime();
 		Object o;
 		try {
 			o = method.invoke(statement, args);
 		} catch (InvocationTargetException e) {
 			throw e.getCause();
 		}
-		long time = start - System.nanoTime();
+		final long time = start - System.nanoTime();
 
 		if ("executeQuery".equals(method.getName())) {
 			readStats(1, time);
