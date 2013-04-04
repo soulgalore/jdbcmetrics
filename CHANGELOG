@@ -4,6 +4,7 @@ version  0.9.5
 --------------------------
 * Fixed defect: The read time was categorised as a JDBC write, that is wrong.
 * Connection pools stats are now categorised as reads or writes.
+* Code cleanup
 
 version  0.9.4
 --------------------------
