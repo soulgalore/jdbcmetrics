@@ -45,7 +45,8 @@ public class JDBCMetrics {
 	private static final String GROUP_POOL = "connectionpool";
 	private static final String TYPE_READ = "read";
 	private static final String TYPE_WRITE = "write";
-
+	private static final String TYPE_READ_OR_WRITE = "readorwrite";
+	
 	private static final String REGISTRY_DEFAULT = "default";
 	
 	private final MetricsRegistry registry; 
@@ -93,10 +94,10 @@ public class JDBCMetrics {
 					TYPE_WRITE, "write-time"), TimeUnit.MILLISECONDS, TimeUnit.SECONDS);
 		 
 		 readTimer = registry.newTimer(new MetricName(GROUP,
-					TYPE_WRITE, "read-time"), TimeUnit.MILLISECONDS, TimeUnit.SECONDS);
+					TYPE_READ, "read-time"), TimeUnit.MILLISECONDS, TimeUnit.SECONDS);
 		 
 		 connectionPoolTimer = registry.newTimer(new MetricName(GROUP_POOL,
-					TYPE_WRITE, "wait-for-connection"), TimeUnit.MILLISECONDS, TimeUnit.SECONDS);
+				 TYPE_READ_OR_WRITE, "wait-for-connection"), TimeUnit.MILLISECONDS, TimeUnit.SECONDS);
 	}
 
 	/**
