@@ -4,7 +4,8 @@ version  0.9.5
 --------------------------
 * Fixed defect: The read time was categorised as a JDBC write, that is wrong.
 * Connection pools stats are now categorised as reads or writes.
-* Code cleanup
+* Code cleanup.
+* Debug log setup for com.soulgalore.jdbcmetrics.proxy.StatementInvocationHandler that will log every proxied query.
 
 version  0.9.4
 --------------------------
