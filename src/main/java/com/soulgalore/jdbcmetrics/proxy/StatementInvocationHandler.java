@@ -34,12 +34,12 @@ import com.soulgalore.jdbcmetrics.QueryThreadLocal;
 
 public class StatementInvocationHandler implements InvocationHandler {
 
-	private final static String METHOD_NAME_EXECUTE_QUERY = "executeQuery";
-	private final static String METHOD_NAME_EXECUTE_UPDATE = "executeUpdate";
-	private final static String METHOD_NAME_EXECUTE = "execute";
-	private final static String METHOD_NAME_EXECUTE_ADD_BATCH = "addBatch";
-	private final static String METHOD_NAME_EXECUTE_CLEAR_BATCH = "clearBatch";
-	private final static String METHOD_NAME_EXECUTE_EXECUTE_BATCH = "executeBatch";
+	private static final String METHOD_NAME_EXECUTE_QUERY = "executeQuery";
+	private static final String METHOD_NAME_EXECUTE_UPDATE = "executeUpdate";
+	private static final String METHOD_NAME_EXECUTE = "execute";
+	private static final String METHOD_NAME_ADD_BATCH = "addBatch";
+	private static final String METHOD_NAME_CLEAR_BATCH = "clearBatch";
+	private static final String METHOD_NAME_EXECUTE_BATCH = "executeBatch";
 	
 	private final Statement statement;
 	private final String sql;
@@ -82,16 +82,16 @@ public class StatementInvocationHandler implements InvocationHandler {
 			writeStats(1, time);
 		} else if (METHOD_NAME_EXECUTE.equals(method.getName())) {
 			incStats(args != null ? args[0].toString() : sql, time);
-		} else if (METHOD_NAME_EXECUTE_ADD_BATCH.equals(method.getName())) {
+		} else if (METHOD_NAME_ADD_BATCH.equals(method.getName())) {
 			if (isRead(args[0].toString())) {
 				nrOfBatchReads++;
 			} else {
 				nrOfBatchWrites++;
 			}
-		} else if (METHOD_NAME_EXECUTE_CLEAR_BATCH.equals(method.getName())) {
+		} else if (METHOD_NAME_CLEAR_BATCH.equals(method.getName())) {
 			nrOfBatchReads = 0;
 			nrOfBatchWrites = 0;
-		} else if (METHOD_NAME_EXECUTE_EXECUTE_BATCH.equals(method.getName())) {
+		} else if (METHOD_NAME_EXECUTE_BATCH.equals(method.getName())) {
 			readStats(nrOfBatchReads, time);
 			writeStats(nrOfBatchWrites, time);
 			nrOfBatchReads = 0;
