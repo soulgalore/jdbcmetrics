@@ -103,9 +103,9 @@ public class StatementInvocationHandler implements InvocationHandler {
 		
 		if (logger.isDebugEnabled() && isTouched) {
 			logger.debug((method.getName() + " " + args != null ? args[0]
-					.toString() : sql));
+					.toString() : sql) + " " + time + " ns");
 		}
-		
+
 		return o;
 	}
 
