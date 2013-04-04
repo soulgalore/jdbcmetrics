@@ -63,6 +63,8 @@ public class StatementInvocationHandler implements InvocationHandler {
 	public Object invoke(Object proxy, Method method, Object[] args)
 			throws Throwable {
 
+		boolean isTouched = true;
+		
 		// TODO we only need to time the onces that executes a query
 		// this adds a little overhead
 		final long start = System.nanoTime();
@@ -95,8 +97,11 @@ public class StatementInvocationHandler implements InvocationHandler {
 			nrOfBatchReads = 0;
 			nrOfBatchWrites = 0;
 		}
+		else {
+			isTouched = false;
+		}
 		
-		if (logger.isDebugEnabled()) {
+		if (logger.isDebugEnabled() && isTouched) {
 			logger.debug((method.getName() + " " + args != null ? args[0]
 					.toString() : sql));
 		}
