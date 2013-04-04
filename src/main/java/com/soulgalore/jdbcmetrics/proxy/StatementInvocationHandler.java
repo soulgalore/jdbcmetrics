@@ -40,10 +40,10 @@ public class StatementInvocationHandler implements InvocationHandler {
 	private static final String METHOD_NAME_ADD_BATCH = "addBatch";
 	private static final String METHOD_NAME_CLEAR_BATCH = "clearBatch";
 	private static final String METHOD_NAME_EXECUTE_BATCH = "executeBatch";
-	
+
 	private final Statement statement;
 	private final String sql;
-
+	
 	private final Logger logger = LoggerFactory.getLogger(StatementInvocationHandler.class);
 
 	private long nrOfBatchReads = 0;
@@ -102,9 +102,10 @@ public class StatementInvocationHandler implements InvocationHandler {
 		}
 		
 		if (logger.isDebugEnabled() && isTouched) {
-			// TODO catch addBatch
-			logger.debug((method.getName() + " " + args != null ? args[0]
-					.toString() : sql) + " " + time + " ns");
+			logger.debug(method.getName()
+					+ " "
+					+ (args != null ? args[0].toString() : (sql != null ? sql
+							: "")) + " " + time + " ns");
 		}
 
 		return o;
