@@ -102,6 +102,7 @@ public class StatementInvocationHandler implements InvocationHandler {
 		}
 		
 		if (logger.isDebugEnabled() && isTouched) {
+			// TODO catch addBatch
 			logger.debug((method.getName() + " " + args != null ? args[0]
 					.toString() : sql) + " " + time + " ns");
 		}
