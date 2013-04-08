@@ -74,7 +74,7 @@ public class StatementInvocationHandler implements InvocationHandler {
 		} catch (InvocationTargetException e) {
 			throw e.getCause();
 		}
-		final long time = start - System.nanoTime();
+		final long time =  System.nanoTime() - start;
 
 		if (METHOD_NAME_EXECUTE_QUERY.equals(method.getName())) {
 			readStats(1, time);
