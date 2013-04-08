@@ -1,5 +1,9 @@
 CHANGELOG jdbcmetrics
 
+version  0.9.7
+--------------------------
+
+
 version  0.9.6
 --------------------------
 * Fixed calculation of the timer, was wrong before. Now both read-timer & write-timer will work.
