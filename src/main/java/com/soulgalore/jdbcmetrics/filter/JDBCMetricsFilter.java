@@ -90,6 +90,7 @@ public class JDBCMetricsFilter implements Filter {
 					(HttpServletResponse) resp);
 
 			try {
+				// TODO only use the wrapper if only right request header is set
 				chain.doFilter(req, useHeaders ? responseWrapper : resp);
 			} finally {
 
