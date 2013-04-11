@@ -184,7 +184,7 @@ public class WhenQueryIsExecuted extends AbstractDriverTest {
 	}
 	
 	@Test
-	public void executeSelectShouldIncreaseWriteTimer() throws SQLException {
+	public void executeInsertShouldIncreaseWriteTimer() throws SQLException {
 		long oldValue = JDBCMetrics.getInstance().getWriteTimer().count();
 		PreparedStatement pst = connection.prepareStatement("INSERT 1");
 		pst.execute();
@@ -192,7 +192,7 @@ public class WhenQueryIsExecuted extends AbstractDriverTest {
 	}
 
 	@Test
-	public void executeSelectShouldIncreaseWriteMeter() throws SQLException {
+	public void executeInsertShouldIncreaseWriteMeter() throws SQLException {
 		long oldValue = JDBCMetrics.getInstance().getWriteMeter().count();
 		PreparedStatement pst = connection.prepareStatement("INSERT 1");
 		pst.execute();
