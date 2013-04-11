@@ -12,6 +12,7 @@ import java.sql.Statement;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.soulgalore.jdbcmetrics.JDBCMetrics;
 import com.soulgalore.jdbcmetrics.QueryThreadLocal;
 
 public class WhenQueryIsExecuted extends AbstractDriverTest {
@@ -148,7 +149,57 @@ public class WhenQueryIsExecuted extends AbstractDriverTest {
 		}
 		
 	}
+	
+	@Test
+	public void executeSelectShouldIncreaseTotalReadCounter() throws SQLException {
+		long oldValue = JDBCMetrics.getInstance().getTotalNumberOfReads().count();
+		PreparedStatement pst = connection.prepareStatement("SELECT 1");
+		pst.execute();
+		assertThat(JDBCMetrics.getInstance().getTotalNumberOfReads().count(), is(oldValue+1));
+	}
+	
+	@Test
+	public void executeSelectShouldIncreaseReadTimer() throws SQLException {
+		long oldValue = JDBCMetrics.getInstance().getReadTimer().count();
+		PreparedStatement pst = connection.prepareStatement("SELECT 1");
+		pst.execute();
+		assertThat(JDBCMetrics.getInstance().getReadTimer().count(), is(oldValue+1));
+	}
 
+	@Test
+	public void executeSelectShouldIncreaseReadMeter() throws SQLException {
+		long oldValue = JDBCMetrics.getInstance().getReadMeter().count();
+		PreparedStatement pst = connection.prepareStatement("SELECT 1");
+		pst.execute();
+		assertThat(JDBCMetrics.getInstance().getReadMeter().count(), is(oldValue+1));
+	}
+
+	
+	@Test
+	public void executeInsertShouldIncreaseTotalWriteCounter() throws SQLException {
+		long oldValue = JDBCMetrics.getInstance().getTotalNumberOfWrites().count();
+		PreparedStatement pst = connection.prepareStatement("INSERT 1");
+		pst.execute();
+		assertThat(JDBCMetrics.getInstance().getTotalNumberOfWrites().count(), is(oldValue+1));
+	}
+	
+	@Test
+	public void executeSelectShouldIncreaseWriteTimer() throws SQLException {
+		long oldValue = JDBCMetrics.getInstance().getWriteTimer().count();
+		PreparedStatement pst = connection.prepareStatement("INSERT 1");
+		pst.execute();
+		assertThat(JDBCMetrics.getInstance().getWriteTimer().count(), is(oldValue+1));
+	}
+
+	@Test
+	public void executeSelectShouldIncreaseWriteMeter() throws SQLException {
+		long oldValue = JDBCMetrics.getInstance().getWriteMeter().count();
+		PreparedStatement pst = connection.prepareStatement("INSERT 1");
+		pst.execute();
+		assertThat(JDBCMetrics.getInstance().getWriteMeter().count(), is(oldValue+1));
+	}
+	
+	
 	private int reads() {
 		return QueryThreadLocal.getNrOfQueries().getReads();
 	}
