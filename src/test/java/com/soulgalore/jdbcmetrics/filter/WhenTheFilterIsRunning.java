@@ -93,6 +93,9 @@ public class WhenTheFilterIsRunning {
 		Mockito.when(
 				config.getInitParameter(JDBCMetricsFilter.REQUEST_HEADER_NAME_INIT_PARAM_NAME))
 				.thenReturn(headerName);
+		Mockito.when(
+				config.getInitParameter(JDBCMetricsFilter.USE_HEADERS_INIT_PARAM_NAME))
+				.thenReturn("true");
 
 		HttpServletRequest req = Mockito.mock(HttpServletRequest.class);
 		Mockito.when(req.getHeader(headerName)).thenReturn(null);
