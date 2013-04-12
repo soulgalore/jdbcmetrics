@@ -2,7 +2,9 @@ CHANGELOG jdbcmetrics
 
 version  0.9.7
 --------------------------
-
+* More JUnit tests for the different Yammer metrics
+* Cleanup of the JDBCMetricsFilter
+* Only create the ResponseWrapper when it is configured to use the response headers, and the right request header exists
 
 version  0.9.6
 --------------------------

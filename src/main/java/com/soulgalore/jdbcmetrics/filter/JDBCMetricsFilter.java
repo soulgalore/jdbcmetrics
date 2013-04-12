@@ -72,7 +72,7 @@ public class JDBCMetricsFilter implements Filter {
 	private final Logger logger = LoggerFactory.getLogger(JDBCMetricsFilter.class);
 
 	protected String requestHeaderName;
-	private boolean useHeaders;
+	private boolean useHeadersInConfig;
 
 	@Override
 	public void destroy() {
@@ -86,39 +86,49 @@ public class JDBCMetricsFilter implements Filter {
 		if (QueryThreadLocal.getNrOfQueries() == null) {
 			QueryThreadLocal.init();
 
-			ResponseWrapper responseWrapper = new ResponseWrapper(
-					(HttpServletResponse) resp);
+
+			// setup the response wrapper ONLY if we set the response headers
+			boolean useHeaders = useHeaders((HttpServletRequest) req);
+			ResponseWrapper responseWrapper = null;			
+			if (useHeaders)
+				responseWrapper = new ResponseWrapper(
+						(HttpServletResponse) resp);
 
 			try {
-				// TODO only use the wrapper if only right request header is set
 				chain.doFilter(req, useHeaders ? responseWrapper : resp);
 			} finally {
-
+				
+				// set the stats & cleanup
 				ReadAndWrites rw = QueryThreadLocal.getNrOfQueries();
 				updateStatistics(rw);
-				if (useHeaders) {
-					setHeaders(rw, req, responseWrapper);
-				}
+				if (useHeaders)
+					setHeaders(rw, responseWrapper);
 				log(req, rw);
-
 				QueryThreadLocal.removeNrOfQueries();
-				if (useHeaders) {
+				if (useHeaders)
 					responseWrapper.write();
-				}
 			}
 		}
 	}
 
 	@Override
 	public void init(FilterConfig config) throws ServletException {
-
+		
 		requestHeaderName = config
 				.getInitParameter(REQUEST_HEADER_NAME_INIT_PARAM_NAME);
-		if (requestHeaderName == null || "".equals(requestHeaderName)) {
+		if (requestHeaderName == null || "".equals(requestHeaderName))
 			requestHeaderName = DEFAULT_REQUEST_HEADER_NAME;
-		}
-		useHeaders = Boolean.valueOf((config
+		useHeadersInConfig = Boolean.valueOf((config
 				.getInitParameter(USE_HEADERS_INIT_PARAM_NAME)));
+	}
+	
+	private boolean useHeaders(HttpServletRequest request) {
+		if (!useHeadersInConfig)
+			return false;
+		else if (request.getHeader(requestHeaderName) != null)
+			return true;
+		else
+			return false;
 	}
 
 	private void log(ServletRequest req, ReadAndWrites rw) {
@@ -126,9 +136,8 @@ public class JDBCMetricsFilter implements Filter {
 			StringBuilder builder = new StringBuilder("URL: ");
 			HttpServletRequest request = (HttpServletRequest) req;
 			builder.append(request.getRequestURL());
-			if (request.getQueryString() != null) {
+			if (request.getQueryString() != null)
 				builder.append("?").append(request.getQueryString());
-			}
 			builder.append(" reads:").append(rw.getReads()).append(" writes:")
 					.append(rw.getWrites());
 			logger.debug(builder.toString());
@@ -136,27 +145,17 @@ public class JDBCMetricsFilter implements Filter {
 	}
 
 	private void updateStatistics(ReadAndWrites rw) {
-		if (rw != null) {
 			JDBCMetrics.getInstance().getReadCountsPerRequest()
 					.update(rw.getReads());
 			JDBCMetrics.getInstance().getWriteCountsPerRequest()
 					.update(rw.getWrites());
-		}
 	}
 
-	private void setHeaders(ReadAndWrites rw, ServletRequest req,
-			ServletResponse resp) {
-		if (rw != null) {
-			HttpServletRequest request = (HttpServletRequest) req;
-			if (requestHeaderName != null
-					&& request.getHeader(requestHeaderName) != null) {
-				HttpServletResponse response = (HttpServletResponse) resp;
-				response.setHeader(RESPONSE_HEADER_NAME_NR_OF_READS,
-						String.valueOf(rw.getReads()));
-				response.setHeader(RESPONSE_HEADER_NAME_NR_OF_WRITES,
-						String.valueOf(rw.getWrites()));
-			}
-		}
+	private void setHeaders(ReadAndWrites rw, HttpServletResponse response) {		
+		
+			response.setHeader(RESPONSE_HEADER_NAME_NR_OF_READS,
+					String.valueOf(rw.getReads()));
+			response.setHeader(RESPONSE_HEADER_NAME_NR_OF_WRITES,
+					String.valueOf(rw.getWrites()));
 	}
 }
-
