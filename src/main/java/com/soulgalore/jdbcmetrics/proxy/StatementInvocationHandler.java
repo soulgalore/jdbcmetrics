@@ -128,8 +128,6 @@ public class StatementInvocationHandler implements InvocationHandler {
 		}
 		JDBCMetrics.getInstance().getReadTimer()
 				.update(time / inc, TimeUnit.NANOSECONDS);
-		JDBCMetrics.getInstance().getTotalNumberOfReads().inc(inc);
-		JDBCMetrics.getInstance().getReadMeter().mark();
 		
 		// TODO how should we handle slow queries? or is the timing enough?
 	}
@@ -143,8 +141,6 @@ public class StatementInvocationHandler implements InvocationHandler {
 		}
 		JDBCMetrics.getInstance().getWriteTimer()
 				.update(time / inc, TimeUnit.NANOSECONDS);
-		JDBCMetrics.getInstance().getTotalNumberOfWrites().inc(inc);
-		JDBCMetrics.getInstance().getWriteMeter().mark();
 	}
 
 	static boolean isRead(String sql) {

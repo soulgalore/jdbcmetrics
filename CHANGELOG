@@ -1,7 +1,8 @@
 CHANGELOG jdbcmetrics
 
-version  0.9.8
+version 1.0
 --------------------------
+* Cleanup of reads & write stats that existed in multiple places, now they only exist in one.
 
 version  0.9.7
 --------------------------

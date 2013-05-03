@@ -51,12 +51,9 @@ public class JDBCMetrics {
 	
 	private final MetricsRegistry registry; 
 	
-	private final Counter totalNumberOfReads;
-	private final Counter totalNumberOfWrites;
 	private final Histogram readCountsPerRequest;
 	private final Histogram writeCountsPerRequest;
-	private final Meter readMeter;
-	private final Meter writeMeter;
+
 	private final Timer writeTimer;
 	private final Timer readTimer;
 	private final Timer connectionPoolTimer;
@@ -71,24 +68,13 @@ public class JDBCMetrics {
 			registry = Metrics.defaultRegistry();
 		else
 			registry = new MetricsRegistry();
-		
-		totalNumberOfReads = registry.newCounter(new MetricName(
-				GROUP, TYPE_READ, "total-of-reads"));
-		
-		totalNumberOfWrites = registry.newCounter(new MetricName(
-				GROUP, TYPE_WRITE, "total-of-writes"));
+	
 		
 		readCountsPerRequest = registry.newHistogram(new MetricName(
 				GROUP, TYPE_READ, "read-counts-per-request"), true);
 		
 		 writeCountsPerRequest = registry.newHistogram(new MetricName(
 					GROUP, TYPE_WRITE, "write-counts-per-request"), true);
-		 
-		 readMeter = registry.newMeter(new MetricName(GROUP, TYPE_READ,
-					"reads"), "jdbcread", TimeUnit.SECONDS);
-		 
-		 writeMeter = registry.newMeter(new MetricName(GROUP,
-					TYPE_WRITE, "writes"), "jdbcwrite", TimeUnit.SECONDS);
 		 
 		 writeTimer = registry.newTimer(new MetricName(GROUP,
 					TYPE_WRITE, "write-time"), TimeUnit.MILLISECONDS, TimeUnit.SECONDS);
@@ -109,13 +95,6 @@ public class JDBCMetrics {
 		return INSTANCE;
 	}
 
-	public Counter getTotalNumberOfReads() {
-		return totalNumberOfReads;
-	}
-
-	public Counter getTotalNumberOfWrites() {
-		return totalNumberOfWrites;
-	}
 
 	public Histogram getReadCountsPerRequest() {
 		return readCountsPerRequest;
@@ -123,14 +102,6 @@ public class JDBCMetrics {
 
 	public Histogram getWriteCountsPerRequest() {
 		return writeCountsPerRequest;
-	}
-
-	public Meter getReadMeter() {
-		return readMeter;
-	}
-
-	public Meter getWriteMeter() {
-		return writeMeter;
 	}
 	
 	public Timer getWriteTimer() {
