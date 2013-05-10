@@ -28,16 +28,20 @@ public class ReadAndWrites {
 			
 	private int reads = 0;
 	private int writes = 0;
+	private long totalReadTime = 0;
+	private long totalWriteTime = 0;
 
 	public ReadAndWrites() {
 	}
 	
-	public void incReads() {
+	public void incReads(long readTime) {
 		reads++;
+		totalReadTime =+ readTime;
 	}
 	
-	public void incWrites() {
+	public void incWrites(long writeTime) {
 		writes++;
+		totalWriteTime =+ writeTime;
 	}
 	
 	public int getWrites() {
@@ -48,9 +52,19 @@ public class ReadAndWrites {
 		return reads;
 	}
 	
+	public long getTotalReadTime() {
+		return totalReadTime;
+	}
+	
+	public long getTotalWriteTime() {
+		return totalWriteTime;
+	}
+	
 	public void clear() {
 		reads = 0;
 		writes = 0;
+		totalReadTime = 0;
+		totalWriteTime = 0;
 	}
 	
 }

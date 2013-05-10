@@ -124,7 +124,7 @@ public class StatementInvocationHandler implements InvocationHandler {
 			return;
 		}
 		for (long i = inc; i > 0; i--) {
-			QueryThreadLocal.addRead();
+			QueryThreadLocal.addRead(time / inc);
 		}
 		JDBCMetrics.getInstance().getReadTimer()
 				.update(time / inc, TimeUnit.NANOSECONDS);
@@ -137,7 +137,7 @@ public class StatementInvocationHandler implements InvocationHandler {
 			return;
 		}
 		for (long i = inc; i > 0; i--) {
-			QueryThreadLocal.addWrite();
+			QueryThreadLocal.addWrite(time / inc);
 		}
 		JDBCMetrics.getInstance().getWriteTimer()
 				.update(time / inc, TimeUnit.NANOSECONDS);

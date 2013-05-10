@@ -20,14 +20,17 @@ public class WhenAWriteIsDone {
 
 	@Test
 	public void theNumberOfWritesShouldBeIncreased() {
-		rw.incWrites();
-		assertThat("The writes should be increased",rw.getWrites(), is(1));
-		rw.incWrites();
-		rw.incWrites();
+
+		rw.incWrites(5);
+		assertThat("The writes should be increased", rw.getWrites(), is(1));
+		rw.incWrites(4);
+		rw.incWrites(2);
 		assertThat("The writes should be increased", rw.getWrites(), is(3));
+		assertThat("The total write time is right",
+				(new Long(rw.getTotalWriteTime())).intValue(), is(11));
 		rw.clear();
-		assertThat("The writes should be cleared",rw.getWrites(), is(0));
-		
+		assertThat("The writes should be cleared", rw.getWrites(), is(0));
+
 	}
 
 }

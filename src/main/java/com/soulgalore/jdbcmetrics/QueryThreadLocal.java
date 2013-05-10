@@ -37,15 +37,15 @@ public abstract class QueryThreadLocal {
 		nrOfQueries.set(new ReadAndWrites());
 	}
 	
-	 public static void addRead() {
+	 public static void addRead(long timeInNanos) {
 		 if (nrOfQueries.get()!=null) {
-			 nrOfQueries.get().incReads();
+			 nrOfQueries.get().incReads(timeInNanos);
 		 }
 	 }
 	 
-	 public static void addWrite() {
+	 public static void addWrite(long timeInNanos) {
 		 if (nrOfQueries.get()!=null) {
-			 nrOfQueries.get().incWrites();
+			 nrOfQueries.get().incWrites(timeInNanos);
 		 }
 	 }
 
