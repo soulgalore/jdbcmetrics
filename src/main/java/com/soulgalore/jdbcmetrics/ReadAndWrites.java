@@ -36,12 +36,12 @@ public class ReadAndWrites {
 	
 	public void incReads(long readTime) {
 		reads++;
-		totalReadTime =+ readTime;
+		totalReadTime += readTime;
 	}
 	
 	public void incWrites(long writeTime) {
 		writes++;
-		totalWriteTime =+ writeTime;
+		totalWriteTime += writeTime;
 	}
 	
 	public int getWrites() {
