@@ -23,9 +23,7 @@ package com.soulgalore.jdbcmetrics;
 import java.util.concurrent.TimeUnit;
 
 import com.yammer.metrics.Metrics;
-import com.yammer.metrics.core.Counter;
 import com.yammer.metrics.core.Histogram;
-import com.yammer.metrics.core.Meter;
 import com.yammer.metrics.core.Timer;
 import com.yammer.metrics.core.MetricName;
 import com.yammer.metrics.core.MetricsRegistry;
@@ -56,6 +54,8 @@ public class JDBCMetrics {
 
 	private final Timer writeTimer;
 	private final Timer readTimer;
+	private final Timer writeTimerPerRequest;
+	private final Timer readTimerPerRequest;
 	private final Timer connectionPoolTimer;
 	
 	private static final JDBCMetrics INSTANCE = new JDBCMetrics();
@@ -81,6 +81,13 @@ public class JDBCMetrics {
 		 
 		 readTimer = registry.newTimer(new MetricName(GROUP,
 					TYPE_READ, "read-time"), TimeUnit.MILLISECONDS, TimeUnit.SECONDS);
+		 
+		 writeTimerPerRequest = registry.newTimer(new MetricName(GROUP,
+					TYPE_WRITE, "write-time-per-request"), TimeUnit.MILLISECONDS, TimeUnit.SECONDS);
+		 
+		 readTimerPerRequest = registry.newTimer(new MetricName(GROUP,
+					TYPE_READ, "read-time-per-request"), TimeUnit.MILLISECONDS, TimeUnit.SECONDS);
+		 
 		 
 		 connectionPoolTimer = registry.newTimer(new MetricName(GROUP_POOL,
 				 TYPE_READ_OR_WRITE, "wait-for-connection"), TimeUnit.MILLISECONDS, TimeUnit.SECONDS);
@@ -119,5 +126,14 @@ public class JDBCMetrics {
 	public MetricsRegistry getRegistry() {
 		return registry;
 	}
+
+	public Timer getWriteTimerPerRequest() {
+		return writeTimerPerRequest;
+	}
+
+	public Timer getReadTimerPerRequest() {
+		return readTimerPerRequest;
+	}
+	
 	
 }

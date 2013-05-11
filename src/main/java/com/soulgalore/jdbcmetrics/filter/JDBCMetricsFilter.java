@@ -21,6 +21,7 @@
 package com.soulgalore.jdbcmetrics.filter;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -145,10 +146,13 @@ public class JDBCMetricsFilter implements Filter {
 	}
 
 	private void updateStatistics(ReadAndWrites rw) {
-			JDBCMetrics.getInstance().getReadCountsPerRequest()
-					.update(rw.getReads());
-			JDBCMetrics.getInstance().getWriteCountsPerRequest()
-					.update(rw.getWrites());
+		JDBCMetrics metrics = JDBCMetrics.getInstance();
+		metrics.getReadCountsPerRequest().update(rw.getReads());
+		metrics.getWriteCountsPerRequest().update(rw.getWrites());
+		metrics.getReadTimerPerRequest().update(rw.getTotalReadTime(),
+				TimeUnit.NANOSECONDS);
+		metrics.getWriteTimerPerRequest().update(rw.getTotalWriteTime(),
+				TimeUnit.NANOSECONDS);
 	}
 
 	private void setHeaders(ReadAndWrites rw, HttpServletResponse response) {		
