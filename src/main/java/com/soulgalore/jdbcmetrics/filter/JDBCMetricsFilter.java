@@ -72,9 +72,18 @@ public class JDBCMetricsFilter implements Filter {
 
 	private final Logger logger = LoggerFactory.getLogger(JDBCMetricsFilter.class);
 
+	private static final String LOG_URL_TEXT = "URL: ";
+	private static final String LOG_URL_QUERY_TEXT = "?";
+	private static final String LOG_READS = " reads:";
+	private static final String LOG_WRITES = " writes:";
+	private static final String LOG_READ_TIME = " readTime:";
+	private static final String LOG_WRITE_TIME = " writeTime:";
+	private static final String LOG_MS = " ms";
+	
 	protected String requestHeaderName;
 	private boolean useHeadersInConfig;
 
+	
 	@Override
 	public void destroy() {
 	}
@@ -135,16 +144,16 @@ public class JDBCMetricsFilter implements Filter {
 	private void log(ServletRequest req, ReadAndWrites rw) {
 		if (logger.isDebugEnabled()
 				&& (rw.getReads() > 0 || rw.getWrites() > 0)) {
-			StringBuilder builder = new StringBuilder("URL: ");
+			StringBuilder builder = new StringBuilder(LOG_URL_TEXT);
 			HttpServletRequest request = (HttpServletRequest) req;
 			builder.append(request.getRequestURL());
 			if (request.getQueryString() != null)
-				builder.append("?").append(request.getQueryString());
-			builder.append(" reads:").append(rw.getReads()).append(" writes:")
+				builder.append(LOG_URL_QUERY_TEXT).append(request.getQueryString());
+			builder.append(LOG_READS).append(rw.getReads()).append(LOG_WRITES)
 					.append(rw.getWrites());
-			builder.append(" readTime:").append(rw.getTotalReadTime()/1000000)
-					.append(" ms ").append(" writeTime:")
-					.append(rw.getTotalWriteTime()/1000000).append(" ms");
+			builder.append(LOG_READ_TIME).append(rw.getTotalReadTime()/1000000)
+					.append(LOG_MS ).append(LOG_WRITE_TIME)
+					.append(rw.getTotalWriteTime()/1000000).append(LOG_MS);
 			logger.debug(builder.toString());
 		}
 	}
