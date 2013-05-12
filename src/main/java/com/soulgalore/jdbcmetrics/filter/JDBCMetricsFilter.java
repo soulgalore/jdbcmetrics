@@ -133,7 +133,8 @@ public class JDBCMetricsFilter implements Filter {
 	}
 
 	private void log(ServletRequest req, ReadAndWrites rw) {
-		if (logger.isDebugEnabled() && (rw.getReads()>0 || rw.getWrites()>0)) {
+		if (logger.isDebugEnabled()
+				&& (rw.getReads() > 0 || rw.getWrites() > 0)) {
 			StringBuilder builder = new StringBuilder("URL: ");
 			HttpServletRequest request = (HttpServletRequest) req;
 			builder.append(request.getRequestURL());
@@ -141,6 +142,9 @@ public class JDBCMetricsFilter implements Filter {
 				builder.append("?").append(request.getQueryString());
 			builder.append(" reads:").append(rw.getReads()).append(" writes:")
 					.append(rw.getWrites());
+			builder.append(" readTime:").append(rw.getTotalReadTime()/1000000)
+					.append(" ms ").append(" writeTime:")
+					.append(rw.getTotalWriteTime()/1000000).append(" ms");
 			logger.debug(builder.toString());
 		}
 	}
