@@ -8,7 +8,7 @@ By only setting up the **JDBCMetricsDriver** (meaning configure your driver):
 * The total number of database writes
 * Number of reads per second (per minute, 5 minutes & 15 minutes)
 * Number of writes per second (per minute, 5 minutes & 15 minutes)
-* Average query times for reads & for writes
+* Average/median/percentile query times for reads & for writes
 
 By also setting up the **JDBCMetricsFilter** you will get:
 
