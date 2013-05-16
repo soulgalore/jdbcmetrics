@@ -69,7 +69,9 @@ public class JDBCMetricsFilter implements Filter {
 	static final String DEFAULT_REQUEST_HEADER_NAME = "jdbcmetrics";
 	static final String RESPONSE_HEADER_NAME_NR_OF_READS = "nr-of-reads";
 	static final String RESPONSE_HEADER_NAME_NR_OF_WRITES = "nr-of-writes";
-
+	static final String RESPONSE_HEADER_NAME_TIME_SPENT_IN_READS = "read-time";
+	static final String RESPONSE_HEADER_NAME_TIME_SPENT_IN_WRITES = "write-time";
+	
 	private final Logger logger = LoggerFactory.getLogger(JDBCMetricsFilter.class);
 
 	private static final String LOG_URL_TEXT = "URL: ";
@@ -79,6 +81,8 @@ public class JDBCMetricsFilter implements Filter {
 	private static final String LOG_READ_TIME = " readTime:";
 	private static final String LOG_WRITE_TIME = " writeTime:";
 	private static final String LOG_MS = " ms";
+	
+	private static final long NANOS_TO_MILLIS = 1000000;
 	
 	protected String requestHeaderName;
 	private boolean useHeadersInConfig;
@@ -91,7 +95,7 @@ public class JDBCMetricsFilter implements Filter {
 	@Override
 	public void doFilter(ServletRequest req, ServletResponse resp,
 			FilterChain chain) throws IOException, ServletException {
-
+		
 		// run once per thread
 		if (QueryThreadLocal.getNrOfQueries() == null) {
 			QueryThreadLocal.init();
@@ -151,9 +155,9 @@ public class JDBCMetricsFilter implements Filter {
 				builder.append(LOG_URL_QUERY_TEXT).append(request.getQueryString());
 			builder.append(LOG_READS).append(rw.getReads()).append(LOG_WRITES)
 					.append(rw.getWrites());
-			builder.append(LOG_READ_TIME).append(rw.getTotalReadTime()/1000000)
+			builder.append(LOG_READ_TIME).append(rw.getTotalReadTime()/NANOS_TO_MILLIS)
 					.append(LOG_MS ).append(LOG_WRITE_TIME)
-					.append(rw.getTotalWriteTime()/1000000).append(LOG_MS);
+					.append(rw.getTotalWriteTime()/NANOS_TO_MILLIS).append(LOG_MS);
 			logger.debug(builder.toString());
 		}
 	}
@@ -174,5 +178,10 @@ public class JDBCMetricsFilter implements Filter {
 					String.valueOf(rw.getReads()));
 			response.setHeader(RESPONSE_HEADER_NAME_NR_OF_WRITES,
 					String.valueOf(rw.getWrites()));
+			// report in millis
+			response.setHeader(RESPONSE_HEADER_NAME_TIME_SPENT_IN_READS,
+					String.valueOf(rw.getTotalReadTime()/NANOS_TO_MILLIS));
+			response.setHeader(RESPONSE_HEADER_NAME_TIME_SPENT_IN_WRITES,
+					String.valueOf(rw.getTotalWriteTime()/NANOS_TO_MILLIS));
 	}
 }
