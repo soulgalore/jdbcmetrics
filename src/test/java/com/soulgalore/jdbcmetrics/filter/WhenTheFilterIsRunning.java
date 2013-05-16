@@ -78,6 +78,10 @@ public class WhenTheFilterIsRunning {
 					JDBCMetricsFilter.RESPONSE_HEADER_NAME_NR_OF_READS, "0");
 			verify(resp).setHeader(
 					JDBCMetricsFilter.RESPONSE_HEADER_NAME_NR_OF_WRITES, "0");
+			verify(resp).setHeader(
+					JDBCMetricsFilter.RESPONSE_HEADER_NAME_TIME_SPENT_IN_READS, "0");
+			verify(resp).setHeader(
+					JDBCMetricsFilter.RESPONSE_HEADER_NAME_TIME_SPENT_IN_WRITES, "0");
 
 		} finally {
 			filter.destroy();
