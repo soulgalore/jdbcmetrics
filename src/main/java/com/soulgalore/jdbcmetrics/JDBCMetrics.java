@@ -134,6 +134,5 @@ public class JDBCMetrics {
 	public Timer getReadTimerPerRequest() {
 		return readTimerPerRequest;
 	}
-	
-	
+
 }
