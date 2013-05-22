@@ -14,8 +14,9 @@ By also setting up the **JDBCMetricsFilter** you will get:
 
 * The number of database reads created for a specific HTTP request
 * The number of database writes created for a specific HTTP request
-* Statistics about reads per request (average, median, percentile etc)
-* Statistics about writes per request (average, median, percentile etc)
+* The time spent in the database for reads & writes per request
+* Statistics about reads & read time per request (average, median, percentile etc)
+* Statistics about writes & write time per request (average, median, percentile etc)
 
 ##Background##
 In 99% of the projects we have worked with, when the shit hits the fan the problem is the interaction with the database. We want a super easy way 
@@ -36,7 +37,7 @@ In your **pom.xml** file add:
 &lt;dependency&gt;
  &lt;groupId&gt;com.soulgalore&lt;/groupId&gt;
  &lt;artifactId&gt;jdbcmetrics&lt;/artifactId&gt;
- &lt;version&gt;1.0&lt;/version&gt;
+ &lt;version&gt;1.1&lt;/version&gt;
  &lt;scope&gt;runtime&lt;/scope&gt;
 &lt;/dependency&gt;
 </pre>
