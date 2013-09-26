@@ -1,5 +1,9 @@
 CHANGELOG jdbcmetrics
 
+version 1.1.1
+--------------------------
+* Nullpointerfix for batch inserts (thanks @lhallowes) 
+
 version 1.1
 --------------------------
 * Collect total time of all read & writes for one request
