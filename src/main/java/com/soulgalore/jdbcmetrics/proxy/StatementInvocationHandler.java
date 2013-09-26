@@ -83,7 +83,7 @@ public class StatementInvocationHandler implements InvocationHandler {
 		} else if (METHOD_NAME_EXECUTE.equals(method.getName())) {
 			incStats(args != null ? args[0].toString() : sql, time);
 		} else if (METHOD_NAME_ADD_BATCH.equals(method.getName())) {
-			if (isRead(args[0].toString())) {
+			if (isRead(args != null ? args[0].toString() : sql)) {
 				nrOfBatchReads++;
 			} else {
 				nrOfBatchWrites++;
