@@ -1,5 +1,7 @@
 # JDBCMetrics - get information from your JDBC driver [![Build Status](https://travis-ci.org/soulgalore/jdbcmetrics.png?branch=master)](https://travis-ci.org/soulgalore/jdbcmetrics)
 
+[![I Love Open Source](http://www.iloveopensource.io/images/logo-lightbg.png)](http://www.iloveopensource.io/projects/5261764143c6bdee140001cb)
+
 Using **JDBCMetrics** you can get hold of the following information from your driver:
 
 By only setting up the **JDBCMetricsDriver** (meaning configure your driver):
