@@ -1,7 +1,8 @@
 package com.soulgalore.jdbcmetrics.proxy;
 
-import static org.hamcrest.MatcherAssert.*;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.notNullValue;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -19,26 +20,26 @@ public class WhenQueryIsExecuted extends AbstractDriverTest {
 
 	Connection connection;
 	Statement statement;
-	
+
 	@Before
 	public void setup() throws SQLException {
 		connection = driver.connect(URL_JDBC_METRICS, null);
 		assertThat(connection, notNullValue());
 		statement = connection.createStatement();
 		assertThat(statement, notNullValue());
-		
+
 		QueryThreadLocal.init();
 		assertThat(reads(), is(0));
 		assertThat(writes(), is(0));
 	}
-	
+
 	@Test
 	public void executeShouldIncreaseReadCounter() throws SQLException {
 		statement.execute("SELECT 1");
 		assertThat(reads(), is(1));
 		assertThat(writes(), is(0));
 	}
-	
+
 	@Test
 	public void executeShouldIncreaseWriteCounter() throws SQLException {
 		statement.execute("INSERT 1 (SELECT 2)");
@@ -80,7 +81,7 @@ public class WhenQueryIsExecuted extends AbstractDriverTest {
 		assertThat(reads(), is(0));
 		assertThat(writes(), is(0));
 	}
-	
+
 	@Test
 	public void executePreparedStatementShouldIncreaseReadCounter() throws SQLException {
 		PreparedStatement pst = connection.prepareStatement("SELECT 1");
@@ -88,7 +89,7 @@ public class WhenQueryIsExecuted extends AbstractDriverTest {
 		assertThat(reads(), is(1));
 		assertThat(writes(), is(0));
 	}
-	
+
 	@Test
 	public void executePreparedStatementShouldIncreaseWriteCounter() throws SQLException {
 		PreparedStatement pst = connection.prepareStatement("INSERT 1");
@@ -104,7 +105,7 @@ public class WhenQueryIsExecuted extends AbstractDriverTest {
 		assertThat(reads(), is(1));
 		assertThat(writes(), is(0));
 	}
-	
+
 	@Test
 	public void executeCallableStatementShouldIncreaseWriteCounter() throws SQLException {
 		CallableStatement cst = connection.prepareCall("INSERT 1");
@@ -112,7 +113,7 @@ public class WhenQueryIsExecuted extends AbstractDriverTest {
 		assertThat(reads(), is(0));
 		assertThat(writes(), is(1));
 	}
-	
+
 	@Test
 	public void allPrepareStatementsExecuteShouldIncreaseCounter() throws SQLException {
 
@@ -142,37 +143,37 @@ public class WhenQueryIsExecuted extends AbstractDriverTest {
 			pst.executeBatch();
 			assertThat(reads(), is(8));
 			assertThat(writes(), is(0));
-			
+
 		} finally {
 			if (pst != null)
 				pst.close();
 		}
-		
-	}
-	
-	
-	@Test
-	public void executeSelectShouldIncreaseReadTimer() throws SQLException {
-		long oldValue = JDBCMetrics.getInstance().getReadTimer().count();
-		PreparedStatement pst = connection.prepareStatement("SELECT 1");
-		pst.execute();
-		assertThat(JDBCMetrics.getInstance().getReadTimer().count(), is(oldValue+1));
+
 	}
 
-	
+
+	@Test
+	public void executeSelectShouldIncreaseReadTimer() throws SQLException {
+		long oldValue = JDBCMetrics.getInstance().getReadTimer().getCount();
+		PreparedStatement pst = connection.prepareStatement("SELECT 1");
+		pst.execute();
+		assertThat(JDBCMetrics.getInstance().getReadTimer().getCount(), is(oldValue+1));
+	}
+
+
 	@Test
 	public void executeInsertShouldIncreaseWriteTimer() throws SQLException {
-		long oldValue = JDBCMetrics.getInstance().getWriteTimer().count();
+		long oldValue = JDBCMetrics.getInstance().getWriteTimer().getCount();
 		PreparedStatement pst = connection.prepareStatement("INSERT 1");
 		pst.execute();
-		assertThat(JDBCMetrics.getInstance().getWriteTimer().count(), is(oldValue+1));
+		assertThat(JDBCMetrics.getInstance().getWriteTimer().getCount(), is(oldValue+1));
 	}
-	
-	
+
+
 	private int reads() {
 		return QueryThreadLocal.getNrOfQueries().getReads();
 	}
-	
+
 	private int writes() {
 		return QueryThreadLocal.getNrOfQueries().getWrites();
 	}

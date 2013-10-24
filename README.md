@@ -138,8 +138,8 @@ Then set it up in your **web.xml**:
 </pre>
 
 ###Choose registry###
-The default <em>MetricRegistry</em> is used by default, if you want a new to be created 
-add the System property <em>com.soulgalore.jdbcmetrics.MetricRegistry</em> with the value <em>new</em>.
+A new <em>MetricRegistry</em> is used by default. If you want to retrieve one from <em>SharedMetricRegistries</em>,
+set the System property <em>com.soulgalore.jdbcmetrics.MetricRegistry</em> to the name of the registry you wish to use.
 
 ## Fetching info from individual request(s)
 You can get information on how many database reads & writes your request generates by two different ways: Either it is logged to your log system or you can get it as response headers
