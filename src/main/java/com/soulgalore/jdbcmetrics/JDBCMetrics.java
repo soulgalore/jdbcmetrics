@@ -20,6 +20,10 @@
  */
 package com.soulgalore.jdbcmetrics;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+
 import javax.management.ObjectName;
 
 import com.codahale.metrics.Histogram;
@@ -63,6 +67,26 @@ public class JDBCMetrics {
 	private JDBCMetrics() {
 
 		String propertyValue = System.getProperty(REGISTRY_PROPERTY_NAME);
+		if (propertyValue == null) {
+		  InputStream propertiesStream = getClass().getResourceAsStream("/jdbcmetrics.properties");
+		  if (propertiesStream != null) {
+		    try {
+		      Properties properties = new Properties();
+		      properties.load(propertiesStream);
+
+		      propertyValue = properties.getProperty("metricRegistry.name");
+		    } catch (Exception e) {
+		      throw new RuntimeException(e);
+		    } finally {
+		      try {
+		        propertiesStream.close();
+		      } catch (IOException e) {
+		        // ignore
+		      }
+		    }
+		  }
+		}
+
 		if (propertyValue != null)
 			registry = SharedMetricRegistries.getOrCreate(propertyValue);
 		else
