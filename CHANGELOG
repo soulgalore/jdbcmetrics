@@ -4,6 +4,7 @@ version 2.0
 --------------------------
 * Upgrade to Metrics 3.0 (note that you now will get a NEW MetricRegistry by default, to use the old one, set the system property _com.soulgalore.jdbcmetrics.MetricRegistry_ to that name.
 * Fix for slf4j dependencies & right scope for the servlet API
+* MetricRegistry can be set via properties file
 * Many thanks to @mwanji for the upgrade & the fixes
 
 version 1.1.1
