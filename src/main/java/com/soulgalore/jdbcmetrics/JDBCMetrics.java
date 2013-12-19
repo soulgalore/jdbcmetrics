@@ -107,7 +107,7 @@ public class JDBCMetrics {
 
 		 readTimerPerRequest = registry.timer(createName(GROUP,
 					TYPE_READ, "read-time-per-request"));
-
+		 
 		 connectionPoolTimer = registry.timer(createName(GROUP_POOL,
 		     TYPE_READ_OR_WRITE, "wait-for-connection"));
 	}
@@ -155,15 +155,6 @@ public class JDBCMetrics {
 	}
 
   private static String createName(String group, String type, String name) {
-    final StringBuilder nameBuilder = new StringBuilder();
-    nameBuilder.append(ObjectName.quote(group));
-    nameBuilder.append(":type=");
-    nameBuilder.append(ObjectName.quote(type));
-    if (name.length() > 0) {
-      nameBuilder.append(",name=");
-      nameBuilder.append(ObjectName.quote(name));
-    }
-
-    return nameBuilder.toString();
+	return 	MetricRegistry.name(group,type,name);
   }
 }
