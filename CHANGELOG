@@ -1,5 +1,9 @@
 CHANGELOG jdbcmetrics
 
+version 2.0.1
+-------------------------
+* Bug fix: The metrics naming will now be the same as on 1.X
+
 version 2.0
 --------------------------
 * Upgrade to Metrics 3.0 (note that you now will get a NEW MetricRegistry by default, to use the old one, set the system property _com.soulgalore.jdbcmetrics.MetricRegistry_ to that name.
