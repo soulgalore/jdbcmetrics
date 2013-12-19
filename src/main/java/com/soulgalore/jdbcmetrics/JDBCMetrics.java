@@ -48,8 +48,6 @@ public class JDBCMetrics {
 	private static final String TYPE_WRITE = "write";
 	private static final String TYPE_READ_OR_WRITE = "readorwrite";
 
-	private static final String REGISTRY_DEFAULT = "default";
-
 	private final MetricRegistry registry;
 
 	private final Histogram readCountsPerRequest;
