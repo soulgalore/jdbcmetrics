@@ -39,7 +39,7 @@ In your **pom.xml** file add:
 &lt;dependency&gt;
  &lt;groupId&gt;com.soulgalore&lt;/groupId&gt;
  &lt;artifactId&gt;jdbcmetrics&lt;/artifactId&gt;
- &lt;version&gt;1.1.1&lt;/version&gt;
+ &lt;version&gt;2.0.1&lt;/version&gt;
  &lt;scope&gt;runtime&lt;/scope&gt;
 &lt;/dependency&gt;
 </pre>
