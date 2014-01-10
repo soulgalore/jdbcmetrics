@@ -16,22 +16,22 @@ import com.soulgalore.jdbcmetrics.proxy.ConnectionInvocationHandler;
 
 public class WhenConnectionIsMade extends AbstractDriverTest {
 
-	@Before
-	public void setup() throws SQLException {
-	}
-	
-	@Test
-	public void connectionShouldBeProxy() throws SQLException {
-		Connection connection = driver.connect(URL_JDBC_METRICS, null);
-		assertThat(connection, notNullValue());
-		assertThat(connection, instanceOf(Proxy.class));
-		assertThat(Proxy.getInvocationHandler(connection), instanceOf(ConnectionInvocationHandler.class));
-	}
+  @Before
+  public void setup() throws SQLException {}
 
-	@Test
-	public void connectionShouldNull() throws SQLException {
-		Connection connection = driver.connect(URL_UNKNOWN, null);
-		assertThat(connection, nullValue());
-	}
+  @Test
+  public void connectionShouldBeProxy() throws SQLException {
+    Connection connection = driver.connect(URL_JDBC_METRICS, null);
+    assertThat(connection, notNullValue());
+    assertThat(connection, instanceOf(Proxy.class));
+    assertThat(Proxy.getInvocationHandler(connection),
+        instanceOf(ConnectionInvocationHandler.class));
+  }
+
+  @Test
+  public void connectionShouldNull() throws SQLException {
+    Connection connection = driver.connect(URL_UNKNOWN, null);
+    assertThat(connection, nullValue());
+  }
 
 }

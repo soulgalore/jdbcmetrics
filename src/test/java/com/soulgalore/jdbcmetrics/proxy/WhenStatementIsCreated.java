@@ -17,36 +17,36 @@ import com.soulgalore.jdbcmetrics.proxy.StatementInvocationHandler;
 
 public class WhenStatementIsCreated extends AbstractDriverTest {
 
-	private Connection connection;
+  private Connection connection;
 
-	@Before
-	public void setup() throws SQLException {
-		connection = driver.connect(URL_JDBC_METRICS, null);
-		assertThat(connection, notNullValue());
-	}
-	
-	@Test
-	public void statementShouldBeProxy() throws SQLException {
-		Statement statement = connection.createStatement();
-		assertThat(statement, notNullValue());
-		assertThat(statement, instanceOf(Proxy.class));
-		assertThat(Proxy.getInvocationHandler(statement), instanceOf(StatementInvocationHandler.class));
-	}
+  @Before
+  public void setup() throws SQLException {
+    connection = driver.connect(URL_JDBC_METRICS, null);
+    assertThat(connection, notNullValue());
+  }
 
-	@Test
-	public void callableStatementShouldBeProxy() throws SQLException {
-		CallableStatement statement = connection.prepareCall("SELECT 1");
-		assertThat(statement, notNullValue());
-		assertThat(statement, instanceOf(Proxy.class));
-		assertThat(Proxy.getInvocationHandler(statement), instanceOf(StatementInvocationHandler.class));
-	}
+  @Test
+  public void statementShouldBeProxy() throws SQLException {
+    Statement statement = connection.createStatement();
+    assertThat(statement, notNullValue());
+    assertThat(statement, instanceOf(Proxy.class));
+    assertThat(Proxy.getInvocationHandler(statement), instanceOf(StatementInvocationHandler.class));
+  }
 
-	@Test
-	public void preparedStatementShouldBeProxy() throws SQLException {
-		PreparedStatement statement = connection.prepareStatement("SELECT 1");
-		assertThat(statement, notNullValue());
-		assertThat(statement, instanceOf(Proxy.class));
-		assertThat(Proxy.getInvocationHandler(statement), instanceOf(StatementInvocationHandler.class));
-	}
+  @Test
+  public void callableStatementShouldBeProxy() throws SQLException {
+    CallableStatement statement = connection.prepareCall("SELECT 1");
+    assertThat(statement, notNullValue());
+    assertThat(statement, instanceOf(Proxy.class));
+    assertThat(Proxy.getInvocationHandler(statement), instanceOf(StatementInvocationHandler.class));
+  }
+
+  @Test
+  public void preparedStatementShouldBeProxy() throws SQLException {
+    PreparedStatement statement = connection.prepareStatement("SELECT 1");
+    assertThat(statement, notNullValue());
+    assertThat(statement, instanceOf(Proxy.class));
+    assertThat(Proxy.getInvocationHandler(statement), instanceOf(StatementInvocationHandler.class));
+  }
 
 }

@@ -21,104 +21,92 @@ import org.mockito.Mockito;
 
 public class WhenTheFilterIsRunning {
 
-	@Before
-	public void setUp() throws Exception {
-        QueryThreadLocal.removeNrOfQueries();
+  @Before
+  public void setUp() throws Exception {
+    QueryThreadLocal.removeNrOfQueries();
+  }
+
+  @Test
+  public void anEmptyInitParameterShouldFallbackToDefault() {
+    FilterConfig config = Mockito.mock(FilterConfig.class);
+    Mockito.when(config.getInitParameter(JDBCMetricsFilter.REQUEST_HEADER_NAME_INIT_PARAM_NAME))
+        .thenReturn("");
+    Mockito.when(config.getInitParameter(JDBCMetricsFilter.USE_HEADERS_INIT_PARAM_NAME))
+        .thenReturn("true");
+    JDBCMetricsFilter filter = new JDBCMetricsFilter();
+    try {
+      try {
+        filter.init(config);
+        assertThat("The header name should be the default one", filter.requestHeaderName,
+            is(JDBCMetricsFilter.DEFAULT_REQUEST_HEADER_NAME));
+      } catch (ServletException e) {
+        fail();
+      }
+    } finally {
+      filter.destroy();
+    }
+  }
+
+  @Test
+  public void headersShouldBeSetWhenRightHeaderIsSupplied() throws ServletException, IOException {
+    FilterConfig config = Mockito.mock(FilterConfig.class);
+    String headerName = "jdbc";
+    Mockito.when(config.getInitParameter(JDBCMetricsFilter.REQUEST_HEADER_NAME_INIT_PARAM_NAME))
+        .thenReturn(headerName);
+    Mockito.when(config.getInitParameter(JDBCMetricsFilter.USE_HEADERS_INIT_PARAM_NAME))
+        .thenReturn("true");
+
+    HttpServletRequest req = Mockito.mock(HttpServletRequest.class);
+    Mockito.when(req.getHeader(headerName)).thenReturn("yes");
+    HttpServletResponse resp = Mockito.mock(HttpServletResponse.class);
+    ServletOutputStream stream = Mockito.mock(ServletOutputStream.class);
+    Mockito.when(resp.getOutputStream()).thenReturn(stream);
+
+    FilterChain chain = Mockito.mock(FilterChain.class);
+
+    JDBCMetricsFilter filter = new JDBCMetricsFilter();
+    try {
+      filter.init(config);
+      filter.doFilter(req, resp, chain);
+
+      verify(resp).setHeader(JDBCMetricsFilter.RESPONSE_HEADER_NAME_NR_OF_READS, "0");
+      verify(resp).setHeader(JDBCMetricsFilter.RESPONSE_HEADER_NAME_NR_OF_WRITES, "0");
+      verify(resp).setHeader(JDBCMetricsFilter.RESPONSE_HEADER_NAME_TIME_SPENT_IN_READS, "0");
+      verify(resp).setHeader(JDBCMetricsFilter.RESPONSE_HEADER_NAME_TIME_SPENT_IN_WRITES, "0");
+
+    } finally {
+      filter.destroy();
     }
 
-	@Test
-	public void anEmptyInitParameterShouldFallbackToDefault() {
-		FilterConfig config = Mockito.mock(FilterConfig.class);
-		Mockito.when(
-				config.getInitParameter(JDBCMetricsFilter.REQUEST_HEADER_NAME_INIT_PARAM_NAME))
-				.thenReturn("");
-		Mockito.when(
-				config.getInitParameter(JDBCMetricsFilter.USE_HEADERS_INIT_PARAM_NAME))
-				.thenReturn("true");
-		JDBCMetricsFilter filter = new JDBCMetricsFilter();
-		try {
-			try {
-				filter.init(config);
-				assertThat("The header name should be the default one",filter.requestHeaderName,
-						is(JDBCMetricsFilter.DEFAULT_REQUEST_HEADER_NAME));
-			} catch (ServletException e) {
-				fail();
-			}
-		} finally {
-			filter.destroy();
-		}
-	}
+  }
 
-	@Test
-	public void headersShouldBeSetWhenRightHeaderIsSupplied()
-			throws ServletException, IOException {
-		FilterConfig config = Mockito.mock(FilterConfig.class);
-		String headerName = "jdbc";
-		Mockito.when(
-				config.getInitParameter(JDBCMetricsFilter.REQUEST_HEADER_NAME_INIT_PARAM_NAME))
-				.thenReturn(headerName);
-		Mockito.when(
-				config.getInitParameter(JDBCMetricsFilter.USE_HEADERS_INIT_PARAM_NAME))
-				.thenReturn("true");
+  @Test
+  public void headersShouldNotBeSetWithMissingRequestHeader() throws ServletException, IOException {
+    FilterConfig config = Mockito.mock(FilterConfig.class);
+    String headerName = "jdbc";
+    Mockito.when(config.getInitParameter(JDBCMetricsFilter.REQUEST_HEADER_NAME_INIT_PARAM_NAME))
+        .thenReturn(headerName);
+    Mockito.when(config.getInitParameter(JDBCMetricsFilter.USE_HEADERS_INIT_PARAM_NAME))
+        .thenReturn("true");
 
-		HttpServletRequest req = Mockito.mock(HttpServletRequest.class);
-		Mockito.when(req.getHeader(headerName)).thenReturn("yes");
-		HttpServletResponse resp = Mockito.mock(HttpServletResponse.class);
-		ServletOutputStream stream = Mockito.mock(ServletOutputStream.class);
-		Mockito.when(resp.getOutputStream()).thenReturn(stream);
-		
-		FilterChain chain = Mockito.mock(FilterChain.class);
+    HttpServletRequest req = Mockito.mock(HttpServletRequest.class);
+    Mockito.when(req.getHeader(headerName)).thenReturn(null);
+    HttpServletResponse resp = Mockito.mock(HttpServletResponse.class);
+    ServletOutputStream stream = Mockito.mock(ServletOutputStream.class);
+    Mockito.when(resp.getOutputStream()).thenReturn(stream);
 
-		JDBCMetricsFilter filter = new JDBCMetricsFilter();
-		try {
-			filter.init(config);
-			filter.doFilter(req, resp, chain);
+    FilterChain chain = Mockito.mock(FilterChain.class);
 
-			verify(resp).setHeader(
-					JDBCMetricsFilter.RESPONSE_HEADER_NAME_NR_OF_READS, "0");
-			verify(resp).setHeader(
-					JDBCMetricsFilter.RESPONSE_HEADER_NAME_NR_OF_WRITES, "0");
-			verify(resp).setHeader(
-					JDBCMetricsFilter.RESPONSE_HEADER_NAME_TIME_SPENT_IN_READS, "0");
-			verify(resp).setHeader(
-					JDBCMetricsFilter.RESPONSE_HEADER_NAME_TIME_SPENT_IN_WRITES, "0");
+    JDBCMetricsFilter filter = new JDBCMetricsFilter();
+    try {
+      filter.init(config);
+      filter.doFilter(req, resp, chain);
+      verify(resp, times(0)).setHeader(anyString(), anyString());
 
-		} finally {
-			filter.destroy();
-		}
+    } finally {
+      filter.destroy();
+    }
 
-	}
-
-	@Test
-	public void headersShouldNotBeSetWithMissingRequestHeader()
-			throws ServletException, IOException {
-		FilterConfig config = Mockito.mock(FilterConfig.class);
-		String headerName = "jdbc";
-		Mockito.when(
-				config.getInitParameter(JDBCMetricsFilter.REQUEST_HEADER_NAME_INIT_PARAM_NAME))
-				.thenReturn(headerName);
-		Mockito.when(
-				config.getInitParameter(JDBCMetricsFilter.USE_HEADERS_INIT_PARAM_NAME))
-				.thenReturn("true");
-
-		HttpServletRequest req = Mockito.mock(HttpServletRequest.class);
-		Mockito.when(req.getHeader(headerName)).thenReturn(null);
-		HttpServletResponse resp = Mockito.mock(HttpServletResponse.class);
-		ServletOutputStream stream = Mockito.mock(ServletOutputStream.class);
-		Mockito.when(resp.getOutputStream()).thenReturn(stream);
-		
-		FilterChain chain = Mockito.mock(FilterChain.class);
-
-		JDBCMetricsFilter filter = new JDBCMetricsFilter();
-		try {
-			filter.init(config);
-			filter.doFilter(req, resp, chain);
-			verify(resp,times(0)).setHeader(anyString(), anyString());
-
-		} finally {
-			filter.destroy();
-		}
-
-	}
+  }
 
 }
