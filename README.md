@@ -172,7 +172,7 @@ URL: http://www.example.com reads:10 writes:1
 
 ## License
 
-Copyright 2013 Magnus Lundberg & Peter Hedenskog
+Copyright 2014 Magnus Lundberg & Peter Hedenskog
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
