@@ -97,26 +97,26 @@ Add the filter in your **web.xml** file (make sure it run early in the chain):
 </pre>
 
 ###Reporters###
-**JDBCMetrics** uses the great [Metrics](http://metrics.codahale.com/) as metric backend, that have the following different ways of reporting:
+**JDBCMetrics** uses the great [Metrics](https://dropwizard.github.io/metrics/3.1.0/) as metric backend, that have the following different ways of reporting:
 
-* [JMX](http://metrics.codahale.com/manual/core/#jmx) (not recommended for production)
-* [console](http://metrics.codahale.com/manual/core/#console)
-* [CSV](http://metrics.codahale.com/manual/core/#csv) - which periodically appends to a set of .csv files in a given directory.
-* [Servlet](http://metrics.codahale.com/manual/servlet/#metricsservlet) -  which will return all metrics as JSON.
-* [Ganglia](http://metrics.codahale.com/manual/ganglia/#manual-ganglia) - read more about Ganglia [here](http://ganglia.sourceforge.net/).
-* [Graphite](http://metrics.codahale.com/manual/graphite/#manual-graphite) - read more about Graphite [here](http://graphite.wikidot.com/).
+* [JMX](https://dropwizard.github.io/metrics/3.1.0/manual/core/#jmx) (not recommended for production)
+* [console](https://dropwizard.github.io/metrics/3.1.0/manual/core/#man-core-reporters-console)
+* [CSV](https://dropwizard.github.io/metrics/3.1.0/manual/core/#man-core-reporters-csv) - which periodically appends to a set of .csv files in a given directory.
+* [Servlet](https://dropwizard.github.io/metrics/3.1.0/manual/servlets/) -  which will return all metrics as JSON.
+* [Ganglia](https://dropwizard.github.io/metrics/3.1.0/manual/ganglia/#manual-ganglia) - read more about Ganglia [here](http://ganglia.sourceforge.net/).
+* [Graphite](https://dropwizard.github.io/metrics/3.1.0/manual/graphite/#manual-graphite) - read more about Graphite [here](http://graphite.wikidot.com/).
 
 
-Click [here](http://metrics.codahale.com/manual/core/#reporters) for documentation of how to setup the reporters.
+Click [here](https://dropwizard.github.io/metrics/3.1.0/manual/core/#reporters) for documentation of how to setup the reporters.
 
 And here's a real world example of setting up an metrics servlet:
 
 First add it the servlet to your **pom.xml** file:
 <pre>
 &lt;dependency&gt;
-	&lt;groupId&gt;com.yammer.metrics&lt;/groupId&gt;
-	&lt;artifactId&gt;metrics-servlet&lt;/artifactId&gt;
-	&lt;version&gt;2.2.0&lt;/version&gt;
+    &lt;groupId&gt;io.dropwizard.metrics&lt;/groupId&gt;
+    &lt;artifactId&gt;metrics-servlets&lt;/artifactId&gt;
+    &lt;version&gt;3.1.0&lt;/version&gt;
 &lt;/dependency&gt;
 </pre>
 
@@ -124,7 +124,7 @@ Then set it up in your **web.xml**:
 <pre>
 &lt;servlet&gt;
 	&lt;servlet-name&gt;MetricsServlet&lt;/servlet-name&gt;
-	&lt;servlet-class&gt;com.yammer.metrics.reporting.MetricsServlet&lt;/servlet-class&gt;
+	&lt;servlet-class&gt;com.codahale.metrics.servlets.AdminServlet&lt;/servlet-class&gt;
 	&lt;init-param&gt;
 		&lt;param-name&gt;show-jvm-metrics&lt;/param-name&gt;
 		&lt;param-value&gt;false&lt;/param-value&gt;
