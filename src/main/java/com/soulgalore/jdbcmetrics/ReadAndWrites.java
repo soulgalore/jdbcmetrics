@@ -23,7 +23,7 @@
 package com.soulgalore.jdbcmetrics;
 
 /**
- * Hold read & writes per request. The class is not thread safe but is used within a ThreadLocal.
+ * Hold read &amp; writes per request. The class is not thread safe but is used within a ThreadLocal.
  * 
  */
 public class ReadAndWrites {
