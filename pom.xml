@@ -41,6 +41,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<closeTestReports>true</closeTestReports>
 	</properties>
 
 	<parent>
@@ -132,6 +133,7 @@
 					<includes>
 						<include>**/*.java</include>
 					</includes>
+					<disableXmlReport>${closeTestReports}</disableXmlReport>
 				</configuration>
 			</plugin>
 
